@@ -65,10 +65,8 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
       - name: Build and analyze
-        with:
-          arguments: build sonarqube --info
-          build-root-directory: backend-desapp-api
-          gradle-version: 7.6.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./backend-desapp-api/gradlew build sonarqube --info
+        working-directory: backend-desapp-api
