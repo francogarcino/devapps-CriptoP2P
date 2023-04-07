@@ -23,7 +23,7 @@ class UserServiceImpl : UserService {
     override fun read(userId: Long): User {
         val daoResponse = userDAO.findById(userId)
         if (daoResponse.isPresent) return daoResponse.get()
-        else throw RuntimeException("The recived ID doesn't match with any user in the database")
+        else throw RuntimeException("The received ID doesn't match with any user in the database")
     }
 
     override fun readAll(): List<User> = userDAO.findAll().toList()
