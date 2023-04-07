@@ -19,7 +19,7 @@ class User(
 ) {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 
     init {
