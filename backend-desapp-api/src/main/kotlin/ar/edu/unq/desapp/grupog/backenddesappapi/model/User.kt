@@ -1,11 +1,7 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.model
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.*
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import jakarta.persistence.*
 
 @Entity
 class User(
@@ -15,7 +11,7 @@ class User(
     @Column(nullable = false) var address: String,
     @Column(nullable = false) var password: String,
     @Column(nullable = false, unique = true) var cvu: String,
-    @Column(nullable = false, unique = true) var wallet: String,
+    @Column(nullable = false, unique = true) var wallet: String
 ) {
 
     @Id
