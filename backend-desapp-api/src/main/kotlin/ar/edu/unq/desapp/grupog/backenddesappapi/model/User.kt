@@ -18,7 +18,9 @@ class User(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 
-    init {
+    init { validateUserData() }
+
+    private fun validateUserData() {
         if (!isValidName(this.firstName) || !isValidName(this.lastName)) { throw InvalidNameAttempException() }
         if (!isValidEmail(this.email)) { throw InvalidEmailException() }
         if (!isValidPassword(this.password)) { throw InvalidPasswordException() }

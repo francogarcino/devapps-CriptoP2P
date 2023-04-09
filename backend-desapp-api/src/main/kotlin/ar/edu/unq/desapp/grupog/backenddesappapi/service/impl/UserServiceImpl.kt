@@ -12,8 +12,14 @@ import java.lang.RuntimeException
 @Service
 class UserServiceImpl : UserService {
     @Autowired private lateinit var userDAO: UserDAO
+    override fun create(entity: User): User {
+        return try {
+            userDAO.save(entity)
+        } catch (e: Exception) {
+            throw RuntimeException(e.message)
+        }
+    }
 
-    override fun create(entity: User) = userDAO.save(entity)
     override fun update(entity: User): User {
         return if (userDAO.existsById(entity.id!!)) {
             userDAO.save(entity)
@@ -28,8 +34,6 @@ class UserServiceImpl : UserService {
 
     override fun readAll(): List<User> = userDAO.findAll().toList()
     override fun delete(entityId: Long) { userDAO.deleteById(entityId) }
-    override fun deleteAll() {
-        userDAO.deleteAll()
-    }
+    override fun deleteAll() { userDAO.deleteAll() }
 
 }
