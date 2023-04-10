@@ -1,11 +1,7 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.model
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.*
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import jakarta.persistence.*
 
 @Entity
 class User(
@@ -15,14 +11,16 @@ class User(
     @Column(nullable = false) var address: String,
     @Column(nullable = false) var password: String,
     @Column(nullable = false, unique = true) var cvu: String,
-    @Column(nullable = false, unique = true) var wallet: String,
+    @Column(nullable = false, unique = true) var wallet: String
 ) {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 
-    init {
+    init { validateUserData() }
+
+    private fun validateUserData() {
         if (!isValidName(this.firstName) || !isValidName(this.lastName)) { throw InvalidNameAttempException() }
         if (!isValidEmail(this.email)) { throw InvalidEmailException() }
         if (!isValidPassword(this.password)) { throw InvalidPasswordException() }
