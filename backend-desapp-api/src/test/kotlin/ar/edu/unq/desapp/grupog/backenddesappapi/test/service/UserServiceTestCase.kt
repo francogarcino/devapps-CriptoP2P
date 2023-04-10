@@ -61,18 +61,86 @@ class UserServiceTestCase {
     }
 
     @Test
-    fun testUpdate_ShouldThrowAnExceptionWhenTheUserDoesNotExists() {
-        assertThrows<RuntimeException> { userService.update(builder.build()) }
+    fun testUpdate_UpdateSuccessfully() {
+        val anUser = userService.create(builder.build())
+        anUser.apply { email = "backup-mail@gmail.com" }
+        userService.update(anUser)
+        val updatedUser = userService.read(anUser.id!!)
+
+        Assertions.assertEquals(anUser.firstName, updatedUser.firstName)
+        Assertions.assertEquals(anUser.lastName, updatedUser.lastName)
+        Assertions.assertEquals(anUser.address, updatedUser.address)
+        Assertions.assertEquals(anUser.cvu, updatedUser.cvu)
+        Assertions.assertEquals(anUser.wallet, updatedUser.wallet)
+        Assertions.assertEquals(anUser.password, updatedUser.password)
+        Assertions.assertEquals(anUser.email, updatedUser.email)
     }
 
     @Test
-    fun testRead_ShowThrowAnExceptionWhenTheIdDoesNotMatchWithAnyUser() {
+    fun testUpdate_ShouldThrowAnExceptionWhenTheUserDoesNotExists() {
+        assertThrows<RuntimeException> { userService.update(builder.build()) }
+    }
+    @Test
+    fun testRead_RecoversSimilarObjects() {
+        val anUser = userService.create(builder.build())
+        val recoveryUser = userService.read(anUser.id!!)
+
+        Assertions.assertEquals(anUser.firstName, recoveryUser.firstName)
+        Assertions.assertEquals(anUser.lastName, recoveryUser.lastName)
+        Assertions.assertEquals(anUser.address, recoveryUser.address)
+        Assertions.assertEquals(anUser.cvu, recoveryUser.cvu)
+        Assertions.assertEquals(anUser.wallet, recoveryUser.wallet)
+        Assertions.assertEquals(anUser.password, recoveryUser.password)
+        Assertions.assertEquals(anUser.email, recoveryUser.email)
+
+        Assertions.assertTrue(anUser !== recoveryUser)
+    }
+
+    @Test
+    fun testRead_ShouldThrowAnExceptionWhenTheIdDoesNotMatchWithAnyUser() {
         assertThrows<RuntimeException> { userService.read(1) }
     }
 
     @Test
-    fun testRead_ShowThrowAnExceptionWhenTheIdIsInvalid() {
+    fun testRead_ShouldThrowAnExceptionWhenTheIdIsInvalid() {
         assertThrows<RuntimeException> { userService.read(-1) }
+    }
+
+    @Test
+    fun testReadAll_RecoversAllTheUsersInTheDatabase() {
+        val aDefaultUser = userService.create(builder.build())
+        val anotherUser = userService.create(
+            builder.withEmail("notDefault@hotmail.com")
+                .withWallet("12346578")
+                .withCVU("0000010000000000100000")
+                .build()
+        )
+
+        val users = userService.readAll()
+        Assertions.assertEquals(2, users.size)
+        Assertions.assertTrue(users.any { u -> u.wallet == aDefaultUser.wallet })
+        Assertions.assertTrue(users.any { u -> u.wallet == anotherUser.wallet })
+    }
+
+    @Test
+    fun testReadAll_ShouldReturnsAnEmptyListIfDatabaseHaveNoUsers() {
+        Assertions.assertTrue(userService.readAll().isEmpty())
+    }
+
+    @Test
+    fun testDelete_DeleteTheUserFromDatabase() {
+        val anUser = userService.create(builder.build())
+        assertDoesNotThrow { userService.read(anUser.id!!) }
+        userService.delete(anUser.id!!)
+        assertThrows<RuntimeException> { userService.read(anUser.id!!) }
+    }
+
+    @Test
+    fun testDeleteAll_DeletesAllTheUsersInTheDatabase() {
+        userService.create(builder.build())
+        Assertions.assertTrue(userService.readAll().isNotEmpty())
+        userService.deleteAll()
+        Assertions.assertTrue(userService.readAll().isEmpty())
     }
 
     @AfterEach fun teardown() { userService.deleteAll() }
