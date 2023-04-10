@@ -1,5 +1,5 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers
 
-enum class trxType {
+enum class TrxType {
     BUY, SELL
 }
