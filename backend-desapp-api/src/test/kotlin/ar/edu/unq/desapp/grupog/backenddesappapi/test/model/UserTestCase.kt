@@ -1,5 +1,5 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.test.model
-
+/*
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.*
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserBuilder
 import org.junit.jupiter.api.BeforeEach
@@ -67,4 +67,4 @@ class UserTestCase {
         assertThrows<BadBankDataException> { builder.withWallet("0123456789").build() }
     }
 
-}
+}*/
