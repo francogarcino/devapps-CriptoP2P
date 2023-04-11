@@ -34,3 +34,7 @@ jobs:
         arguments: build
         build-root-directory: backend-desapp-api
         gradle-version: 7.6.1
+      env:
+        SQL_URL: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false
+        HIBERNATE_DIALECT: org:hibernate:dialect:H2Dialect
+        SQL_DRIVER: org:h2:Driver
