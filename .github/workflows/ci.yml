@@ -29,9 +29,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     - name: Run tests
-      run: ./gradlew test -i
-      env:
-        SQL_URL: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false
-        HIBERNATE_DIALECT: org:hibernate:dialect:H2Dialect
-        SQL_DRIVER: org:h2:Driver
+      run: |
+        ./gradlew wrapper --gradle-version=7.6.1
+        ./gradlew test -i
       working-directory: backend-desapp-api
