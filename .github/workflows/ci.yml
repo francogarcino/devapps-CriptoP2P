@@ -28,6 +28,17 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Run tests
-      run: ./gradlew test -i
+    - name: Validate Gradle Wrapper
+      uses: gradle/wrapper-validation-action@8d49e559aae34d3e0eb16cde532684bc9702762b
+      with:
+        build-root-directory: backend-desapp-api
+        gradle-version: 7.6.1
+    - name: Build with Gradle
+      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+      with:
+        arguments: build
+        build-root-directory: backend-desapp-api
+        gradle-version: 7.6.1
+    - name: Run Unit Tests
+      run: ./gradlew test
       working-directory: backend-desapp-api

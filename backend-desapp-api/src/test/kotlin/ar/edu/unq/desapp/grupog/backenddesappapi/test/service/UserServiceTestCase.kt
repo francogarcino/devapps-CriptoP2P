@@ -1,5 +1,5 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.test.service
-/*
+
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserBuilder
 import org.junit.jupiter.api.*
@@ -144,4 +144,4 @@ class UserServiceTestCase {
     }
 
     @AfterEach fun teardown() { userService.deleteAll() }
-}*/
+}
