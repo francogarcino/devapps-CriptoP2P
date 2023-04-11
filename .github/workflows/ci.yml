@@ -37,6 +37,7 @@ jobs:
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       env:
         MYSQL_DATABASE: desapp-api
+        MYSQL_ROOT_PASSWORD: root
         MYSQL_USER: root
         MYSQL_PASSWORD: root
       with:
