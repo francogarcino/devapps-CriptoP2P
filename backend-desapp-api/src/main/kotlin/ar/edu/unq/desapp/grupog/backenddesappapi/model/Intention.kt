@@ -7,11 +7,11 @@ import java.time.LocalDateTime
 
 @Entity
 class Intention(
-    @Column(nullable = false) var cryptoActive: CryptoActive,
+    @Column(nullable = false) var cryptoActive: CryptoActiveName,
     @Column(nullable = false) var cryptoAmount: Int,
     @Column(nullable = false) var cryptoPrice: Double,
     @Column(nullable = false) var arsAmount: Double,
-    @Column(nullable = false) var user: UserDTO,
+    var user: UserDTO,
     @Column(nullable = false) var trxType: TrxType,
     @Column(nullable = false) var date: LocalDateTime
 ) {
