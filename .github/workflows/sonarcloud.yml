@@ -43,6 +43,17 @@ jobs:
   build:
     name: Build and analyze
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: desapp-api
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
     steps:
       - uses: actions/checkout@v3
         with:
@@ -66,6 +77,10 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle
       - name: Generate Coverage Report
         run: ./gradlew jacocoTestReport
+        env:
+          DB_URL: jdbc:mysql://localhost:3306/desapp-api?useSSL=false&serverTimezone=UTC
+          DB_USERNAME: root
+          DB_PASSWORD: root
         working-directory: backend-desapp-api
       - name: Build and analyze
         env:

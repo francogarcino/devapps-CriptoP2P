@@ -42,7 +42,7 @@ sonarqube {
 	property "sonar.projectName", "devapps-CriptoP2P"
 	property "sonar.login", "2a3fabd2618e5d914324b42a00da48b7d55c0897"
 	property "sonar.kotlin.compiler.version", "1.7.22"
-	property "sonar.coverage.jacoco.xmlReportPaths", "$buildDir/reports/jacoco/test"
+	property "sonar.coverage.jacoco.xmlReportPaths", "$buildDir\\reports\\jacoco\\test\\jacocoTestReport.xml"
   }
 }
 
