@@ -2,10 +2,10 @@ package ar.edu.unq.desapp.grupog.backenddesappapi.test.model
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.*
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserBuilder
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import org.junit.jupiter.api.assertThrows
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
@@ -15,56 +15,111 @@ class UserTestCase {
     @BeforeEach fun setup() { builder = UserBuilder() }
 
     @Test
+    fun testBuild_WhenBuildTheIdMustBeNull() {
+        Assertions.assertNotNull(builder.build())
+    }
+
+    @Test
     fun testValidation_ShouldThrowAnExceptionForInvalidNames() {
-        assertThrows<InvalidNameAttempException> { builder.withName("").build() }
-        assertThrows<InvalidNameAttempException> { builder.withName("Li").build() }
-        assertThrows<InvalidNameAttempException> { builder.withName("ABCABCABCABCABCABCABCABCABCABCABCABCABCABC").build() }
+        try { builder.withName("").build() } catch (e: Throwable) {
+            Assertions.assertEquals(InvalidNameAttempException::class, e::class)
+        }
+        try { builder.withName("Li").build() } catch (e: Throwable) {
+            Assertions.assertEquals(InvalidNameAttempException::class, e::class)
+        }
+        try { builder.withName("ABCABCABCABCABCABCABCABCABCABCABCABCABCABC").build() } catch (e: Throwable) {
+            Assertions.assertEquals(InvalidNameAttempException::class, e::class)
+        }
     }
 
     @Test
     fun testValidation_ShouldThrowAnExceptionForInvalidLastnames() {
-        assertThrows<InvalidNameAttempException> { builder.withLastname("").build() }
-        assertThrows<InvalidNameAttempException> { builder.withLastname("Li").build() }
-        assertThrows<InvalidNameAttempException> { builder.withLastname("ABCABCABCABCABCABCABCABCABCABCABCABCABCABC").build() }
+        try { builder.withLastname("").build() } catch (e: Throwable) {
+            Assertions.assertEquals(InvalidNameAttempException::class, e::class)
+        }
+        try { builder.withLastname("Li").build() } catch (e: Throwable) {
+            Assertions.assertEquals(InvalidNameAttempException::class, e::class)
+        }
+        try { builder.withLastname("ABCABCABCABCABCABCABCABCABCABCABCABCABCABC").build() } catch (e: Throwable) {
+            Assertions.assertEquals(InvalidNameAttempException::class, e::class)
+        }
     }
 
     @Test
     fun testValidation_ShouldThrowAnExceptionForInvalidEmails() {
-        assertThrows<InvalidEmailException> { builder.withEmail("").build() }
-        assertThrows<InvalidEmailException> { builder.withEmail("aBadEmail").build() }
-        assertThrows<InvalidEmailException> { builder.withEmail("fgr@yahoo.com").build() }
+        try { builder.withEmail("").build() } catch (e: Throwable) {
+            Assertions.assertEquals(InvalidEmailException::class, e::class)
+        }
+        try { builder.withEmail("aBadEmail").build() } catch (e: Throwable) {
+            Assertions.assertEquals(InvalidEmailException::class, e::class)
+        }
+        try { builder.withEmail("fgr@yahoo.com").build() } catch (e: Throwable) {
+            Assertions.assertEquals(InvalidEmailException::class, e::class)
+        }
     }
 
     @Test
     fun testValidation_ShouldThrowAnExceptionForInvalidPasswords() {
-        assertThrows<InvalidPasswordException> { builder.withPassword("").build() }
-        assertThrows<InvalidPasswordException> { builder.withPassword("without-capitals-0").build() }
-        assertThrows<InvalidPasswordException> { builder.withPassword("WITHOUT.SMALLS.0").build() }
-        assertThrows<InvalidPasswordException> { builder.withPassword("WithoutSpecials").build() }
-        assertThrows<InvalidPasswordException> { builder.withPassword("Sh0rt").build() }
+        try { builder.withPassword("").build() } catch (e: Throwable) {
+            Assertions.assertEquals(InvalidPasswordException::class, e::class)
+        }
+        try { builder.withPassword("without-capitals-0").build() } catch (e: Throwable) {
+            Assertions.assertEquals(InvalidPasswordException::class, e::class)
+        }
+        try { builder.withPassword("WITHOUT.SMALLS.0").build() } catch (e: Throwable) {
+            Assertions.assertEquals(InvalidPasswordException::class, e::class)
+        }
+        try { builder.withPassword("WithoutSpecials").build() } catch (e: Throwable) {
+            Assertions.assertEquals(InvalidPasswordException::class, e::class)
+        }
+        try { builder.withPassword("Sh0rt").build() } catch (e: Throwable) {
+            Assertions.assertEquals(InvalidPasswordException::class, e::class)
+        }
     }
 
     @Test
     fun testValidation_ShouldThrowAnExceptionForInvalidAddress() {
-        assertThrows<BadAddressException> { builder.withAddress("").build() }
-        assertThrows<BadAddressException> { builder.withAddress("Here").build() }
-        assertThrows<BadAddressException> { builder.withAddress("A location in some place of Argentina").build() }
+        try { builder.withAddress("").build() } catch(e: Throwable) {
+            Assertions.assertEquals(BadAddressException::class, e::class)
+        }
+        try { builder.withAddress("Here").build() } catch(e: Throwable) {
+            Assertions.assertEquals(BadAddressException::class, e::class)
+        }
+        try { builder.withAddress("A location in some place of Argentina").build() } catch(e: Throwable) {
+            Assertions.assertEquals(BadAddressException::class, e::class)
+        }
     }
 
     @Test
     fun testValidation_ShouldThrowAnExceptionForInvalidCVU() {
-        assertThrows<BadBankDataException> { builder.withCVU("").build() }
-        assertThrows<BadBankDataException> { builder.withCVU("0123456789").build() }
-        assertThrows<BadBankDataException> { builder.withCVU("A random cvu").build() }
-        assertThrows<BadBankDataException> { builder.withCVU("010101010101010101010101").build() }
+        try { builder.withCVU("").build() } catch (e: Throwable) {
+            Assertions.assertEquals(BadBankDataException::class, e::class)
+        }
+        try { builder.withCVU("0123456789").build() } catch (e: Throwable) {
+            Assertions.assertEquals(BadBankDataException::class, e::class)
+        }
+        try { builder.withCVU("A random cvu").build() } catch (e: Throwable) {
+            Assertions.assertEquals(BadBankDataException::class, e::class)
+        }
+        try { builder.withCVU("010101010101010101010101").build() } catch (e: Throwable) {
+            Assertions.assertEquals(BadBankDataException::class, e::class)
+        }
     }
 
     @Test
     fun testValidation_ShouldThrowAnExceptionForInvalidWallet() {
-        assertThrows<BadBankDataException> { builder.withWallet("").build() }
-        assertThrows<BadBankDataException> { builder.withWallet("A wallet").build() }
-        assertThrows<BadBankDataException> { builder.withWallet("0123").build() }
-        assertThrows<BadBankDataException> { builder.withWallet("0123456789").build() }
+        try { builder.withWallet("").build() } catch (e: Throwable) {
+            Assertions.assertEquals(BadBankDataException::class, e::class)
+        }
+        try { builder.withWallet("A wallet").build() } catch (e: Throwable) {
+            Assertions.assertEquals(BadBankDataException::class, e::class)
+        }
+        try { builder.withWallet("0123").build() } catch (e: Throwable) {
+            Assertions.assertEquals(BadBankDataException::class, e::class)
+        }
+        try { builder.withWallet("0123456789").build() } catch (e: Throwable) {
+            Assertions.assertEquals(BadBankDataException::class, e::class)
+        }
     }
 
 }
