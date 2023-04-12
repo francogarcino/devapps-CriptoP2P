@@ -21,16 +21,6 @@ jobs:
 
     runs-on: ubuntu-latest
     
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: desapp-api
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
@@ -39,9 +29,5 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     - name: Run Unit Tests
-      env:
-          DB_URL: jdbc:mysql://localhost:3306/desapp-api?useSSL=false&serverTimezone=UTC
-          DB_USERNAME: root
-          DB_PASSWORD: root
       run: ./gradlew test
       working-directory: backend-desapp-api
