@@ -18,6 +18,9 @@ class User(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 
+    @OneToMany
+    var intentions: MutableSet<Intention> = mutableSetOf()
+
     init { validateUserData() }
 
     private fun validateUserData() {
