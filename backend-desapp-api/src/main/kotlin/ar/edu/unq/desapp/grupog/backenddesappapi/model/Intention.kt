@@ -1,7 +1,6 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.model
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
-import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.UserDTO
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -11,7 +10,7 @@ class Intention(
     @Column(nullable = false) var cryptoAmount: Int,
     @Column(nullable = false) var cryptoPrice: Double,
     @Column(nullable = false) var arsAmount: Double,
-    var user: UserDTO,
+    @ManyToOne var user: User,
     @Column(nullable = false) var trxType: TrxType,
     @Column(nullable = false) var date: LocalDateTime
 ) {
