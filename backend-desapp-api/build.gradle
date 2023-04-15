@@ -54,9 +54,3 @@ tasks.withType(KotlinCompile) {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
-tasks.withType(org.gradle.jvm.tasks.Jar) {
-	manifest {
-		attributes["Main-Class"] = "ar/edu/unq/desapp/grupog/backenddesappapi/BackendDesappApiApplication.kt"
-	}
-}
