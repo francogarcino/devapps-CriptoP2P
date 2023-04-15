@@ -57,6 +57,6 @@ tasks.named('test') {
 
 tasks.withType(org.gradle.jvm.tasks.Jar) {
 	manifest {
-		attributes["Main-Class"] = "ar.edu.unq.desapp.grupog.backenddesappapi.BackendDesappApiApplication.kt"
+		attributes["Main-Class"] = "ar/edu/unq/desapp/grupog/backenddesappapi/BackendDesappApiApplication.kt"
 	}
 }
