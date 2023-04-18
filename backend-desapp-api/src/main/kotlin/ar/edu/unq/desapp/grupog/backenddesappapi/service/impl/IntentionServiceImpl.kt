@@ -16,7 +16,7 @@ class IntentionServiceImpl : IntentionService {
     override fun create(entity: Intention) = intentionDAO.save(entity)
 
     override fun update(entity: Intention): Intention {
-        if (entity.id != null && intentionDAO.existsById(entity.id!!)) return intentionDAO.save(entity)
+        if (entity.getId() != null && intentionDAO.existsById(entity.getId()!!)) return intentionDAO.save(entity)
          else throw NoSuchElementException("The intention to update does not exists")
     }
 
