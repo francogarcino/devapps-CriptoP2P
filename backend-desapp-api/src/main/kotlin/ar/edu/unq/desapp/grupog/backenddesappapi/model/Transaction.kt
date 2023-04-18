@@ -1,11 +1,13 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.model
 
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxStatus
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
 
 class Transaction(
         var intention: Intention,
         var user1: User
 ) {
+    var status : TrxStatus = TrxStatus.WAITING
     lateinit var cryptoActive: CryptoActiveName
     var cryptoAmount: Int? = null
     var arsAmount: Double? = null
@@ -13,7 +15,6 @@ class Transaction(
     lateinit var user2: User
     lateinit var address: String
     var cryptoPrice: Double = 0.0
-    // cantidad de operaciones realizadas por el usuario
 
     fun setInformation() {
         cryptoActive = intention.cryptoActive
