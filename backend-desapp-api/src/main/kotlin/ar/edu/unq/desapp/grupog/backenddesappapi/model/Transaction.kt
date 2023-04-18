@@ -16,6 +16,9 @@ class Transaction(
     lateinit var address: String
     var cryptoPrice: Double = 0.0
 
+    fun cancelledByUser(user: User) {
+//       user.discountPionts(20)
+    }
     fun setInformation() {
         cryptoActive = intention.cryptoActive
         cryptoAmount = intention.cryptoAmount

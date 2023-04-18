@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.model
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.*
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
 import jakarta.persistence.*
 
 @Entity
@@ -20,6 +21,18 @@ class User(
 
     @OneToMany
     var intentions: MutableSet<Intention> = mutableSetOf()
+
+// fun createIntention
+
+    fun cancelTransaction(transaction: Transaction) {
+        transaction.cancelledByUser(this)
+    }
+
+    fun beginTransaction(intention: Intention) : Transaction {
+        return Transaction(intention, this)
+    }
+
+//    fun discountPoints(amount : Int)
 
     init { validateUserData() }
 
