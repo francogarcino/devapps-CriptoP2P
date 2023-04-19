@@ -13,7 +13,7 @@ class IntentionBuilder {
     private var trxType = TrxType.BUY
     private var date = LocalDateTime.of(2023, 3, 15, 11, 20, 53, 10)
 
-    fun build() = Intention(cryptoActive, cryptoAmount, cryptoPrice, arsAmount, user, trxType, date)
+    fun build() = Intention(cryptoActive, cryptoAmount, cryptoPrice, user, trxType, date)
 
     fun withCryptoActive(newCryptoActive: CryptoActiveName) = this.apply { cryptoActive = newCryptoActive }
     fun withCryptoAmount(newCryptoAmount: Int) = this.apply { cryptoAmount = newCryptoAmount }
