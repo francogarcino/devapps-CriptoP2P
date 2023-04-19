@@ -160,4 +160,13 @@ class UserTestCase {
         Assertions.assertEquals(createdTransaction.user_whoCreate, userWhoCreates)
         Assertions.assertEquals(createdTransaction.user_whoAccept, userWhoAccepts)
     }
+
+    @Test
+    fun testTransactionCreation_ShouldThrowAnExceptionWhenUserIsTheSameWhoCreatesAndAccepts() {
+        val user = builder.build()
+        val createdIntention = user.createIntention(CryptoActiveName.AAVEUSDT, 2, 2.0, TrxType.SELL)
+
+        try { user.beginTransaction(createdIntention) }
+        catch (e: Throwable) { Assertions.assertEquals(SameUserException().message, e.message) }
+     }
 }
