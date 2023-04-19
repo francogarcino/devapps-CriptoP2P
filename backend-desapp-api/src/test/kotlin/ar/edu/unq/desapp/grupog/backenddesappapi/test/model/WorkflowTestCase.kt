@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.test.model
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoActiveName
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.ExternalUserActionException
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.trx.ActionOnEndedTransactionException
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxStatus
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
@@ -77,6 +78,23 @@ class WorkflowTestCase {
         defaultUser.releaseCrypto(trx)
 
         Assertions.assertEquals(TrxStatus.DONE, trx.status)
+    }
+
+    @Test
+    fun testFlow_WhenAnExternalUserInteractsWithATransaction_ShouldReturnAnException() {
+        val defaultUser = userBuilder.build()
+        val anotherUser = userBuilder.withEmail("another@gmail.com").build()
+        val externalUser = userBuilder.withEmail("external@gmail.com").build()
+
+        val expectedMsg = ExternalUserActionException().message
+
+        val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
+        val trx = anotherUser.beginTransaction(intention)
+
+        try { externalUser.transferMoneyToBankAccount(trx) } catch (e: Throwable) { Assertions.assertEquals(expectedMsg, e.message) }
+        anotherUser.transferMoneyToBankAccount(trx)
+        try { externalUser.releaseCrypto(trx) } catch (e: Throwable) { Assertions.assertEquals(expectedMsg, e.message) }
+        try { externalUser.cancelTransaction(trx) } catch (e: Throwable) { Assertions.assertEquals(expectedMsg, e.message) }
     }
 
 }
