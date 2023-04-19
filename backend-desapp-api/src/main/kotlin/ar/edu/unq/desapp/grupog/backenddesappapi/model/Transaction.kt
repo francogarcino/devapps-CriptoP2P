@@ -24,7 +24,7 @@ class Transaction(
     var cryptoPrice: Double = 0.0
 
     fun registerTransfer(user: User) {
-        if (user !== user_whoAccept || user !== user_whoCreate) {
+        if (user !== user_whoAccept && user !== user_whoCreate) {
             throw ExternalUserActionException()
         }
         // Simulación de transferencia
@@ -36,7 +36,7 @@ class Transaction(
     }
 
     fun registerRelease(user: User) {
-        if (user !== user_whoAccept || user !== user_whoCreate) {
+        if (user !== user_whoAccept && user !== user_whoCreate) {
             throw ExternalUserActionException()
         }
         // Simulación de transferencia
@@ -47,7 +47,7 @@ class Transaction(
     }
 
     fun cancelByMaybeUser(user: User?) {
-        if (user !== user_whoAccept || user !== user_whoCreate) {
+        if (user !== user_whoAccept && user !== user_whoCreate) {
             throw ExternalUserActionException()
         }
 //      cambio a User? para implementacion futura de cancelación por precio

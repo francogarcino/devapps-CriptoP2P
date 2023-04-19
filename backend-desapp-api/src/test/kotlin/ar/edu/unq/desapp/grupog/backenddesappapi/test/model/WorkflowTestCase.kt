@@ -15,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class TransactionTestCase {
+class WorkflowTestCase {
 
     private lateinit var userBuilder : UserBuilder
     private lateinit var transactionBuilder: TransactionBuilder
@@ -29,7 +29,7 @@ class TransactionTestCase {
     }
 
     @Test
-    fun testTrxState_WhenCancelledShouldNotExecuteActions() {
+    fun testFlow_AfterCancelTheTransactionStateChangesToCancelled() {
         val defaultUser = userBuilder.build()
         val anotherUser = userBuilder.withEmail("another@gmail.com")
             .withCVU("6600660066006600660066")
@@ -38,17 +38,45 @@ class TransactionTestCase {
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
         val trx = anotherUser.beginTransaction(intention)
+        anotherUser.transferMoneyToBankAccount(trx)
+        defaultUser.cancelTransaction(trx)
+
+        Assertions.assertEquals(TrxStatus.CANCELLED, trx.status)
+    }
+
+    @Test
+    fun testFlow_AfterCancelTheUserCannotReleaseCryptos() {
+        val defaultUser = userBuilder.build()
+        val anotherUser = userBuilder.withEmail("another@gmail.com")
+            .withCVU("6600660066006600660066")
+            .withWallet("80000000")
+            .build()
+
+        val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
+        val trx = anotherUser.beginTransaction(intention)
+        anotherUser.transferMoneyToBankAccount(trx)
         defaultUser.cancelTransaction(trx)
 
         val expectedMsg = ActionOnEndedTransactionException().message
-        try { anotherUser.transferMoneyToBankAccount(trx) } catch (e: Throwable) {
-            Assertions.assertEquals(expectedMsg, e.message)
-        }
         try { defaultUser.releaseCrypto(trx) } catch (e: Throwable) {
             Assertions.assertEquals(expectedMsg, e.message)
         }
-        try { defaultUser.cancelTransaction(trx) } catch (e: Throwable) {
-            Assertions.assertEquals(expectedMsg, e.message)
-        }
     }
+
+    @Test
+    fun testFlow_AfterReleaseCryptoTheTransactionStateChangeToDone() {
+        val defaultUser = userBuilder.build()
+        val anotherUser = userBuilder.withEmail("another@gmail.com")
+            .withCVU("6600660066006600660066")
+            .withWallet("80000000")
+            .build()
+
+        val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
+        val trx = anotherUser.beginTransaction(intention)
+        anotherUser.transferMoneyToBankAccount(trx)
+        defaultUser.releaseCrypto(trx)
+
+        Assertions.assertEquals(TrxStatus.DONE, trx.status)
+    }
+
 }
