@@ -1,6 +1,8 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.test.model
 
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoActiveName
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.*
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserBuilder
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
@@ -135,4 +137,36 @@ class UserTestCase {
         }
     }
 
+    @Test
+    fun testIntentionCreation_ShouldReturnAValidIntention() {
+        val user = builder.build()
+        val createdIntention = user.createIntention(CryptoActiveName.AAVEUSDT, 2, 2.0, TrxType.SELL)
+
+        Assertions.assertEquals(createdIntention.getUser(), user)
+        Assertions.assertTrue(user.intentions.contains(createdIntention))
+        Assertions.assertEquals(createdIntention.getCryptoActive(), CryptoActiveName.AAVEUSDT)
+        Assertions.assertEquals(createdIntention.getArsAmount(), 1600.0)
+    }
+
+    @Test
+    fun userAcceptsAnIntention_andATransactionIsCreated() {
+        val userWhoCreates = builder.withName("Valen").build()
+        val userWhoAccepts = builder.withName("Franco").build()
+
+        val createdIntention = userWhoCreates.createIntention(CryptoActiveName.AAVEUSDT, 2, 2.0, TrxType.SELL)
+        val createdTransaction = userWhoAccepts.beginTransaction(createdIntention)
+
+        Assertions.assertEquals(createdTransaction.intention, createdIntention)
+        Assertions.assertEquals(createdTransaction.user_whoCreate, userWhoCreates)
+        Assertions.assertEquals(createdTransaction.user_whoAccept, userWhoAccepts)
+    }
+
+    @Test
+    fun testTransactionCreation_ShouldThrowAnExceptionWhenUserIsTheSameWhoCreatesAndAccepts() {
+        val user = builder.build()
+        val createdIntention = user.createIntention(CryptoActiveName.AAVEUSDT, 2, 2.0, TrxType.SELL)
+
+        try { user.beginTransaction(createdIntention) }
+        catch (e: Throwable) { Assertions.assertEquals(SameUserException().message, e.message) }
+     }
 }
