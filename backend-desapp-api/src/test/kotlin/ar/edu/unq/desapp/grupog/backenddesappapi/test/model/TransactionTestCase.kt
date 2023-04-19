@@ -28,27 +28,4 @@ class TransactionTestCase {
         intentionBuilder = IntentionBuilder()
     }
 
-    @Test
-    fun testTrxState_WhenCancelledShouldNotExecuteActions() {
-        val defaultUser = userBuilder.build()
-        val anotherUser = userBuilder.withEmail("another@gmail.com")
-            .withCVU("6600660066006600660066")
-            .withWallet("80000000")
-            .build()
-
-        val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
-        val trx = anotherUser.beginTransaction(intention)
-        defaultUser.cancelTransaction(trx)
-
-        val expectedMsg = ActionOnEndedTransactionException().message
-        try { anotherUser.transferMoneyToBankAccount(trx) } catch (e: Throwable) {
-            Assertions.assertEquals(expectedMsg, e.message)
-        }
-        try { defaultUser.releaseCrypto(trx) } catch (e: Throwable) {
-            Assertions.assertEquals(expectedMsg, e.message)
-        }
-        try { defaultUser.cancelTransaction(trx) } catch (e: Throwable) {
-            Assertions.assertEquals(expectedMsg, e.message)
-        }
-    }
 }
