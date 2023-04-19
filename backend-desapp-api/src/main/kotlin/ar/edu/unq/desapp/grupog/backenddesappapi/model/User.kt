@@ -3,6 +3,7 @@ package ar.edu.unq.desapp.grupog.backenddesappapi.model
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.*
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
 import jakarta.persistence.*
+import java.time.LocalDateTime
 
 @Entity
 class User(
@@ -22,14 +23,26 @@ class User(
     @OneToMany
     var intentions: MutableSet<Intention> = mutableSetOf()
 
-// fun createIntention
-
-    fun cancelTransaction(transaction: Transaction) {
-        transaction.cancelledByUser(this)
+    fun createIntention(cryptoActive: CryptoActiveName, cryptoAmount: Int, cryptoPrice: Double, trxType: TrxType) : Intention {
+        val intention = Intention(cryptoActive, cryptoAmount, cryptoPrice, this, trxType, LocalDateTime.now())
+        intentions.add(intention)
+        return intention
     }
 
     fun beginTransaction(intention: Intention) : Transaction {
         return Transaction(intention, this)
+    }
+
+    fun transferMoneyToBankAccount(transaction: Transaction) {
+        transaction.registerTransfer(this)
+    }
+
+    fun releaseCrypto(transaction: Transaction) {
+        transaction.registerRelease(this)
+    }
+
+    fun cancelTransaction(transaction: Transaction) {
+        transaction.cancelByMaybeUser(this)
     }
 
 //    fun discountPoints(amount : Int)

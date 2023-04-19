@@ -27,14 +27,4 @@ class IntentionTestCase {
         }
     }
 
-    @Test
-    fun testValidation_ShouldThrowAnExceptionForInvalidArsAmount() {
-        val expectedMsg = "The value of arsAmount is not valid"
-        try { IntentionBuilder().withArsAmount(0.0).build() } catch (e: Throwable) {
-            Assertions.assertEquals(expectedMsg, e.message)
-        }
-        try { IntentionBuilder().withArsAmount(-2.0).build() } catch (e: Throwable) {
-            Assertions.assertEquals(expectedMsg, e.message)
-        }
-    }
 }

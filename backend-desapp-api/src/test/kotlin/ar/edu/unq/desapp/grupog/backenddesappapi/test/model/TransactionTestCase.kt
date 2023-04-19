@@ -7,5 +7,4 @@ import org.springframework.boot.test.context.SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TransactionTestCase {
 
-
 }
