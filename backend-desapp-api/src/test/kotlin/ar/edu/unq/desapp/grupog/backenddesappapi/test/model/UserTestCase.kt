@@ -1,6 +1,8 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.test.model
 
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoActiveName
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.*
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserBuilder
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
@@ -133,6 +135,17 @@ class UserTestCase {
         try { builder.withWallet("0123456789").build() } catch (e: Throwable) {
             Assertions.assertEquals(expectedMsg, e.message!!)
         }
+    }
+
+    @Test
+    fun testIntentionCreation_ShouldReturnAValidIntention() {
+        val user = builder.build()
+        val createdIntention = user.createIntention(CryptoActiveName.AAVEUSDT, 2, 2.0, TrxType.SELL)
+
+        Assertions.assertNotNull(createdIntention)
+        Assertions.assertEquals(createdIntention.getUser(), user)
+        Assertions.assertEquals(createdIntention.getCryptoActive(), CryptoActiveName.AAVEUSDT)
+        Assertions.assertEquals(createdIntention.getArsAmount(), 1600.0)
     }
 
 }
