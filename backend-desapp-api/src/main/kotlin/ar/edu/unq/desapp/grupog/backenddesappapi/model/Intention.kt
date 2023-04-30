@@ -10,10 +10,10 @@ class Intention(
     @Column(nullable = false) private var cryptoActive: CryptoActiveName,
     @Column(nullable = false) private var cryptoAmount: Int,
     @Column(nullable = false) private var cryptoPrice: Double,
-    @ManyToOne private var user: User,
+    @ManyToOne var user: User,
     @Column(nullable = false) private var trxType: TrxType,
-    @Column(nullable = false) private var date: LocalDateTime
-) {
+    @Column(nullable = false) private var date: LocalDateTime,
+  ) {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

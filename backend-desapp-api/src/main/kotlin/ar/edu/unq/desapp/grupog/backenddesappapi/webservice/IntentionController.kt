@@ -38,13 +38,5 @@ class IntentionController {
         }
     }
 
-    @PostMapping("/new")
-    fun createIntention(@RequestBody newIntention : Intention) : ResponseEntity<Any> {
-        return try {
-            val dto = mapper.fromIntentionToDTO(intentionService.create(newIntention))
-            ResponseEntity.ok().body(dto)
-        } catch (e : Exception) {
-            ResponseEntity.badRequest().body(e.message)
-        }
-    }
+
 }
