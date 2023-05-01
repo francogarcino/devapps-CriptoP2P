@@ -12,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional
 class IntentionServiceImpl : IntentionService {
 
     @Autowired private lateinit var intentionDAO: IntentionDAO
+    override fun getActiveIntentions(): List<Intention> {
+        return intentionDAO.getActiveIntentions()
+    }
 
     override fun create(entity: Intention) = intentionDAO.save(entity)
 
