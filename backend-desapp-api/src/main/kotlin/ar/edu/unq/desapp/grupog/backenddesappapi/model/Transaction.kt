@@ -29,7 +29,7 @@ class Transaction(
     fun cryptoActive() = intention.getCryptoActive()
     fun cryptoAmount() = intention.getCryptoAmount()
     fun typeTransaction() = intention.getTrxType()
-    fun user_whoCreate() = intention.getUser()
+    fun user_whoCreate() = intention.getUserFromIntention()
     fun cryptoPrice() = intention.getCryptoPrice()
 
     fun registerTransfer(user: User) {

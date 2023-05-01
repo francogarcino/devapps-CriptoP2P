@@ -33,7 +33,7 @@ class User(
     }
 
     fun beginTransaction(intention: Intention) : Transaction {
-        if(intention.getUser() == this) throw SameUserException()
+        if(intention.getUserFromIntention() == this) throw SameUserException()
         return Transaction(intention, this)
     }
 

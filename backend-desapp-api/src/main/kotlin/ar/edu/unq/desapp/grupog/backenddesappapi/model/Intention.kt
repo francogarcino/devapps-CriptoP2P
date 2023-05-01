@@ -11,7 +11,7 @@ class Intention(
     @Column(nullable = false) private var cryptoAmount: Int,
     @Column(nullable = false) private var cryptoPrice: Double,
     @ManyToOne var user: User,
-    @Column(nullable = false) private var trxType: TrxType,
+    @Enumerated(EnumType.STRING) @Column(nullable = false) private var trxType: TrxType,
     @Column(nullable = false) private var date: LocalDateTime,
   ) {
 
@@ -32,7 +32,7 @@ class Intention(
     fun getCryptoAmount() = cryptoAmount
     fun getCryptoPrice() = cryptoPrice
     fun getArsAmount() = arsAmount
-    fun getUser() = user
+    fun getUserFromIntention() = user
     fun getTrxType() = trxType
     fun getDate() = date
     fun getId() = id
