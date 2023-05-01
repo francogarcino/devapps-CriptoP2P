@@ -25,7 +25,6 @@ class Transaction(
     var id: Long? = null
 
     var arsAmount: Double? = null
-    lateinit var address: String
     fun cryptoActive() = intention.getCryptoActive()
     fun cryptoAmount() = intention.getCryptoAmount()
     fun typeTransaction() = intention.getTrxType()
@@ -38,7 +37,6 @@ class Transaction(
         }
         // Simulación de transferencia
         stateBehavior.registerBankTransfer()
-        address = if (address == user_whoCreate().cvu) user_whoAccept.wallet else user_whoCreate().wallet
         // Actualización de estado
         status = TrxStatus.CHECKING
         stateBehavior = CheckingBehavior()
@@ -67,10 +65,27 @@ class Transaction(
         stateBehavior = EndedBehavior()
     }
 
+    fun address(): String {
+        return when (status) {
+            TrxStatus.WAITING -> { chooseCvuToShow() }
+            TrxStatus.CHECKING -> { chooseWalletToShow() }
+            else -> "Transaction Completed or Finished, no needed address right now"
+        }
+    }
+
+    private fun chooseCvuToShow() = when (intention.getTrxType()) {
+        TrxType.BUY -> user_whoAccept.cvu
+        else -> user_whoCreate().cvu
+    }
+
+    private fun chooseWalletToShow() = when (intention.getTrxType()) {
+        TrxType.BUY -> user_whoCreate().wallet
+        else -> user_whoAccept.wallet
+    }
+
     private fun setInformation() {
         // A futuro, el 400 será el valor retornado por la api al consultar el precio del dólar + cryptoPrice será consumido desde la API de Binance
         arsAmount = cryptoAmount() * 400 * cryptoPrice()
-        address = if (typeTransaction() == TrxType.SELL) user_whoCreate().cvu else user_whoAccept.cvu
     }
 
     /*
