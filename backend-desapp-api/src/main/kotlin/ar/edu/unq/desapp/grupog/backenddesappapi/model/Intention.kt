@@ -19,7 +19,10 @@ class Intention(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private var id: Long? = null
 
-    // A futuro, el 400 sera el valor retornado por la api al consultar el precio del dolar
+    @OneToMany(mappedBy = "intention", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+    val transactions = mutableSetOf<Transaction>()
+
+    // A futuro, el 400 será el valor retornado por la api al consultar el precio del dólar
     @Column(nullable = false) private var arsAmount: Double = cryptoAmount * 400 * cryptoPrice
 
     @Column(nullable = false)

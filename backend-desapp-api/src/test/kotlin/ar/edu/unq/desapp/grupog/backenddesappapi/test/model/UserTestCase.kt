@@ -157,7 +157,7 @@ class UserTestCase {
         val createdTransaction = userWhoAccepts.beginTransaction(createdIntention)
 
         Assertions.assertEquals(createdTransaction.intention, createdIntention)
-        Assertions.assertEquals(createdTransaction.user_whoCreate, userWhoCreates)
+        Assertions.assertEquals(createdTransaction.user_whoCreate(), userWhoCreates)
         Assertions.assertEquals(createdTransaction.user_whoAccept, userWhoAccepts)
     }
 

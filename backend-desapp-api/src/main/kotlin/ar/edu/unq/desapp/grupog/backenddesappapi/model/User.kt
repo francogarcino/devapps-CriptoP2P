@@ -20,8 +20,11 @@ class User(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 
-    @OneToMany
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     var intentions: MutableSet<Intention> = mutableSetOf()
+
+    @OneToMany(mappedBy = "user_whoAccept", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+    var transactions = mutableSetOf<Transaction>()
 
     fun createIntention(cryptoActive: CryptoActiveName, cryptoAmount: Int, cryptoPrice: Double, trxType: TrxType) : Intention {
         val intention = Intention(cryptoActive, cryptoAmount, cryptoPrice, this, trxType, LocalDateTime.now())
