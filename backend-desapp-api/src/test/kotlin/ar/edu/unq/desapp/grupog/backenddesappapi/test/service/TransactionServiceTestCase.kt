@@ -47,9 +47,9 @@ class TransactionServiceTestCase {
         val transaction = anotherUser.beginTransaction(intention)
 
         transactionService.create(transaction)
-        val readed = transactionService.read(transaction.id!!)
+        val read = transactionService.read(transaction.id!!)
 
-        Assertions.assertNotNull(readed.id!!)
+        Assertions.assertNotNull(read.id!!)
     }
 
     @AfterEach
