@@ -29,7 +29,11 @@ class TransactionServiceImpl : TransactionService {
 
     override fun read(entityId: Long): Transaction {
         val daoResponse = transactionDAO.findById(entityId)
-        if (daoResponse.isPresent) return daoResponse.get()
+        if (daoResponse.isPresent) {
+            val trx = daoResponse.get()
+            trx.stateBehavior = trx.status.behavior()
+            return trx
+        }
         else throw RuntimeException("The received ID doesn't match with any transaction in the database")
     }
 
