@@ -2,6 +2,7 @@ package ar.edu.unq.desapp.grupog.backenddesappapi.test.service
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoActiveName
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
+import ar.edu.unq.desapp.grupog.backenddesappapi.service.DataService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.IntentionService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.TransactionService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
@@ -21,6 +22,7 @@ class TransactionServiceTestCase {
     @Autowired private lateinit var transactionService: TransactionService
     @Autowired private lateinit var userService: UserService
     @Autowired private lateinit var intentionService: IntentionService
+    @Autowired private lateinit var dataService: DataService
 
     private lateinit var transactionBuilder : TransactionBuilder
     private lateinit var userBuilder : UserBuilder
@@ -54,9 +56,7 @@ class TransactionServiceTestCase {
 
     @AfterEach
     fun teardown() {
-        transactionService.deleteAll()
-        intentionService.deleteAll()
-        userService.deleteAll()
+        dataService.deleteAll()
     }
 
 }
