@@ -10,16 +10,19 @@ class Intention(
     @Column(nullable = false) private var cryptoActive: CryptoActiveName,
     @Column(nullable = false) private var cryptoAmount: Int,
     @Column(nullable = false) private var cryptoPrice: Double,
-    @ManyToOne private var user: User,
-    @Column(nullable = false) private var trxType: TrxType,
-    @Column(nullable = false) private var date: LocalDateTime
-) {
+    @ManyToOne var user: User,
+    @Enumerated(EnumType.STRING) @Column(nullable = false) private var trxType: TrxType,
+    @Column(nullable = false) private var date: LocalDateTime,
+  ) {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private var id: Long? = null
 
-    // A futuro, el 400 sera el valor retornado por la api al consultar el precio del dolar
+    @OneToMany(mappedBy = "intention", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+    val transactions = mutableSetOf<Transaction>()
+
+    // A futuro, el 400 será el valor retornado por la api al consultar el precio del dólar
     @Column(nullable = false) private var arsAmount: Double = cryptoAmount * 400 * cryptoPrice
 
     @Column(nullable = false)
@@ -29,7 +32,7 @@ class Intention(
     fun getCryptoAmount() = cryptoAmount
     fun getCryptoPrice() = cryptoPrice
     fun getArsAmount() = arsAmount
-    fun getUser() = user
+    fun getUserFromIntention() = user
     fun getTrxType() = trxType
     fun getDate() = date
     fun getId() = id
