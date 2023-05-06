@@ -13,10 +13,8 @@ class Transaction(
     @ManyToOne
     var user_whoAccept: User
 ) {
-    // Solo para persistencia, capaz lo omitimos?
     @Enumerated(EnumType.STRING)
     var status: TrxStatus = TrxStatus.WAITING
-    // Transient, que hay que inicializar al recuperar
     @Transient
     var stateBehavior: TrxStateBehavior = WaitingBehavior()
 
@@ -32,7 +30,9 @@ class Transaction(
     fun cryptoPrice() = intention.getCryptoPrice()
 
     fun registerTransfer(user: User) {
-        if (user !== user_whoAccept && user !== user_whoCreate()) {
+        // Si es compra, quien debe pagar en ARS es el user_whoCreate
+        // Si es venta, espero que quien pague sea el user_whoAccept
+        if ((user == user_whoCreate() && intention.getTrxType() == TrxType.BUY) || (user == user_whoAccept && intention.getTrxType() == TrxType.SELL)) {
             throw ExternalUserActionException()
         }
         // Simulación de transferencia
@@ -43,7 +43,9 @@ class Transaction(
     }
 
     fun registerRelease(user: User) {
-        if (user !== user_whoAccept && user !== user_whoCreate()) {
+        // Si es compra, quien debe pagar en ARS es el user_whoAccept
+        // Si es venta, espero que quien pague sea el user_whoCreate
+        if ((user == user_whoAccept && intention.getTrxType() == TrxType.BUY) || (user == user_whoCreate() && intention.getTrxType() == TrxType.SELL)) {
             throw ExternalUserActionException()
         }
         // Simulación de transferencia
@@ -54,6 +56,7 @@ class Transaction(
     }
 
     fun cancelByMaybeUser(user: User?) {
+        // Cualquier usuario puede cancelar la transacción
         if (user !== user_whoAccept && user !== user_whoCreate()) {
             throw ExternalUserActionException()
         }
