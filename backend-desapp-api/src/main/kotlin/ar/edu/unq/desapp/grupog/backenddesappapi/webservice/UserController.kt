@@ -7,6 +7,12 @@ import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.UserDTO
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.mappers.IntentionMapper
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.mappers.UserMapper
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.ExampleObject
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -66,6 +72,36 @@ class UserController {
         }
     }
 
+    @Operation(
+        summary = "Create an intention",
+        description = "Create an intention with a registered user by validating him by his id",
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "Success",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        schema = Schema(implementation = Intention::class),
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "404",
+                description = "Not found",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "The received ID doesn't match with any user in the database"
+                        )]
+                    )
+                ]
+            )
+        ]
+    )
     @PostMapping("/{id}/createIntention")
     fun createIntention(@PathVariable id : Long, @RequestBody newIntention : Intention) : ResponseEntity<Any> {
         return try {
