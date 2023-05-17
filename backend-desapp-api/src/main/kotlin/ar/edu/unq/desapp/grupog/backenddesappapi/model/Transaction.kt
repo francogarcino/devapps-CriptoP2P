@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.model
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.ExternalUserActionException
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.trx.UnableActionException
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxStateClasses.*
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxStatus
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
@@ -32,8 +33,9 @@ class Transaction(
     fun registerTransfer(user: User) {
         // Si es compra, quien debe pagar en ARS es el user_whoCreate
         // Si es venta, espero que quien pague sea el user_whoAccept
-        if ((user == user_whoCreate() && intention.getTrxType() == TrxType.BUY) || (user == user_whoAccept && intention.getTrxType() == TrxType.SELL)) {
-            throw ExternalUserActionException()
+        if (user != user_whoAccept && user != user_whoCreate()) throw ExternalUserActionException()
+        if ((user == user_whoAccept && intention.getTrxType() == TrxType.BUY) || (user == user_whoCreate() && intention.getTrxType() == TrxType.SELL)) {
+            throw UnableActionException()
         }
         // Simulación de transferencia
         stateBehavior.registerBankTransfer()
@@ -43,10 +45,11 @@ class Transaction(
     }
 
     fun registerRelease(user: User) {
-        // Si es compra, quien debe pagar en ARS es el user_whoAccept
-        // Si es venta, espero que quien pague sea el user_whoCreate
-        if ((user == user_whoAccept && intention.getTrxType() == TrxType.BUY) || (user == user_whoCreate() && intention.getTrxType() == TrxType.SELL)) {
-            throw ExternalUserActionException()
+        // Si es compra, quien debe liberar cryptos es el user_whoAccept
+        // Si es venta, espero que quien libere sea el user_whoCreate
+        if (user != user_whoAccept && user != user_whoCreate()) throw ExternalUserActionException()
+        if ((user == user_whoCreate() && intention.getTrxType() == TrxType.BUY) || (user == user_whoAccept && intention.getTrxType() == TrxType.SELL)) {
+            throw UnableActionException()
         }
         // Simulación de transferencia
         stateBehavior.releaseCrypto()
@@ -57,7 +60,7 @@ class Transaction(
 
     fun cancelByMaybeUser(user: User?) {
         // Cualquier usuario puede cancelar la transacción
-        if (user !== user_whoAccept && user !== user_whoCreate()) {
+        if (user != user_whoAccept && user != user_whoCreate()) {
             throw ExternalUserActionException()
         }
         // if (user != null) { user.discountPoints(20) }
