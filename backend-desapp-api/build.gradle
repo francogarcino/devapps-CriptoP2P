@@ -32,6 +32,7 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	implementation files("$buildDir\\libs\\backend-desapp-api-0.0.1-SNAPSHOT-plain.jar")
 }
 
 sonarqube {
@@ -69,6 +70,8 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-tasks.named("jar") {
-	enabled = false
+jar {
+    manifest {
+        attributes 'Main-Class': '$buildDir\\libs\\backend-desapp-api-0.0.1-SNAPSHOT-plain.jar'
+    }
 }
