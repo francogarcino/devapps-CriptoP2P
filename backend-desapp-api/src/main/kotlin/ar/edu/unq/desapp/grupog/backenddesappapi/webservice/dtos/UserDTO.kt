@@ -7,6 +7,4 @@ class UserDTO(
     var email: String,
     var cvu: String,
     var wallet: String
-) {
-
-}
+)
