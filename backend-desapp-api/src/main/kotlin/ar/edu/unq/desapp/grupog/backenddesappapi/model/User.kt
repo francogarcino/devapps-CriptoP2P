@@ -5,7 +5,7 @@ import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
-@Entity
+@Entity(name = "UserApp")
 class User(
     @Column(nullable = false) var firstName: String,
     @Column(nullable = false) var lastName: String,
