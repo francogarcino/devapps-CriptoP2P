@@ -58,7 +58,7 @@ class Transaction(
         stateBehavior.releaseCrypto()
 
         val finishTime = creationDate.plusMinutes(30)
-        if (finishTime.isBefore(LocalDateTime.now())) increaseReputationToBothUsersBy(10) else increaseReputationToBothUsersBy(5)
+        if (finishTime.isAfter(LocalDateTime.now())) increaseReputationToBothUsersBy(10) else increaseReputationToBothUsersBy(5)
 
         // Actualización de estado
         status = TrxStatus.DONE
