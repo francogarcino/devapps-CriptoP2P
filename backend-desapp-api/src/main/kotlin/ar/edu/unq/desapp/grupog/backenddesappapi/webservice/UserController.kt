@@ -1,24 +1,16 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.webservice
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.User
-import ar.edu.unq.desapp.grupog.backenddesappapi.service.IntentionService
-import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
-import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.IntentionDTO
-import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.UserDTO
-import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.mappers.IntentionMapper
-import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.mappers.UserMapper
+import ar.edu.unq.desapp.grupog.backenddesappapi.service.*
+import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.*
+import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.mappers.*
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.*
 import io.swagger.v3.oas.annotations.responses.*
 import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.*
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.RestController
 import java.lang.Exception
 
@@ -30,6 +22,7 @@ class UserController {
     @Autowired private lateinit var intentionService: IntentionService
     private var userMapper = UserMapper()
     private var intentionMapper = IntentionMapper()
+    private var transactionMapper = TransactionMapper()
 
     @Operation(
         summary = "Get a user",
@@ -197,4 +190,221 @@ class UserController {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
         }
     }
+
+    @Operation(
+        summary = "Create a transaction",
+        description = "Create a transaction",
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "Success",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        schema = Schema(implementation = TransactionDTO::class),
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Bad Request",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "404",
+                description = "Not Found",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            )
+        ]
+    )
+    @PostMapping("/{idUser}/{idIntention}")
+    fun createTransaction(@PathVariable idUser: Long, @PathVariable idIntention: Long) : ResponseEntity<Any> {
+        return try {
+            val dto = transactionMapper.fromTransactionToDTO(userService.beginTransaction(idUser, idIntention))
+            ResponseEntity.ok().body(dto)
+        } catch (e: Exception) {
+            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+        } catch (e: Throwable) {
+            ResponseEntity.badRequest().body(e.message)
+        }
+    }
+
+    @Operation(
+        summary = "Register a transfer",
+        description = "Register a transfer in a transaction using the id as the unique identifier",
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "Success",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        schema = Schema(implementation = TransactionDTO::class),
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Bad Request",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "404",
+                description = "Not Found",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            )
+        ]
+    )
+    @PutMapping("/{idUser}/{idTransaction}/registerTransfer")
+    fun registerTransfer(@PathVariable idUser: Long, @PathVariable idTransaction: Long) : ResponseEntity<Any> {
+        return try {
+            val dto = transactionMapper.fromTransactionToDTO(userService.registerTransfer(idUser, idTransaction))
+            ResponseEntity.ok().body(dto)
+        } catch (e: Exception) {
+            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+        } catch (e: Throwable) {
+            ResponseEntity.badRequest().body(e.message)
+        }
+    }
+
+    @Operation(
+        summary = "Register a crypto release",
+        description = "Register a crypto release in a transaction using the id as the unique identifier",
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "Success",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        schema = Schema(implementation = TransactionDTO::class),
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Bad Request",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "404",
+                description = "Not Found",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            )
+        ]
+    )
+    @PutMapping("/{idUser}/{idTransaction}/registerRelease")
+    fun registerReleaseCrypto(@PathVariable idUser: Long, @PathVariable idTransaction: Long) : ResponseEntity<Any> {
+        return try {
+            val dto = transactionMapper.fromTransactionToDTO(userService.registerReleaseCrypto(idUser, idTransaction))
+            ResponseEntity.ok().body(dto)
+        } catch (e: Exception) {
+            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+        } catch (e: Throwable) {
+            ResponseEntity.badRequest().body(e.message)
+        }
+    }
+
+    @Operation(
+        summary = "Cancel a transaction",
+        description = "Cancel a transaction using the id as the unique identifier",
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "Success",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        schema = Schema(implementation = TransactionDTO::class),
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Bad Request",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "404",
+                description = "Not Found",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            )
+        ]
+    )
+    @PutMapping("/{idUser}/{idTransaction}/cancelTransaction")
+    fun cancelTransaction(@PathVariable idUser: Long, @PathVariable idTransaction: Long) : ResponseEntity<Any> {
+        return try {
+            val dto = transactionMapper.fromTransactionToDTO(userService.cancelTransaction(idUser, idTransaction))
+            ResponseEntity.ok().body(dto)
+        } catch (e: Exception) {
+            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+        } catch (e: Throwable) {
+            ResponseEntity.badRequest().body(e.message)
+        }
+    }
+
 }

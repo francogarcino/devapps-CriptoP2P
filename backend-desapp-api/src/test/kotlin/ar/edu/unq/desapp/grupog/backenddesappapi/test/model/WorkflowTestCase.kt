@@ -75,7 +75,7 @@ class WorkflowTestCase {
         anotherUser.cancelTransaction(trx)
 
         val expectedMsg = ActionOnEndedTransactionException().message
-        try { anotherUser.transferMoneyToBankAccount(trx) } catch (e: Throwable) {
+        try { defaultUser.transferMoneyToBankAccount(trx) } catch (e: Throwable) {
             Assertions.assertEquals(expectedMsg, e.message)
         }
     }
@@ -90,7 +90,7 @@ class WorkflowTestCase {
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
         val trx = anotherUser.beginTransaction(intention)
-        anotherUser.transferMoneyToBankAccount(trx)
+        defaultUser.transferMoneyToBankAccount(trx)
 
         Assertions.assertEquals(TrxStatus.CHECKING, trx.status)
     }
@@ -105,7 +105,7 @@ class WorkflowTestCase {
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
         val trx = anotherUser.beginTransaction(intention)
-        anotherUser.transferMoneyToBankAccount(trx)
+        defaultUser.transferMoneyToBankAccount(trx)
 
         val expectedMsg = UnableActionException().message
         try { anotherUser.transferMoneyToBankAccount(trx) } catch (e: Throwable) {
@@ -123,8 +123,8 @@ class WorkflowTestCase {
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
         val trx = anotherUser.beginTransaction(intention)
-        anotherUser.transferMoneyToBankAccount(trx)
-        defaultUser.cancelTransaction(trx)
+        defaultUser.transferMoneyToBankAccount(trx)
+        anotherUser.cancelTransaction(trx)
 
         Assertions.assertEquals(TrxStatus.CANCELLED, trx.status)
     }
@@ -139,11 +139,11 @@ class WorkflowTestCase {
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
         val trx = anotherUser.beginTransaction(intention)
-        anotherUser.transferMoneyToBankAccount(trx)
+        defaultUser.transferMoneyToBankAccount(trx)
         defaultUser.cancelTransaction(trx)
 
         val expectedMsg = ActionOnEndedTransactionException().message
-        try { defaultUser.releaseCrypto(trx) } catch (e: Throwable) {
+        try { anotherUser.releaseCrypto(trx) } catch (e: Throwable) {
             Assertions.assertEquals(expectedMsg, e.message)
         }
     }
@@ -158,8 +158,8 @@ class WorkflowTestCase {
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
         val trx = anotherUser.beginTransaction(intention)
-        anotherUser.transferMoneyToBankAccount(trx)
-        defaultUser.releaseCrypto(trx)
+        defaultUser.transferMoneyToBankAccount(trx)
+        anotherUser.releaseCrypto(trx)
 
         Assertions.assertEquals(TrxStatus.DONE, trx.status)
     }
@@ -177,13 +177,13 @@ class WorkflowTestCase {
         defaultUser.cancelTransaction(trx)
 
         val expectedMsg = ActionOnEndedTransactionException().message
-        try { anotherUser.transferMoneyToBankAccount(trx) } catch (e: Throwable) {
+        try { defaultUser.transferMoneyToBankAccount(trx) } catch (e: Throwable) {
             Assertions.assertEquals(expectedMsg, e.message)
         }
-        try { defaultUser.releaseCrypto(trx) } catch (e: Throwable) {
+        try { anotherUser.releaseCrypto(trx) } catch (e: Throwable) {
             Assertions.assertEquals(expectedMsg, e.message)
         }
-        try { defaultUser.cancelTransaction(trx) } catch (e: Throwable) {
+        try { anotherUser.cancelTransaction(trx) } catch (e: Throwable) {
             Assertions.assertEquals(expectedMsg, e.message)
         }
     }
@@ -198,14 +198,14 @@ class WorkflowTestCase {
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
         val trx = anotherUser.beginTransaction(intention)
-        anotherUser.transferMoneyToBankAccount(trx)
-        defaultUser.releaseCrypto(trx)
+        defaultUser.transferMoneyToBankAccount(trx)
+        anotherUser.releaseCrypto(trx)
 
         val expectedMsg = ActionOnEndedTransactionException().message
-        try { anotherUser.transferMoneyToBankAccount(trx) } catch (e: Throwable) {
+        try { defaultUser.transferMoneyToBankAccount(trx) } catch (e: Throwable) {
             Assertions.assertEquals(expectedMsg, e.message)
         }
-        try { defaultUser.releaseCrypto(trx) } catch (e: Throwable) {
+        try { anotherUser.releaseCrypto(trx) } catch (e: Throwable) {
             Assertions.assertEquals(expectedMsg, e.message)
         }
         try { defaultUser.cancelTransaction(trx) } catch (e: Throwable) {
@@ -216,7 +216,8 @@ class WorkflowTestCase {
     @Test
     fun testFlow_WhenAnExternalUserInteractsWithATransaction_ShouldReturnAnException() {
         val defaultUser = userBuilder.build()
-        val anotherUser = userBuilder.withEmail("another@gmail.com").build()
+        val anotherUser = userBuilder.withCVU("2222222222222222222222")
+            .withWallet("98798798").withEmail("aRandomEmail@hotmail.com").build()
         val externalUser = userBuilder.withEmail("external@gmail.com").build()
 
         val expectedMsg = ExternalUserActionException().message
@@ -225,7 +226,7 @@ class WorkflowTestCase {
         val trx = anotherUser.beginTransaction(intention)
 
         try { externalUser.transferMoneyToBankAccount(trx) } catch (e: Throwable) { Assertions.assertEquals(expectedMsg, e.message) }
-        anotherUser.transferMoneyToBankAccount(trx)
+        defaultUser.transferMoneyToBankAccount(trx)
         try { externalUser.releaseCrypto(trx) } catch (e: Throwable) { Assertions.assertEquals(expectedMsg, e.message) }
         try { externalUser.cancelTransaction(trx) } catch (e: Throwable) { Assertions.assertEquals(expectedMsg, e.message) }
     }
