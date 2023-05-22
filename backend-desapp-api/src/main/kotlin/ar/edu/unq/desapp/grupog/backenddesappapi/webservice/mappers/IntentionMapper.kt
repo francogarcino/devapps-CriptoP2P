@@ -1,7 +1,9 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.webservice.mappers
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.Intention
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.User
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.IntentionDTO
+import java.time.LocalDateTime
 
 class IntentionMapper {
     private val userMapper = UserMapper()
@@ -15,6 +17,14 @@ class IntentionMapper {
                 userDTO,
                 intention.getTrxType(),
                 intention.getDate(),
-                intention.available )
+                intention.available)
+    }
+    fun fromDTOToIntention(dto: IntentionDTO, user: User) : Intention {
+        return Intention(dto.cryptoActive,
+            dto.cryptoAmount,
+            dto.cryptoPrice,
+            user,
+            dto.trxType,
+            LocalDateTime.now())
     }
 }

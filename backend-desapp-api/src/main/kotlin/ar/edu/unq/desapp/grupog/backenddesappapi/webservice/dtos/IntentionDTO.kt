@@ -9,10 +9,9 @@ class IntentionDTO(
     var cryptoActive: CryptoActiveName,
     var cryptoAmount: Int,
     var cryptoPrice: Double,
-    var arsAmount: Double,
-    var user: UserDTO,
+    var arsAmount: Double?,
+    var user: UserDTO?,
     var trxType: TrxType,
-    var date: LocalDateTime,
-    var available: Boolean
-) {
-}
+    var date: LocalDateTime?,
+    var available: Boolean?
+)
