@@ -142,7 +142,7 @@ class UserTestCase {
         val user = builder.build()
         val createdIntention = user.createIntention(CryptoActiveName.AAVEUSDT, 2, 2.0, TrxType.SELL)
 
-        Assertions.assertEquals(createdIntention.user, user)
+        Assertions.assertEquals(createdIntention.getUserFromIntention(), user)
         Assertions.assertTrue(user.intentions.contains(createdIntention))
         Assertions.assertEquals(createdIntention.getCryptoActive(), CryptoActiveName.AAVEUSDT)
         Assertions.assertEquals(createdIntention.getArsAmount(), 1600.0)
@@ -157,7 +157,7 @@ class UserTestCase {
         val createdTransaction = userWhoAccepts.beginTransaction(createdIntention)
 
         Assertions.assertEquals(createdTransaction.intention, createdIntention)
-        Assertions.assertEquals(createdTransaction.user_whoCreate, userWhoCreates)
+        Assertions.assertEquals(createdTransaction.user_whoCreate(), userWhoCreates)
         Assertions.assertEquals(createdTransaction.user_whoAccept, userWhoAccepts)
     }
 
