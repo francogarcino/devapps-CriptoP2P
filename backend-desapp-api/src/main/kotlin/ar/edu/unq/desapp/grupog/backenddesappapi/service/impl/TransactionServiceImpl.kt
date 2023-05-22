@@ -11,6 +11,7 @@ import java.lang.RuntimeException
 @Service
 @Transactional
 class TransactionServiceImpl : TransactionService {
+
     @Autowired private lateinit var transactionDAO: TransactionDAO
 
     override fun create(entity: Transaction): Transaction {
