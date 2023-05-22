@@ -4,9 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4843dad1-8251-4803-919c-c071461a8dc0" name="Changes" comment="change build gradle file">
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/model/CryptoActive.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/model/CryptoActive.kt" afterDir="false" />
+    <list default="true" id="4843dad1-8251-4803-919c-c071461a8dc0" name="Changes" comment="add getActiveIntentions in controller, service and repository">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/model/Intention.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/model/Intention.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/model/Transaction.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/model/Transaction.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/model/User.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/model/User.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/webservice/mappers/IntentionMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/webservice/mappers/IntentionMapper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/model/UserTestCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/model/UserTestCase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/service/UserServiceTestCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/service/UserServiceTestCase.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +62,53 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Gradle.IntentionTestCase">
+    <configuration name="IntentionTestCase" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/backend-desapp-api" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;ar.edu.unq.desapp.grupog.backenddesappapi.test.model.IntentionTestCase&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="UserServiceTestCase.testDeleteAll_DeletesAllTheUsersInTheDatabase" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/backend-desapp-api" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;ar.edu.unq.desapp.grupog.backenddesappapi.test.service.UserServiceTestCase.testDeleteAll_DeletesAllTheUsersInTheDatabase&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="BackendDesappApiApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ar.edu.unq.desapp.grupog.backenddesappapi.BackendDesappApiApplicationKt" />
       <module name="backend-desapp-api.main" />
@@ -79,6 +131,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.IntentionTestCase" />
+        <item itemvalue="Gradle.UserServiceTestCase.testDeleteAll_DeletesAllTheUsersInTheDatabase" />
         <item itemvalue="Kotlin.BackendDesappApiApplicationKt" />
       </list>
     </recent_temporary>
@@ -99,7 +153,35 @@
       <option name="project" value="LOCAL" />
       <updated>1681353452570</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add get mapping in intention controller. add intentionDTO">
+      <created>1682894043185</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1682894043185</updated>
+    </task>
+    <task id="LOCAL-00003" summary="add post mapping in intention controller">
+      <created>1682894210685</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1682894210685</updated>
+    </task>
+    <task id="LOCAL-00004" summary="move intention creating endpoint to UserController">
+      <created>1682895143204</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1682895143204</updated>
+    </task>
+    <task id="LOCAL-00005" summary="add getActiveIntentions in controller, service and repository">
+      <created>1682897520192</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1682897520192</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -115,6 +197,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="change build gradle file" />
-    <option name="LAST_COMMIT_MESSAGE" value="change build gradle file" />
+    <MESSAGE value="add get mapping in intention controller. add intentionDTO" />
+    <MESSAGE value="add post mapping in intention controller" />
+    <MESSAGE value="move intention creating endpoint to UserController" />
+    <MESSAGE value="add getActiveIntentions in controller, service and repository" />
+    <option name="LAST_COMMIT_MESSAGE" value="add getActiveIntentions in controller, service and repository" />
   </component>
 </project>

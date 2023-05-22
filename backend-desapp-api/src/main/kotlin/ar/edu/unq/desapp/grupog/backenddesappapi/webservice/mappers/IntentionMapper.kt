@@ -6,7 +6,7 @@ import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.IntentionDTO
 class IntentionMapper {
     private val userMapper = UserMapper()
     fun fromIntentionToDTO(intention: Intention) : IntentionDTO {
-        val userDTO = userMapper.fromUserToDTO(intention.getUser())
+        val userDTO = userMapper.fromUserToDTO(intention.user)
         return IntentionDTO(intention.getId(),
                 intention.getCryptoActive(),
                 intention.getCryptoAmount(),

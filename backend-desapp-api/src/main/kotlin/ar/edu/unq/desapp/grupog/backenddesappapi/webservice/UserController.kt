@@ -76,6 +76,4 @@ class UserController {
             ResponseEntity.badRequest().body(e.message)
         }
     }
-
-
 }

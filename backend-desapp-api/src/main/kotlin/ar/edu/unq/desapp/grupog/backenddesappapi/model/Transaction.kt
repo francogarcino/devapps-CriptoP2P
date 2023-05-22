@@ -67,7 +67,7 @@ class Transaction(
         arsAmount = cryptoAmount!! * 400 * cryptoPrice
         typeTransaction = intention.getTrxType()
 
-        user_whoCreate = intention.getUser()
+        user_whoCreate = intention.user
         address = if (typeTransaction == TrxType.SELL) user_whoCreate.cvu else user_whoAccept.cvu
     }
 

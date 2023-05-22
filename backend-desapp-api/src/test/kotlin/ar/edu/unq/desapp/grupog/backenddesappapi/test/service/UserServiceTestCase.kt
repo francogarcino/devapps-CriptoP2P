@@ -143,5 +143,5 @@ class UserServiceTestCase {
         Assertions.assertTrue(userService.readAll().isEmpty())
     }
 
-    @AfterEach fun teardown() { userService.deleteAll() }
+//    @AfterEach fun teardown() { userService.deleteAll() }
 }

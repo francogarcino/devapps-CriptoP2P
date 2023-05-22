@@ -29,7 +29,6 @@ class Intention(
     fun getCryptoAmount() = cryptoAmount
     fun getCryptoPrice() = cryptoPrice
     fun getArsAmount() = arsAmount
-    fun getUser() = user
     fun getTrxType() = trxType
     fun getDate() = date
     fun getId() = id
