@@ -38,8 +38,15 @@ class User(
     }
 
     fun beginTransaction(intention: Intention) : Transaction {
-        if(intention.getUserFromIntention() == this) throw SameUserException()
+        if(isTheSameUser(intention)) throw SameUserException()
         return Transaction(intention, this)
+    }
+
+    private fun isTheSameUser(intention: Intention): Boolean {
+        val u = intention.getUserFromIntention()
+        return (u.cvu == this.cvu)
+                || (u.email == this.email)
+                || (u.wallet == this.wallet)
     }
 
     fun transferMoneyToBankAccount(transaction: Transaction) {

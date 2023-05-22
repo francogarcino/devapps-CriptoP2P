@@ -29,7 +29,8 @@ class TransactionTestCase {
     @Test
     fun testBuild_CanAccessToIntentionData() {
         val anUser = userBuilder.build()
-        val anotherUser = userBuilder.withName("Alternative Name").build()
+        val anotherUser = userBuilder.withName("Alternative Name").withCVU("2222222222222222222222")
+            .withWallet("98798798").withEmail("aRandomEmail@hotmail.com").build()
         val aTrx = anotherUser.beginTransaction(
             anUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
         )
@@ -48,7 +49,7 @@ class TransactionTestCase {
     fun testAddress_TheAddressIsTheExpectedAlwaysOnBuy() {
         val anUser = userBuilder.build()
         val anotherUser = userBuilder.withCVU("2222222222222222222222")
-            .withWallet("98798798").build()
+            .withWallet("98798798").withEmail("aRandomEmail@hotmail.com").build()
         val aTrx = anotherUser.beginTransaction(
             anUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
         )
@@ -67,7 +68,7 @@ class TransactionTestCase {
     fun testAddress_TheAddressIsTheExpectedAlwaysOnSell() {
         val anUser = userBuilder.build()
         val anotherUser = userBuilder.withCVU("2222222222222222222222")
-            .withWallet("98798798").build()
+            .withWallet("98798798").withEmail("aRandomEmail@hotmail.com").build()
         val aTrx = anotherUser.beginTransaction(
             anUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.SELL)
         )

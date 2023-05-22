@@ -151,7 +151,8 @@ class UserTestCase {
     @Test
     fun userAcceptsAnIntention_andATransactionIsCreated() {
         val userWhoCreates = builder.withName("Valen").build()
-        val userWhoAccepts = builder.withName("Franco").build()
+        val userWhoAccepts = builder.withCVU("2222222222222222222222")
+            .withWallet("98798798").withEmail("aRandomEmail@hotmail.com").build()
 
         val createdIntention = userWhoCreates.createIntention(CryptoActiveName.AAVEUSDT, 2, 2.0, TrxType.SELL)
         val createdTransaction = userWhoAccepts.beginTransaction(createdIntention)
@@ -168,5 +169,38 @@ class UserTestCase {
 
         try { user.beginTransaction(createdIntention) }
         catch (e: Throwable) { Assertions.assertEquals(SameUserException().message, e.message) }
-     }
+    }
+
+    @Test
+    fun testSameUser_ShouldThrowAnExceptionWhenUsersHaveTheSameEmail() {
+        val user = builder.build()
+        val anotherUser = builder.withCVU("5500550055005500550055").withWallet("55005500").build()
+
+        val createdIntention = user.createIntention(CryptoActiveName.AAVEUSDT, 2, 2.0, TrxType.SELL)
+
+        try { anotherUser.beginTransaction(createdIntention) }
+        catch (e: Throwable) { Assertions.assertEquals(SameUserException().message, e.message) }
+    }
+
+    @Test
+    fun testSameUser_ShouldThrowAnExceptionWhenUsersHaveTheSameCVU() {
+        val user = builder.build()
+        val anotherUser = builder.withWallet("55005500").withEmail("e@gmail.com").build()
+
+        val createdIntention = user.createIntention(CryptoActiveName.AAVEUSDT, 2, 2.0, TrxType.SELL)
+
+        try { anotherUser.beginTransaction(createdIntention) }
+        catch (e: Throwable) { Assertions.assertEquals(SameUserException().message, e.message) }
+    }
+
+    @Test
+    fun testSameUser_ShouldThrowAnExceptionWhenUsersHaveTheSameWallet() {
+        val user = builder.build()
+        val anotherUser = builder.withWallet("55005500").withEmail("e@gmail.com").build()
+
+        val createdIntention = user.createIntention(CryptoActiveName.AAVEUSDT, 2, 2.0, TrxType.SELL)
+
+        try { anotherUser.beginTransaction(createdIntention) }
+        catch (e: Throwable) { Assertions.assertEquals(SameUserException().message, e.message) }
+    }
 }

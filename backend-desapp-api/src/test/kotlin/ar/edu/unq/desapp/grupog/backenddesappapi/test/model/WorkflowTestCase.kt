@@ -216,7 +216,8 @@ class WorkflowTestCase {
     @Test
     fun testFlow_WhenAnExternalUserInteractsWithATransaction_ShouldReturnAnException() {
         val defaultUser = userBuilder.build()
-        val anotherUser = userBuilder.withEmail("another@gmail.com").build()
+        val anotherUser = userBuilder.withCVU("2222222222222222222222")
+            .withWallet("98798798").withEmail("aRandomEmail@hotmail.com").build()
         val externalUser = userBuilder.withEmail("external@gmail.com").build()
 
         val expectedMsg = ExternalUserActionException().message
