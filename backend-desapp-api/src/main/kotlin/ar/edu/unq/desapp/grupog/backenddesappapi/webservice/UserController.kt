@@ -1,11 +1,15 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.webservice
 
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.Transaction
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.User
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.IntentionService
+import ar.edu.unq.desapp.grupog.backenddesappapi.service.TransactionService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.IntentionDTO
+import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.TransactionDTO
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.UserDTO
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.mappers.IntentionMapper
+import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.mappers.TransactionMapper
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.mappers.UserMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.*
@@ -28,8 +32,10 @@ import java.lang.Exception
 class UserController {
     @Autowired private lateinit var userService: UserService
     @Autowired private lateinit var intentionService: IntentionService
+    @Autowired private lateinit var transactionService: TransactionService
     private var userMapper = UserMapper()
     private var intentionMapper = IntentionMapper()
+    private var transactionMapper = TransactionMapper()
 
     @Operation(
         summary = "Get a user",
@@ -192,6 +198,61 @@ class UserController {
             val user = userService.read(id)
             val newIntention = intentionMapper.fromDTOToIntention(newIntentionDTO, user)
             val dto = intentionMapper.fromIntentionToDTO(intentionService.create(newIntention))
+            ResponseEntity.ok().body(dto)
+        } catch (e : Exception) {
+            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+        }
+    }
+
+    @Operation(
+        summary = "Create a transaction",
+        description = "Create a transaction",
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "Success",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        schema = Schema(implementation = TransactionDTO::class),
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Bad Request",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "404",
+                description = "Not Found",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            )
+        ]
+    )
+    @PostMapping("/{idUser}/{idIntention}")
+    fun createTransaction(@PathVariable idUser: Long, @PathVariable idIntention: Long) : ResponseEntity<Any> {
+        return try {
+            val user = userService.read(idUser)
+            val intention = intentionService.read(idIntention)
+            val transaction = Transaction(intention, user)
+            val dto = transactionMapper.fromTransactionToDTO(transactionService.create(transaction))
             ResponseEntity.ok().body(dto)
         } catch (e : Exception) {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
