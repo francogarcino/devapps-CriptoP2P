@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 import kotlin.math.max
 import kotlin.math.min
 
-@Entity
+@Entity(name = "UserApp")
 class User(
     @Column(nullable = false) var firstName: String,
     @Column(nullable = false) var lastName: String,
