@@ -13,7 +13,10 @@ class UserServiceTestCase {
     @Autowired private lateinit var userService: UserService
     private lateinit var builder: UserBuilder
 
-    @BeforeEach fun setup() { builder = UserBuilder() }
+    @BeforeEach fun setup() {
+        builder = UserBuilder()
+        userService.deleteAll()
+    }
 
     @Test
     fun testCreate_CreateAnUserSuccessfully() {
@@ -143,5 +146,5 @@ class UserServiceTestCase {
         Assertions.assertTrue(userService.readAll().isEmpty())
     }
 
-    @AfterEach fun teardown() { userService.deleteAll() }
+//    @AfterEach fun teardown() { userService.deleteAll() }
 }

@@ -71,10 +71,10 @@ class Transaction(
     }
 
     fun cancelByMaybeUser(user: User?) {
-        if (user != user_whoAccept && user != user_whoCreate()) {
+        if (user != null && user != user_whoAccept && user != user_whoCreate()) {
             throw ExternalUserActionException()
         }
-        if (user != null) { user.discountReputation(20) }
+        user?.discountReputation(20)
 
         stateBehavior.cancelTransaction()
 
