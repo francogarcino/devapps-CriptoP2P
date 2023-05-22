@@ -38,10 +38,8 @@ class IntentionController {
     @GetMapping("/activeIntentions")
     fun getActiveIntentions() : ResponseEntity<List<IntentionDTO>> {
         val intentions = intentionService.getActiveIntentions()
-        return ResponseEntity.ok(intentions.map {
-            intention -> mapper.fromIntentionToDTO(intention)
+        return ResponseEntity.ok(intentions.map { intention ->
+            mapper.fromIntentionToDTO(intention)
         })
     }
-
-
 }
