@@ -97,4 +97,58 @@ class TransactionController {
         }
     }
 
+    @Operation(
+        summary = "Cancel a transaction",
+        description = "Cancel a transaction using the id as the unique identifier",
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "Success",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        schema = Schema(implementation = TransactionDTO::class),
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Bad Request",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "404",
+                description = "Not Found",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "The received ID doesn't match with any transaction in the database"
+                        )]
+                    )
+                ]
+            )
+        ]
+    )
+    @PutMapping("/cancelTransaction/{idTransaction}")
+    fun cancelTransaction(@PathVariable idTransaction: Long) : ResponseEntity<Any> {
+        return try {
+            val dto = mapper.fromTransactionToDTO(transactionService.cancelTransaction(idTransaction))
+            ResponseEntity.ok().body(dto)
+        } catch (e: Exception) {
+            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+        } catch (e: Throwable) {
+            ResponseEntity.badRequest().body(e.message)
+        }
+    }
+
 }

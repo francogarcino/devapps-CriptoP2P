@@ -238,10 +238,10 @@ class UserController {
         return try {
             val dto = transactionMapper.fromTransactionToDTO(userService.beginTransaction(idUser, idIntention))
             ResponseEntity.ok().body(dto)
+        } catch (e: Exception) {
+            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
         } catch (e: Throwable) {
             ResponseEntity.badRequest().body(e.message)
-        } catch (e : Exception) {
-            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
         }
     }
 
@@ -292,10 +292,10 @@ class UserController {
         return try {
             val dto = transactionMapper.fromTransactionToDTO(userService.registerTransfer(idUser, idTransaction))
             ResponseEntity.ok().body(dto)
+        } catch (e: Exception) {
+            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
         } catch (e: Throwable) {
             ResponseEntity.badRequest().body(e.message)
-        } catch (e : Exception) {
-            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
         }
     }
 
@@ -346,10 +346,10 @@ class UserController {
         return try {
             val dto = transactionMapper.fromTransactionToDTO(userService.registerReleaseCrypto(idUser, idTransaction))
             ResponseEntity.ok().body(dto)
+        } catch (e: Exception) {
+            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
         } catch (e: Throwable) {
             ResponseEntity.badRequest().body(e.message)
-        } catch (e : Exception) {
-            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
         }
     }
 
@@ -400,10 +400,10 @@ class UserController {
         return try {
             val dto = transactionMapper.fromTransactionToDTO(userService.cancelTransaction(idUser, idTransaction))
             ResponseEntity.ok().body(dto)
+        } catch (e: Exception) {
+            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
         } catch (e: Throwable) {
             ResponseEntity.badRequest().body(e.message)
-        } catch (e : Exception) {
-            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
         }
     }
 

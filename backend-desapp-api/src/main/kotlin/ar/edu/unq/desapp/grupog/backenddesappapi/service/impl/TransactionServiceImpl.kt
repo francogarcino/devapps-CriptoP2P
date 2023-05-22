@@ -38,6 +38,13 @@ class TransactionServiceImpl : TransactionService {
         else throw RuntimeException("The received ID doesn't match with any transaction in the database")
     }
 
+    override fun cancelTransaction(transactionId: Long): Transaction {
+        val transaction = read(transactionId)
+
+        transaction.cancelByMaybeUser(null)
+        return transactionDAO.save(transaction)
+    }
+
     override fun readAll(): List<Transaction> = transactionDAO.findAll().toList()
 
     override fun delete(entityId: Long) { transactionDAO.deleteById(entityId) }
