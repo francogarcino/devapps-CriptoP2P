@@ -47,11 +47,19 @@ class UserServiceImpl : UserService {
         return transactionService.create(transaction)
     }
 
-    override fun registerTransfer(transactionId: Long, userId: Long): Transaction {
+    override fun registerTransfer(userId: Long, transactionId: Long): Transaction {
         val transaction = transactionService.read(transactionId)
         val user = read(userId)
 
         user.transferMoneyToBankAccount(transaction)
+        return transactionService.update(transaction)
+    }
+
+    override fun registerReleaseCrypto(userId: Long, transactionId: Long): Transaction {
+        val transaction = transactionService.read(transactionId)
+        val user = read(userId)
+
+        user.releaseCrypto(transaction)
         return transactionService.update(transaction)
     }
 

@@ -290,7 +290,61 @@ class UserController {
     @PutMapping("/{idUser}/{idTransaction}/registerTransfer")
     fun registerTransfer(@PathVariable idUser: Long, @PathVariable idTransaction: Long) : ResponseEntity<Any> {
         return try {
-            val dto = transactionMapper.fromTransactionToDTO(userService.registerTransfer(idTransaction, idUser))
+            val dto = transactionMapper.fromTransactionToDTO(userService.registerTransfer(idUser, idTransaction))
+            ResponseEntity.ok().body(dto)
+        } catch (e: Throwable) {
+            ResponseEntity.badRequest().body(e.message)
+        } catch (e : Exception) {
+            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+        }
+    }
+
+    @Operation(
+        summary = "Register a crypto release",
+        description = "Register a crypto release in a transaction using the id as the unique identifier",
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "Success",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        schema = Schema(implementation = TransactionDTO::class),
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Bad Request",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "404",
+                description = "Not Found",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            )
+        ]
+    )
+    @PutMapping("/{idUser}/{idTransaction}/registerRelease")
+    fun registerReleaseCrypto(@PathVariable idUser: Long, @PathVariable idTransaction: Long) : ResponseEntity<Any> {
+        return try {
+            val dto = transactionMapper.fromTransactionToDTO(userService.registerReleaseCrypto(idUser, idTransaction))
             ResponseEntity.ok().body(dto)
         } catch (e: Throwable) {
             ResponseEntity.badRequest().body(e.message)
