@@ -197,5 +197,4 @@ class UserController {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
         }
     }
-
 }
