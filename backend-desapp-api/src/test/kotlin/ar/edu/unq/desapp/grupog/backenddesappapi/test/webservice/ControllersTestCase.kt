@@ -31,12 +31,18 @@ class ControllersTestCase {
 
     @BeforeEach
     fun setup() {
+        dataService.deleteAll()
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build()
     }
 
     @Test
     fun testCreateAndReadUser_AndCreateIntentionWithThatUser() {
-        val user = userService.create(UserBuilder().build())
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(UserBuilder().build()))
+        ).andExpect(status().isOk)
+        val user = userService.readAll().first()
         mockMvc.perform(
             MockMvcRequestBuilders.get("/users/{id}", user.id)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -48,8 +54,97 @@ class ControllersTestCase {
         ).andExpect(status().isOk)
     }
 
-    @AfterEach
-    fun teardown() {
-        dataService.deleteAll()
+    @Test
+    fun testCreateUser_CreateIntentionWithThatUserAndReadThisIntention() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(UserBuilder().build()))
+        ).andExpect(status().isOk)
+        val user = userService.readAll().first()
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/users/{id}/createIntention", user.id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(IntentionDTOBuilder().build()))
+        ).andExpect(status().isOk)
+        val intention = intentionService.readAll().first()
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/intentions/{id}", intention.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk)
     }
+
+    @Test
+    fun testCreateUsers_CreateIntentionWithAnUser_CreateAndReadTransaction() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(UserBuilder().build()))
+        ).andExpect(status().isOk)
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(UserBuilder()
+                    .withEmail("otroemail@gmail.com")
+                    .withCVU("1212121212454545454578")
+                    .withWallet("12344321").build()))
+        ).andExpect(status().isOk)
+        val users = userService.readAll()
+        val userCreate = users[0]
+        val userAccept = users[1]
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/users/{id}/createIntention", userCreate.id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(IntentionDTOBuilder().build()))
+        ).andExpect(status().isOk)
+        val intention = intentionService.readAll().first()
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/users/{idUser}/{idIntention}",
+                userAccept.id, intention.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk)
+        val transaction = transactionService.readAll().first()
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/transactions/{id}", transaction.id)
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk)
+    }
+
+    @Test
+    fun testCreateUsers_CreateIntentionWithAnUser_CreateTransactionAndSystemCancelsIt() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(UserBuilder().build()))
+        ).andExpect(status().isOk)
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(UserBuilder()
+                    .withEmail("otroemail@gmail.com")
+                    .withCVU("1212121212454545454578")
+                    .withWallet("12344321").build()))
+        ).andExpect(status().isOk)
+        val users = userService.readAll()
+        val userCreate = users[0]
+        val userAccept = users[1]
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/users/{id}/createIntention", userCreate.id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(IntentionDTOBuilder().build()))
+        ).andExpect(status().isOk)
+        val intention = intentionService.readAll().first()
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/users/{idUser}/{idIntention}",
+                userAccept.id, intention.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk)
+        val transaction = transactionService.readAll().first()
+        mockMvc.perform(
+            MockMvcRequestBuilders.put("/transactions/cancelTransaction/{idTransaction}", transaction.id)
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk)
+    }
+
+    // @AfterEach fun teardown() { dataService.deleteAll() }
 }
