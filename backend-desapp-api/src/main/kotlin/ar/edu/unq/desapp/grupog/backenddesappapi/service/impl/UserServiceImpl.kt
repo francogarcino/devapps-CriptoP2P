@@ -63,6 +63,14 @@ class UserServiceImpl : UserService {
         return transactionService.update(transaction)
     }
 
+    override fun cancelTransaction(userId: Long, transactionId: Long): Transaction {
+        val transaction = transactionService.read(transactionId)
+        val user = read(userId)
+
+        user.cancelTransaction(transaction)
+        return transactionService.update(transaction)
+    }
+
     override fun delete(entityId: Long) { userDAO.deleteById(entityId) }
 
     override fun deleteAll() { userDAO.deleteAll() }

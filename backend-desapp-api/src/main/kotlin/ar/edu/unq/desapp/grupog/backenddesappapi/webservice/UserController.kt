@@ -353,4 +353,58 @@ class UserController {
         }
     }
 
+    @Operation(
+        summary = "Cancel a transaction",
+        description = "Cancel a transaction using the id as the unique identifier",
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "Success",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        schema = Schema(implementation = TransactionDTO::class),
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Bad Request",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "404",
+                description = "Not Found",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            )
+        ]
+    )
+    @PutMapping("/{idUser}/{idTransaction}/cancelTransaction")
+    fun cancelTransaction(@PathVariable idUser: Long, @PathVariable idTransaction: Long) : ResponseEntity<Any> {
+        return try {
+            val dto = transactionMapper.fromTransactionToDTO(userService.cancelTransaction(idUser, idTransaction))
+            ResponseEntity.ok().body(dto)
+        } catch (e: Throwable) {
+            ResponseEntity.badRequest().body(e.message)
+        } catch (e : Exception) {
+            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+        }
+    }
+
 }
