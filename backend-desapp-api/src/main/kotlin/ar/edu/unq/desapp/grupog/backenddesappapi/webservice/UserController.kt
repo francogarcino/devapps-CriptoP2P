@@ -407,4 +407,11 @@ class UserController {
         }
     }
 
+    @GetMapping("/stats")
+    fun getUsersWithStats() : ResponseEntity<List<UserStatsDTO>>{
+        val pairs = userService.allUserStats()
+        val stats = pairs.map { p -> userMapper.fromDataToStatsDTO(p) }
+        return ResponseEntity.ok().body(stats)
+    }
+
 }
