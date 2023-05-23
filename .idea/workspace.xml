@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4843dad1-8251-4803-919c-c071461a8dc0" name="Changes" comment="add getActiveIntentions in controller, service and repository">
-      <change afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/model/CryptoVolume.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/service/UserService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/service/UserService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/persistence/TransactionDAO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/persistence/TransactionDAO.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/service/impl/UserServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/service/impl/UserServiceImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/webservice/UserController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/webservice/UserController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/webservice/dtos/CryptoVolumeDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/webservice/dtos/CryptoVolumeDTO.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

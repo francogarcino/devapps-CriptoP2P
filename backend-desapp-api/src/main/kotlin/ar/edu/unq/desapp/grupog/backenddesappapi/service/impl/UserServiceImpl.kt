@@ -2,6 +2,8 @@ package ar.edu.unq.desapp.grupog.backenddesappapi.service.impl
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoVolume
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.User
+import ar.edu.unq.desapp.grupog.backenddesappapi.persistence.IntentionDAO
+import ar.edu.unq.desapp.grupog.backenddesappapi.persistence.TransactionDAO
 import ar.edu.unq.desapp.grupog.backenddesappapi.persistence.UserDAO
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.CryptoVolumeDTO
@@ -15,8 +17,11 @@ import java.time.LocalDateTime
 @Service
 class UserServiceImpl : UserService {
     @Autowired private lateinit var userDAO: UserDAO
+    @Autowired private lateinit var transactionDAO: TransactionDAO
     override fun getCryptoVolume(user: User, initialDate: LocalDateTime, finalDate: LocalDateTime) : CryptoVolume {
-
+        val date = LocalDateTime.now()
+        val arsAmount = transactionDAO.getFinishedTransactions().filter { t -> t.user_whoCreate().id == user.id }
+//        CryptoVolume(date, )
     }
 
     override fun create(entity: User): User {
