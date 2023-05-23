@@ -1,17 +1,24 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.service.impl
 
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoVolume
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.User
 import ar.edu.unq.desapp.grupog.backenddesappapi.persistence.UserDAO
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
+import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.CryptoVolumeDTO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.lang.RuntimeException
+import java.time.LocalDateTime
 
 @Transactional
 @Service
 class UserServiceImpl : UserService {
     @Autowired private lateinit var userDAO: UserDAO
+    override fun getCryptoVolume(user: User, initialDate: LocalDateTime, finalDate: LocalDateTime) : CryptoVolume {
+
+    }
+
     override fun create(entity: User): User {
         return try {
             userDAO.save(entity)

@@ -3,6 +3,7 @@ package ar.edu.unq.desapp.grupog.backenddesappapi.webservice
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.User
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.IntentionService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
+import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.CryptoVolumeDTO
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.IntentionDTO
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.UserDTO
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.mappers.IntentionMapper
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.lang.Exception
+import java.time.LocalDateTime
 
 @RestController
 @CrossOrigin
@@ -196,5 +198,12 @@ class UserController {
         } catch (e : Exception) {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
         }
+    }
+
+
+    @GetMapping("/cryptoVolume/{startedDate}/{finishDate}")
+    fun getCryptoVolume(@RequestBody user: User, @PathVariable startedDate: LocalDateTime, @PathVariable finishDate: LocalDateTime): ResponseEntity<Any> {
+        val cryptoVolume = userService.getCryptoVolume(user, startedDate, finishDate)
+        return ResponseEntity.ok().body(cryptoVolume)
     }
 }
