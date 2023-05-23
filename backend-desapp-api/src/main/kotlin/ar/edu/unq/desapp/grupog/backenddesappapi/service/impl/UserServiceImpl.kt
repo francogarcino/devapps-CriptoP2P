@@ -2,8 +2,11 @@ package ar.edu.unq.desapp.grupog.backenddesappapi.service.impl
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.Transaction
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.User
+import ar.edu.unq.desapp.grupog.backenddesappapi.persistence.TransactionDAO
 import ar.edu.unq.desapp.grupog.backenddesappapi.persistence.UserDAO
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.*
+import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.UserStatsDTO
+import jakarta.persistence.Tuple
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -69,6 +72,15 @@ class UserServiceImpl : UserService {
 
         user.cancelTransaction(transaction)
         return transactionService.update(transaction)
+    }
+
+    override fun allUserStats(): List<Pair<User, Int>> {
+        val tuples = userDAO.getUsers()
+        val pairs = mutableListOf<Pair<User, Int>>()
+        for (i in IntRange(0, tuples.size-1)) {
+            pairs.add(Pair(tuples.get(i).get(0), tuples.get(i).get(1)) as Pair<User, Int>)
+        }
+        return pairs
     }
 
     override fun delete(entityId: Long) { userDAO.deleteById(entityId) }
