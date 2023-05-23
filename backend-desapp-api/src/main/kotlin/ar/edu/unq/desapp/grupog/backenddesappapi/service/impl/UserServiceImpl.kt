@@ -71,6 +71,15 @@ class UserServiceImpl : UserService {
         return transactionService.update(transaction)
     }
 
+    override fun allUserStats(): List<Pair<User, Int>> {
+        val tuples = userDAO.getUsers()
+        val pairs = mutableListOf<Pair<User, Int>>()
+        for (i in IntRange(0, tuples.size-1)) {
+            pairs.add(Pair(tuples.get(i).get(0), tuples.get(i).get(1)) as Pair<User, Int>)
+        }
+        return pairs
+    }
+
     override fun delete(entityId: Long) { userDAO.deleteById(entityId) }
 
     override fun deleteAll() { userDAO.deleteAll() }
