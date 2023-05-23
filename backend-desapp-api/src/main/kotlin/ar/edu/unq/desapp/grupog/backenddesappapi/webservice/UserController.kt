@@ -407,6 +407,24 @@ class UserController {
         }
     }
 
+    @Operation(
+        summary = "Get all users with stats",
+        description = "Get all users with stats",
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "Success",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        array = ArraySchema(schema = Schema(implementation = UserStatsDTO::class)),
+                    )
+                ]
+            )
+        ]
+    )
     @GetMapping("/stats")
     fun getUsersWithStats() : ResponseEntity<List<UserStatsDTO>>{
         val pairs = userService.allUserStats()

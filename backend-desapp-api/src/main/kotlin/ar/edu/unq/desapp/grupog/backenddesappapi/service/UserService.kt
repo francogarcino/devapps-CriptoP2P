@@ -2,8 +2,6 @@ package ar.edu.unq.desapp.grupog.backenddesappapi.service
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.Transaction
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.User
-import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.UserStatsDTO
-import jakarta.persistence.Tuple
 
 interface UserService : CrudService<User>{
     fun beginTransaction(userId: Long, intentionId: Long): Transaction

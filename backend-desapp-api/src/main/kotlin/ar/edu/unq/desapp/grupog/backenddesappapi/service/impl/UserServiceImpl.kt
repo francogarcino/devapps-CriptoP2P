@@ -2,11 +2,8 @@ package ar.edu.unq.desapp.grupog.backenddesappapi.service.impl
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.Transaction
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.User
-import ar.edu.unq.desapp.grupog.backenddesappapi.persistence.TransactionDAO
 import ar.edu.unq.desapp.grupog.backenddesappapi.persistence.UserDAO
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.*
-import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.UserStatsDTO
-import jakarta.persistence.Tuple
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
