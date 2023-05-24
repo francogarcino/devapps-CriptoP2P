@@ -7,7 +7,11 @@ import org.springframework.data.jpa.repository.Query
 
 interface TransactionDAO : JpaRepository<Transaction, Long> {
 
-    @Query("FROM Transaction t WHERE t.status = DONE")
+    @Query(
+            """
+                FROM Transaction t WHERE t.status = "DONE"
+            """
+    )
     fun getFinishedTransactions(): List<Transaction>
 
 }
