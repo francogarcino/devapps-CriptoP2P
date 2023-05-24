@@ -25,7 +25,7 @@ class TransactionServiceImpl : TransactionService {
     override fun update(entity: Transaction): Transaction {
         return if (transactionDAO.existsById(entity.id!!)) {
             transactionDAO.save(entity)
-        } else { throw RuntimeException("The transaction to update does not exists") }
+        } else { throw NoSuchElementException("The transaction to update does not exists") }
     }
 
     override fun read(entityId: Long): Transaction {
@@ -35,7 +35,7 @@ class TransactionServiceImpl : TransactionService {
             trx.stateBehavior = trx.status.behavior()
             return trx
         }
-        else throw RuntimeException("The received ID doesn't match with any transaction in the database")
+        else throw NoSuchElementException("The received ID doesn't match with any transaction in the database")
     }
 
     override fun cancelTransaction(transactionId: Long): Transaction {
