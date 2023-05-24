@@ -11,6 +11,7 @@ import java.lang.RuntimeException
 @Service
 @Transactional
 class TransactionServiceImpl : TransactionService {
+
     @Autowired private lateinit var transactionDAO: TransactionDAO
 
     override fun create(entity: Transaction): Transaction {
@@ -35,6 +36,13 @@ class TransactionServiceImpl : TransactionService {
             return trx
         }
         else throw RuntimeException("The received ID doesn't match with any transaction in the database")
+    }
+
+    override fun cancelTransaction(transactionId: Long): Transaction {
+        val transaction = read(transactionId)
+
+        transaction.cancelByMaybeUser(null)
+        return transactionDAO.save(transaction)
     }
 
     override fun readAll(): List<Transaction> = transactionDAO.findAll().toList()
