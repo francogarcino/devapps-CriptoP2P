@@ -193,7 +193,6 @@ class UserController {
         }
     }
 
-
     @Operation(
             summary = "Get crypto volume",
             description = "Obtains crypto volume of the given user between initial and final date"
@@ -229,17 +228,17 @@ class UserController {
                             Content(
                                     mediaType = "application/json",
                                     examples = [ExampleObject(
-                                            value = "A error"
+                                            value = "The received ID doesn't match with any user in the database"
                                     )]
                             )
                         ]
                 ),
             ]
     )
-    @GetMapping("/cryptoVolume/{startedDate}/{finishDate}")
-    fun getCryptoVolume(@RequestBody user: User, @PathVariable startedDate: LocalDateTime, @PathVariable finishDate: LocalDateTime): ResponseEntity<Any> {
+    @GetMapping("/cryptoVolume/{userId}/{startDate}/{finishDate}")
+    fun getCryptoVolume(@PathVariable userId: Long, @PathVariable startDate: LocalDateTime, @PathVariable finishDate: LocalDateTime): ResponseEntity<Any> {
         return try {
-            val cryptoVolume = userService.getCryptoVolume(user, startedDate, finishDate)
+            val cryptoVolume = userService.getCryptoVolume(userId, startDate, finishDate)
             return ResponseEntity.ok().body(cryptoVolume)
         } catch (e: Exception) {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)

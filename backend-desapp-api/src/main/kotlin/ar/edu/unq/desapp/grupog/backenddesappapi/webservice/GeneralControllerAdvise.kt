@@ -4,6 +4,7 @@ import org.springframework.http.*
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
+import javax.management.InvalidAttributeValueException
 
 @RestControllerAdvice
 class GeneralControllerAdvise {
@@ -26,4 +27,11 @@ class GeneralControllerAdvise {
             "Required request parameter '" + ex.name + "' for method parameter type " + ex.requiredType + " is not present"
         return ResponseEntity.badRequest().body(errorMessage)
     }
+
+    @ExceptionHandler(InvalidAttributeValueException::class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    fun handleInvalidAttributeValueException(ex: InvalidAttributeValueException): ResponseEntity<Any> {
+        return ResponseEntity.badRequest().body(ex.message)
+    }
+
 }

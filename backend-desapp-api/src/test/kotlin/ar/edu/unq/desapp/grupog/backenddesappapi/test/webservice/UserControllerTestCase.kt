@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
+import java.time.LocalDateTime
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -77,6 +78,45 @@ class UserControllerTestCase {
             MockMvcRequestBuilders.get("/users/stats")
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk)
+    }
+
+    @Test
+    fun testGetCryptoVolume() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(UserBuilder().build()))
+        ).andExpect(status().isOk)
+        val user = userService.readAll().first()
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/users/cryptoVolume/{userId}/{startDate}/{finishDate}",
+                user.id,
+                LocalDateTime.of(2023, 1, 1, 10, 0),
+                LocalDateTime.now())
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk)
+    }
+
+    @Test
+    fun testCannotGetCryptoVolumeWithAnAnInvalidUserId() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/users/cryptoVolume/{userId}/{startDate}/{finishDate}",
+                "id",
+                LocalDateTime.of(2023, 1, 1, 10, 0),
+                LocalDateTime.now())
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun testCannotGetCryptoVolumeWithAnUserIdNotPersisted() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/users/cryptoVolume/{userId}/{startDate}/{finishDate}",
+                -1,
+                LocalDateTime.of(2023, 1, 1, 10, 0),
+                LocalDateTime.now())
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isNotFound)
     }
 
 }

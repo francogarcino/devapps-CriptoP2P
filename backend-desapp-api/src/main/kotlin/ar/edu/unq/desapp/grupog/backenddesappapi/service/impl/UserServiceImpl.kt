@@ -21,9 +21,11 @@ class UserServiceImpl : UserService {
     @Autowired private lateinit var transactionService: TransactionService
     @Autowired private lateinit var intentionService: IntentionService
 
-    override fun getCryptoVolume(user: User, initialDate: LocalDateTime, finalDate: LocalDateTime) : CryptoVolume {
+    override fun getCryptoVolume(userId: Long, initialDate: LocalDateTime, finalDate: LocalDateTime) : CryptoVolume {
+        if (!userDAO.existsById(userId))
+            throw NoSuchElementException("The received ID doesn't match with any user in the database")
         val transactions =  transactionDAO.getFinishedTransactions().
-                            filter { t -> t.user_whoCreate().id == user.id &&
+                            filter { t -> t.user_whoCreate().id == userId &&
                                     isBetweenDate(t.creationDate, initialDate, finalDate)
                             }
         val arsAmount = transactions.sumOf { t -> t.arsAmount!! }

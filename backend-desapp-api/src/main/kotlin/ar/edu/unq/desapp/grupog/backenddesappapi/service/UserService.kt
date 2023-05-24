@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 
 
 interface UserService : CrudService<User>{
-    fun getCryptoVolume(user: User,  initialDate: LocalDateTime, finalDate: LocalDateTime) : CryptoVolume
+    fun getCryptoVolume(userId: Long,  initialDate: LocalDateTime, finalDate: LocalDateTime) : CryptoVolume
     fun beginTransaction(userId: Long, intentionId: Long): Transaction
     fun registerTransfer(userId: Long, transactionId: Long): Transaction
     fun registerReleaseCrypto(userId: Long, transactionId: Long): Transaction
