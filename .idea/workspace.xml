@@ -5,29 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4843dad1-8251-4803-919c-c071461a8dc0" name="Changes" comment="add getActiveIntentions in controller, service and repository">
-      <change afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend-desapp-api/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/persistence/DataDAO.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/persistence/TransactionDAO.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/service/DataService.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/service/InitServiceInMemory.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/service/TransactionService.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/service/impl/DataServiceImpl.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/service/impl/TransactionServiceImpl.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/service/TransactionServiceTestCase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/model/Intention.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/model/Intention.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/model/Transaction.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/model/Transaction.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/model/User.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/model/User.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/model/trxHelpers/TrxStatus.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/model/trxHelpers/TrxStatus.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/persistence/IntentionDAO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/persistence/IntentionDAO.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/persistence/UserDAO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/persistence/UserDAO.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/webservice/mappers/IntentionMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/webservice/mappers/IntentionMapper.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/model/UserTestCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/model/UserTestCase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/service/UserServiceTestCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/service/UserServiceTestCase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/persistence/TransactionDAO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/persistence/TransactionDAO.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/service/impl/UserServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/service/impl/UserServiceImpl.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,12 +90,12 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Gradle.Tests in 'backend-desapp-api'">
     <configuration name="Tests in 'backend-desapp-api'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>

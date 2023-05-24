@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.webservice
 
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoVolume
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.User
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.*
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.*
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.*
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.RestController
+import java.lang.Exception
+import java.time.LocalDateTime
 
 @RestController
 @CrossOrigin
@@ -187,6 +190,61 @@ class UserController {
             ResponseEntity.ok().body(dto)
         } catch (e : NoSuchElementException) {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+        }
+    }
+
+
+    @Operation(
+            summary = "Get crypto volume",
+            description = "Obtains crypto volume of the given user between initial and final date"
+    )
+    @ApiResponses(
+            value = [
+                ApiResponse(
+                        responseCode = "200",
+                        description = "Success",
+                        content = [
+                            Content(
+                                    mediaType = "application/json",
+                                    schema = Schema(implementation = CryptoVolume::class)
+                            )
+                        ]
+                ),
+                ApiResponse(
+                        responseCode = "400",
+                        description = "Bad request",
+                        content = [
+                            Content(
+                                    mediaType = "application/json",
+                                    examples = [ExampleObject(
+                                            value = "A error"
+                                    )]
+                            )
+                        ]
+                ),
+                ApiResponse(
+                        responseCode = "404",
+                        description = "Not found",
+                        content = [
+                            Content(
+                                    mediaType = "application/json",
+                                    examples = [ExampleObject(
+                                            value = "A error"
+                                    )]
+                            )
+                        ]
+                ),
+            ]
+    )
+    @GetMapping("/cryptoVolume/{startedDate}/{finishDate}")
+    fun getCryptoVolume(@RequestBody user: User, @PathVariable startedDate: LocalDateTime, @PathVariable finishDate: LocalDateTime): ResponseEntity<Any> {
+        return try {
+            val cryptoVolume = userService.getCryptoVolume(user, startedDate, finishDate)
+            return ResponseEntity.ok().body(cryptoVolume)
+        } catch (e: Exception) {
+            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+        } catch (e: Throwable) {
+            ResponseEntity.badRequest().body(e.message)
         }
     }
 
