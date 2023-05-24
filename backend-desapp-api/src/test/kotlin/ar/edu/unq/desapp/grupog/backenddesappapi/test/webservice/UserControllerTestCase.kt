@@ -71,4 +71,12 @@ class UserControllerTestCase {
         ).andExpect(status().isOk)
     }
 
+    @Test
+    fun testGetAllUsersWithStats() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/users/stats")
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk)
+    }
+
 }
