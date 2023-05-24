@@ -72,7 +72,7 @@ class UserController {
     fun getUser(@PathVariable id: Long) : ResponseEntity<Any>{
         return try {
             ResponseEntity.ok().body(userMapper.fromUserToDTO(userService.read(id)))
-        } catch (e: Exception) {
+        } catch (e: NoSuchElementException) {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
         }
     }
@@ -188,7 +188,7 @@ class UserController {
             val newIntention = intentionMapper.fromDTOToIntention(newIntentionDTO, user)
             val dto = intentionMapper.fromIntentionToDTO(intentionService.create(newIntention))
             ResponseEntity.ok().body(dto)
-        } catch (e : Exception) {
+        } catch (e : NoSuchElementException) {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
         }
     }
@@ -295,7 +295,7 @@ class UserController {
         return try {
             val dto = transactionMapper.fromTransactionToDTO(userService.beginTransaction(idUser, idIntention))
             ResponseEntity.ok().body(dto)
-        } catch (e: Exception) {
+        } catch (e: NoSuchElementException) {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
         } catch (e: Throwable) {
             ResponseEntity.badRequest().body(e.message)
@@ -349,7 +349,7 @@ class UserController {
         return try {
             val dto = transactionMapper.fromTransactionToDTO(userService.registerTransfer(idUser, idTransaction))
             ResponseEntity.ok().body(dto)
-        } catch (e: Exception) {
+        } catch (e: NoSuchElementException) {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
         } catch (e: Throwable) {
             ResponseEntity.badRequest().body(e.message)
@@ -403,7 +403,7 @@ class UserController {
         return try {
             val dto = transactionMapper.fromTransactionToDTO(userService.registerReleaseCrypto(idUser, idTransaction))
             ResponseEntity.ok().body(dto)
-        } catch (e: Exception) {
+        } catch (e: NoSuchElementException) {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
         } catch (e: Throwable) {
             ResponseEntity.badRequest().body(e.message)
@@ -457,7 +457,7 @@ class UserController {
         return try {
             val dto = transactionMapper.fromTransactionToDTO(userService.cancelTransaction(idUser, idTransaction))
             ResponseEntity.ok().body(dto)
-        } catch (e: Exception) {
+        } catch (e: NoSuchElementException) {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
         } catch (e: Throwable) {
             ResponseEntity.badRequest().body(e.message)

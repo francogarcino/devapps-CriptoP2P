@@ -92,7 +92,7 @@ class TransactionController {
     fun getTransaction(@PathVariable id: Long) : ResponseEntity<Any> {
         return try {
             ResponseEntity.ok().body(mapper.fromTransactionToDTO(transactionService.read(id)))
-        } catch (e: Exception) {
+        } catch (e: NoSuchElementException) {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
         }
     }
@@ -144,7 +144,7 @@ class TransactionController {
         return try {
             val dto = mapper.fromTransactionToDTO(transactionService.cancelTransaction(idTransaction))
             ResponseEntity.ok().body(dto)
-        } catch (e: Exception) {
+        } catch (e: NoSuchElementException) {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
         } catch (e: Throwable) {
             ResponseEntity.badRequest().body(e.message)
