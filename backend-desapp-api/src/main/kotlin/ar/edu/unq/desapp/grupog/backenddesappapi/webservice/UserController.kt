@@ -238,8 +238,14 @@ class UserController {
     )
     @GetMapping("/cryptoVolume/{startedDate}/{finishDate}")
     fun getCryptoVolume(@RequestBody user: User, @PathVariable startedDate: LocalDateTime, @PathVariable finishDate: LocalDateTime): ResponseEntity<Any> {
-        val cryptoVolume = userService.getCryptoVolume(user, startedDate, finishDate)
-        return ResponseEntity.ok().body(cryptoVolume)
+        return try {
+            val cryptoVolume = userService.getCryptoVolume(user, startedDate, finishDate)
+            return ResponseEntity.ok().body(cryptoVolume)
+        } catch (e: Exception) {
+            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+        } catch (e: Throwable) {
+            ResponseEntity.badRequest().body(e.message)
+        }
     }
 
     @Operation(
