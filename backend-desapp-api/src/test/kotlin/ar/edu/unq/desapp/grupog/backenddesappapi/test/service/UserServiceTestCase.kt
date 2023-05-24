@@ -1,5 +1,8 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.test.service
 
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoActiveName
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
+import ar.edu.unq.desapp.grupog.backenddesappapi.service.IntentionService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserBuilder
 import org.junit.jupiter.api.*
@@ -11,9 +14,13 @@ import java.lang.RuntimeException
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UserServiceTestCase {
     @Autowired private lateinit var userService: UserService
+    @Autowired private lateinit var intentionService: IntentionService
     private lateinit var builder: UserBuilder
 
-    @BeforeEach fun setup() { builder = UserBuilder() }
+    @BeforeEach fun setup() {
+        builder = UserBuilder()
+        userService.deleteAll()
+    }
 
     @Test
     fun testCreate_CreateAnUserSuccessfully() {
@@ -143,5 +150,50 @@ class UserServiceTestCase {
         Assertions.assertTrue(userService.readAll().isEmpty())
     }
 
-    @AfterEach fun teardown() { userService.deleteAll() }
+    @Test
+    fun testStats_UsersWithoutTrxs() {
+        userService.create(builder.build())
+        userService.create(builder.withEmail("e@gmail.com").withCVU("0147896321478963214785")
+            .withWallet("64646464").build())
+        val list = userService.allUserStats()
+
+        Assertions.assertTrue(list.all { p -> p.second == 0 })
+    }
+
+    @Test
+    fun testStats_UsersWithTrxs() {
+        val user = userService.create(builder.build())
+        val anotherUser = userService.create(builder.withEmail("e@gmail.com").withCVU("0147896321478963214785")
+            .withWallet("64646464").build())
+        val intention = intentionService.create(user.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY))
+        val trx = userService.beginTransaction(anotherUser.id!!, intention.getId()!!)
+
+        userService.registerTransfer(user.id!!, trx.id!!)
+        userService.registerReleaseCrypto(anotherUser.id!!, trx.id!!)
+
+        val list = userService.allUserStats()
+
+        Assertions.assertTrue(list.all { p -> p.second == 1 })
+    }
+
+    @Test
+    fun testStats_UsersWithDifferentAmounts() {
+        val user = userService.create(builder.build())
+        val anotherUser = userService.create(builder.withEmail("e@gmail.com").withCVU("0147896321478963214785")
+            .withWallet("64646464").build())
+        val externalUser = userService.create(builder.withEmail("ext@gmail.com").withCVU("0147896321478963214000")
+            .withWallet("64646000").build())
+        val intention = intentionService.create(user.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY))
+        val trx = userService.beginTransaction(anotherUser.id!!, intention.getId()!!)
+
+        userService.registerTransfer(user.id!!, trx.id!!)
+        userService.registerReleaseCrypto(anotherUser.id!!, trx.id!!)
+
+        val list = userService.allUserStats()
+
+        Assertions.assertTrue(list.any { p -> p.second == 0 && p.first.email == "ext@gmail.com"})
+        Assertions.assertEquals(2, list.filter { p -> p.second == 1 }.size)
+    }
+
+//    @AfterEach fun teardown() { userService.deleteAll() }
 }
