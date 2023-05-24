@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.webservice
 
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoVolume
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.User
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.*
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.*
@@ -193,6 +194,48 @@ class UserController {
     }
 
 
+    @Operation(
+            summary = "Get crypto volume",
+            description = "Obtains crypto volume of the given user between initial and final date"
+    )
+    @ApiResponses(
+            value = [
+                ApiResponse(
+                        responseCode = "200",
+                        description = "Success",
+                        content = [
+                            Content(
+                                    mediaType = "application/json",
+                                    schema = Schema(implementation = CryptoVolume::class)
+                            )
+                        ]
+                ),
+                ApiResponse(
+                        responseCode = "400",
+                        description = "Bad request",
+                        content = [
+                            Content(
+                                    mediaType = "application/json",
+                                    examples = [ExampleObject(
+                                            value = "A error"
+                                    )]
+                            )
+                        ]
+                ),
+                ApiResponse(
+                        responseCode = "404",
+                        description = "Not found",
+                        content = [
+                            Content(
+                                    mediaType = "application/json",
+                                    examples = [ExampleObject(
+                                            value = "A error"
+                                    )]
+                            )
+                        ]
+                ),
+            ]
+    )
     @GetMapping("/cryptoVolume/{startedDate}/{finishDate}")
     fun getCryptoVolume(@RequestBody user: User, @PathVariable startedDate: LocalDateTime, @PathVariable finishDate: LocalDateTime): ResponseEntity<Any> {
         val cryptoVolume = userService.getCryptoVolume(user, startedDate, finishDate)
