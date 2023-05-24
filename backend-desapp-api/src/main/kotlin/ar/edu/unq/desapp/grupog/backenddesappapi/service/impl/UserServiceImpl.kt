@@ -28,13 +28,13 @@ class UserServiceImpl : UserService {
     override fun update(entity: User): User {
         return if (userDAO.existsById(entity.id!!)) {
             userDAO.save(entity)
-        } else { throw RuntimeException("The user to update does not exists") }
+        } else { throw NoSuchElementException("The user to update does not exists") }
     }
 
     override fun read(entityId: Long): User {
         val daoResponse = userDAO.findById(entityId)
         if (daoResponse.isPresent) return daoResponse.get()
-        else throw RuntimeException("The received ID doesn't match with any user in the database")
+        else throw NoSuchElementException("The received ID doesn't match with any user in the database")
     }
 
     override fun readAll(): List<User> = userDAO.findAll().toList()
