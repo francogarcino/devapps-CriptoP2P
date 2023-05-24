@@ -8,11 +8,7 @@ import ar.edu.unq.desapp.grupog.backenddesappapi.service.TransactionService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.TransactionBuilder
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserBuilder
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
@@ -31,6 +27,7 @@ class TransactionServiceTestCase {
     fun setUp() {
         transactionBuilder = TransactionBuilder()
         userBuilder = UserBuilder()
+        dataService.deleteAll()
     }
 
     @Test
@@ -54,9 +51,6 @@ class TransactionServiceTestCase {
         Assertions.assertNotNull(read.id!!)
     }
 
-    @AfterEach
-    fun teardown() {
-        dataService.deleteAll()
-    }
+    // @AfterEach fun teardown() { dataService.deleteAll() }
 
 }

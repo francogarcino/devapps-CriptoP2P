@@ -90,7 +90,7 @@ class IntentionController {
     fun getIntention(@PathVariable id: Long) : ResponseEntity<Any> {
         return try {
             ResponseEntity.ok().body(mapper.fromIntentionToDTO(intentionService.read(id)))
-        } catch (e: Exception) {
+        } catch (e: NoSuchElementException) {
             ResponseEntity(e.message,HttpStatus.NOT_FOUND)
         }
     }
