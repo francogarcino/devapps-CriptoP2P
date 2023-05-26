@@ -2,7 +2,10 @@ package ar.edu.unq.desapp.grupog.backenddesappapi.test.webservice
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.*
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.IntentionBuilder
+import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.LoginDTOBuilder
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserBuilder
+import com.fasterxml.jackson.databind.ObjectMapper
+import jakarta.servlet.http.Cookie
 import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -31,6 +34,8 @@ class TransactionControllerTestCase {
     @Autowired
     private lateinit var dataService: DataService
 
+    private val mapper = ObjectMapper()
+
     @BeforeEach
     fun setup() {
         dataService.deleteAll()
@@ -39,6 +44,7 @@ class TransactionControllerTestCase {
 
     @Test
     fun testCreateAndReadTransaction() {
+        val cookie = addCookie()
         val userCreate = userService.create(UserBuilder().build())
         val userAccept = userService.create(UserBuilder()
             .withEmail("otroemail@gmail.com")
@@ -49,60 +55,73 @@ class TransactionControllerTestCase {
             MockMvcRequestBuilders.post("/users/{idUser}/{idIntention}",
                 userAccept.id, intention.getId())
                 .contentType(MediaType.APPLICATION_JSON)
+                .cookie(cookie)
         ).andExpect(status().isOk)
         val transaction = transactionService.readAll().first()
         mockMvc.perform(
             MockMvcRequestBuilders.get("/transactions/{id}", transaction.id)
                 .contentType(MediaType.APPLICATION_JSON)
+                .cookie(cookie)
         ).andExpect(status().isOk)
     }
 
     @Test
     fun testCannotCreateTransactionWithAnInvalidUserId() {
+        val cookie = addCookie()
         val userCreate = userService.create(UserBuilder().build())
         val intention = intentionService.create(IntentionBuilder().withUser(userCreate).build())
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users/{idUser}/{idIntention}", "id", intention.getId())
                 .contentType(MediaType.APPLICATION_JSON)
+                .cookie(cookie)
         ).andExpect(status().isBadRequest)
     }
 
     @Test
     fun testCannotCreateTransactionWithAnUserIdNotPersisted() {
+        val cookie = addCookie()
         val userCreate = userService.create(UserBuilder().build())
         val intention = intentionService.create(IntentionBuilder().withUser(userCreate).build())
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users/{idUser}/{idIntention}", -1, intention.getId())
                 .contentType(MediaType.APPLICATION_JSON)
+                .cookie(cookie)
         ).andExpect(status().isNotFound)
     }
 
     @Test
     fun testCannotReadTransactionWithAnInvalidId() {
+        val cookie = addCookie()
         mockMvc.perform(
             MockMvcRequestBuilders.get("/transactions/{id}", "id")
                 .contentType(MediaType.APPLICATION_JSON)
+                .cookie(cookie)
         ).andExpect(status().isBadRequest)
     }
 
     @Test
     fun testCannotReadTransactionWithAnIdNotPersisted() {
+        val cookie = addCookie()
         mockMvc.perform(
             MockMvcRequestBuilders.get("/transactions/{id}", -1)
                 .contentType(MediaType.APPLICATION_JSON)
+                .cookie(cookie)
         ).andExpect(status().isNotFound)
     }
 
     @Test
     fun testReadAllTransactions() {
+        val cookie = addCookie()
         mockMvc.perform(
             MockMvcRequestBuilders.get("/transactions/")
                 .contentType(MediaType.APPLICATION_JSON)
+                .cookie(cookie)
         ).andExpect(status().isOk)
     }
 
     @Test
     fun testCreateTransactionAndSystemCancelsIt() {
+        val cookie = addCookie()
         val userCreate = userService.create(UserBuilder().build())
         val userAccept = userService.create(UserBuilder()
             .withEmail("otroemail@gmail.com")
@@ -113,28 +132,45 @@ class TransactionControllerTestCase {
             MockMvcRequestBuilders.post("/users/{idUser}/{idIntention}",
                 userAccept.id, intention.getId())
                 .contentType(MediaType.APPLICATION_JSON)
+                .cookie(cookie)
         ).andExpect(status().isOk)
         val transaction = transactionService.readAll().first()
         mockMvc.perform(
             MockMvcRequestBuilders.put("/transactions/cancelTransaction/{idTransaction}", transaction.id)
                 .contentType(MediaType.APPLICATION_JSON)
+                .cookie(cookie)
         ).andExpect(status().isOk)
     }
 
     @Test
     fun testSystemCannotCancelTransactionWithAnInvalidId() {
+        val cookie = addCookie()
         mockMvc.perform(
             MockMvcRequestBuilders.put("/transactions/cancelTransaction/{idTransaction}", "id")
                 .contentType(MediaType.APPLICATION_JSON)
+                .cookie(cookie)
         ).andExpect(status().isBadRequest)
     }
 
     @Test
     fun testSystemCannotCancelTransactionWithAnIdNotPersisted() {
+        val cookie = addCookie()
         mockMvc.perform(
             MockMvcRequestBuilders.put("/transactions/cancelTransaction/{idTransaction}", -1)
                 .contentType(MediaType.APPLICATION_JSON)
+                .cookie(cookie)
         ).andExpect(status().isNotFound)
     }
 
+    private fun addCookie(): Cookie? {
+        userService.create(UserBuilder().withEmail("defaultemail2@gmail.com")
+            .withCVU("0011223344556677889911").withWallet("10254721").build())
+        val login = LoginDTOBuilder().build()
+        val response = mockMvc.perform(
+            MockMvcRequestBuilders.post("/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(login))
+        ).andExpect(status().isOk)
+        return response.andReturn().response.cookies[0]
+    }
 }
