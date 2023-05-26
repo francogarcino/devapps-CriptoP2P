@@ -33,11 +33,26 @@ class IntentionController {
                         array = ArraySchema(schema = Schema(implementation = IntentionDTO::class)),
                     )
                 ]
+            ),
+            ApiResponse(
+                responseCode = "401",
+                description = "Unauthorized",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
             )
         ]
     )
     @GetMapping("/")
-    fun getAllIntentions() : ResponseEntity<List<IntentionDTO>> {
+    fun getAllIntentions(@CookieValue("jwt") jwt: String?) : ResponseEntity<Any> {
+        if (jwt.isNullOrBlank()) {
+            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+        }
         val allIntentions = intentionService.readAll()
         return ResponseEntity.ok(allIntentions.map {
             intention -> mapper.fromIntentionToDTO(intention)
@@ -73,6 +88,18 @@ class IntentionController {
                 ]
             ),
             ApiResponse(
+                responseCode = "401",
+                description = "Unauthorized",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            ),
+            ApiResponse(
                 responseCode = "404",
                 description = "Not Found",
                 content = [
@@ -87,7 +114,10 @@ class IntentionController {
         ]
     )
     @GetMapping("/{id}")
-    fun getIntention(@PathVariable id: Long) : ResponseEntity<Any> {
+    fun getIntention(@CookieValue("jwt") jwt: String?, @PathVariable id: Long) : ResponseEntity<Any> {
+        if (jwt.isNullOrBlank()) {
+            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+        }
         return try {
             ResponseEntity.ok().body(mapper.fromIntentionToDTO(intentionService.read(id)))
         } catch (e: NoSuchElementException) {
@@ -110,11 +140,26 @@ class IntentionController {
                         array = ArraySchema(schema = Schema(implementation = IntentionDTO::class)),
                     )
                 ]
+            ),
+            ApiResponse(
+                responseCode = "401",
+                description = "Unauthorized",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
             )
         ]
     )
     @GetMapping("/activeIntentions")
-    fun getActiveIntentions() : ResponseEntity<List<IntentionDTO>> {
+    fun getActiveIntentions(@CookieValue("jwt") jwt: String?) : ResponseEntity<Any> {
+        if (jwt.isNullOrBlank()) {
+            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+        }
         val intentions = intentionService.getActiveIntentions()
         return ResponseEntity.ok(intentions.map { intention ->
             mapper.fromIntentionToDTO(intention)

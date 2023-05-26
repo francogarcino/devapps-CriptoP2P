@@ -55,6 +55,18 @@ class UserController {
                 ]
             ),
             ApiResponse(
+                responseCode = "401",
+                description = "Unauthorized",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            ),
+            ApiResponse(
                 responseCode = "404",
                 description = "Not Found",
                 content = [
@@ -69,7 +81,10 @@ class UserController {
         ]
     )
     @GetMapping("/{id}")
-    fun getUser(@PathVariable id: Long) : ResponseEntity<Any>{
+    fun getUser(@CookieValue("jwt") jwt: String?, @PathVariable id: Long) : ResponseEntity<Any>{
+        if (jwt.isNullOrBlank()) {
+            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+        }
         return try {
             ResponseEntity.ok().body(userMapper.fromUserToDTO(userService.read(id)))
         } catch (e: NoSuchElementException) {
@@ -92,11 +107,26 @@ class UserController {
                         array = ArraySchema(schema = Schema(implementation = UserDTO::class)),
                     )
                 ]
+            ),
+            ApiResponse(
+                responseCode = "401",
+                description = "Unauthorized",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
             )
         ]
     )
     @GetMapping("/")
-    fun getAllUsers() : ResponseEntity<List<UserDTO>>{
+    fun getAllUsers(@CookieValue("jwt") jwt: String?) : ResponseEntity<Any>{
+        if (jwt.isNullOrBlank()) {
+            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+        }
         val users = userService.readAll()
         return ResponseEntity.ok(users.map { u -> userMapper.fromUserToDTO(u) })
     }
@@ -168,6 +198,18 @@ class UserController {
                 ]
             ),
             ApiResponse(
+                responseCode = "401",
+                description = "Unauthorized",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            ),
+            ApiResponse(
                 responseCode = "404",
                 description = "Not Found",
                 content = [
@@ -182,7 +224,11 @@ class UserController {
         ]
     )
     @PostMapping("/{id}/createIntention")
-    fun createIntention(@PathVariable id : Long, @RequestBody @Valid newIntentionDTO : IntentionDTO) : ResponseEntity<Any> {
+    fun createIntention(@CookieValue("jwt") jwt: String?, @PathVariable id : Long,
+                        @RequestBody @Valid newIntentionDTO : IntentionDTO) : ResponseEntity<Any> {
+        if (jwt.isNullOrBlank()) {
+            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+        }
         return try {
             val user = userService.read(id)
             val newIntention = intentionMapper.fromDTOToIntention(newIntentionDTO, user)
@@ -222,6 +268,18 @@ class UserController {
                         ]
                 ),
                 ApiResponse(
+                        responseCode = "401",
+                        description = "Unauthorized",
+                        content = [
+                            Content(
+                                mediaType = "application/json",
+                                examples = [ExampleObject(
+                                        value = "A error"
+                                )]
+                            )
+                        ]
+                ),
+                ApiResponse(
                         responseCode = "404",
                         description = "Not found",
                         content = [
@@ -236,7 +294,13 @@ class UserController {
             ]
     )
     @GetMapping("/cryptoVolume/{userId}/{startDate}/{finishDate}")
-    fun getCryptoVolume(@PathVariable userId: Long, @PathVariable startDate: LocalDateTime, @PathVariable finishDate: LocalDateTime): ResponseEntity<Any> {
+    fun getCryptoVolume(@CookieValue("jwt") jwt: String?,
+                        @PathVariable userId: Long,
+                        @PathVariable startDate: LocalDateTime,
+                        @PathVariable finishDate: LocalDateTime): ResponseEntity<Any> {
+        if (jwt.isNullOrBlank()) {
+            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+        }
         return try {
             val cryptoVolume = userService.getCryptoVolume(userId, startDate, finishDate)
             return ResponseEntity.ok().body(cryptoVolume)
@@ -276,6 +340,18 @@ class UserController {
                 ]
             ),
             ApiResponse(
+                responseCode = "401",
+                description = "Unauthorized",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            ),
+            ApiResponse(
                 responseCode = "404",
                 description = "Not Found",
                 content = [
@@ -290,7 +366,11 @@ class UserController {
         ]
     )
     @PostMapping("/{idUser}/{idIntention}")
-    fun createTransaction(@PathVariable idUser: Long, @PathVariable idIntention: Long) : ResponseEntity<Any> {
+    fun createTransaction(@CookieValue("jwt") jwt: String?, @PathVariable idUser: Long,
+                          @PathVariable idIntention: Long) : ResponseEntity<Any> {
+        if (jwt.isNullOrBlank()) {
+            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+        }
         return try {
             val dto = transactionMapper.fromTransactionToDTO(userService.beginTransaction(idUser, idIntention))
             ResponseEntity.ok().body(dto)
@@ -330,6 +410,18 @@ class UserController {
                 ]
             ),
             ApiResponse(
+                responseCode = "401",
+                description = "Unauthorized",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            ),
+            ApiResponse(
                 responseCode = "404",
                 description = "Not Found",
                 content = [
@@ -344,7 +436,11 @@ class UserController {
         ]
     )
     @PutMapping("/{idUser}/{idTransaction}/registerTransfer")
-    fun registerTransfer(@PathVariable idUser: Long, @PathVariable idTransaction: Long) : ResponseEntity<Any> {
+    fun registerTransfer(@CookieValue("jwt") jwt: String?, @PathVariable idUser: Long,
+                         @PathVariable idTransaction: Long) : ResponseEntity<Any> {
+        if (jwt.isNullOrBlank()) {
+            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+        }
         return try {
             val dto = transactionMapper.fromTransactionToDTO(userService.registerTransfer(idUser, idTransaction))
             ResponseEntity.ok().body(dto)
@@ -384,6 +480,18 @@ class UserController {
                 ]
             ),
             ApiResponse(
+                responseCode = "401",
+                description = "Unauthorized",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            ),
+            ApiResponse(
                 responseCode = "404",
                 description = "Not Found",
                 content = [
@@ -398,7 +506,11 @@ class UserController {
         ]
     )
     @PutMapping("/{idUser}/{idTransaction}/registerRelease")
-    fun registerReleaseCrypto(@PathVariable idUser: Long, @PathVariable idTransaction: Long) : ResponseEntity<Any> {
+    fun registerReleaseCrypto(@CookieValue("jwt") jwt: String?, @PathVariable idUser: Long,
+                              @PathVariable idTransaction: Long) : ResponseEntity<Any> {
+        if (jwt.isNullOrBlank()) {
+            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+        }
         return try {
             val dto = transactionMapper.fromTransactionToDTO(userService.registerReleaseCrypto(idUser, idTransaction))
             ResponseEntity.ok().body(dto)
@@ -438,6 +550,18 @@ class UserController {
                 ]
             ),
             ApiResponse(
+                responseCode = "401",
+                description = "Unauthorized",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            ),
+            ApiResponse(
                 responseCode = "404",
                 description = "Not Found",
                 content = [
@@ -452,7 +576,11 @@ class UserController {
         ]
     )
     @PutMapping("/{idUser}/{idTransaction}/cancelTransaction")
-    fun cancelTransaction(@PathVariable idUser: Long, @PathVariable idTransaction: Long) : ResponseEntity<Any> {
+    fun cancelTransaction(@CookieValue("jwt") jwt: String?, @PathVariable idUser: Long,
+                          @PathVariable idTransaction: Long) : ResponseEntity<Any> {
+        if (jwt.isNullOrBlank()) {
+            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+        }
         return try {
             val dto = transactionMapper.fromTransactionToDTO(userService.cancelTransaction(idUser, idTransaction))
             ResponseEntity.ok().body(dto)
@@ -478,11 +606,26 @@ class UserController {
                         array = ArraySchema(schema = Schema(implementation = UserStatsDTO::class)),
                     )
                 ]
+            ),
+            ApiResponse(
+                responseCode = "401",
+                description = "Unauthorized",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
             )
         ]
     )
     @GetMapping("/stats")
-    fun getUsersWithStats() : ResponseEntity<List<UserStatsDTO>>{
+    fun getUsersWithStats(@CookieValue("jwt") jwt: String?) : ResponseEntity<Any>{
+        if (jwt.isNullOrBlank()) {
+            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+        }
         val pairs = userService.allUserStats()
         val stats = pairs.map { p -> userMapper.fromDataToStatsDTO(p) }
         return ResponseEntity.ok().body(stats)
