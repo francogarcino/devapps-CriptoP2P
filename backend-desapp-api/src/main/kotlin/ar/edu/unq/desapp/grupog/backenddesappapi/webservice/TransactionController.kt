@@ -19,6 +19,7 @@ class TransactionController {
 
     @Autowired private lateinit var transactionService: TransactionService
     private var mapper = TransactionMapper()
+    private val messageUnauthorized = "It is not authenticated. Please log in"
 
     @Operation(
         summary = "Get all transactions",
@@ -53,7 +54,7 @@ class TransactionController {
     @GetMapping("/")
     fun getAllTransactions(@CookieValue("jwt") jwt: String?) : ResponseEntity<Any> {
         if (jwt.isNullOrBlank()) {
-            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
         }
         val allTransactions = transactionService.readAll()
         return ResponseEntity.ok(allTransactions.map {
@@ -118,7 +119,7 @@ class TransactionController {
     @GetMapping("/{id}")
     fun getTransaction(@CookieValue("jwt") jwt: String?, @PathVariable id: Long) : ResponseEntity<Any> {
         if (jwt.isNullOrBlank()) {
-            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
         }
         return try {
             ResponseEntity.ok().body(mapper.fromTransactionToDTO(transactionService.read(id)))
@@ -184,7 +185,7 @@ class TransactionController {
     @PutMapping("/cancelTransaction/{idTransaction}")
     fun cancelTransaction(@CookieValue("jwt") jwt: String?, @PathVariable idTransaction: Long) : ResponseEntity<Any> {
         if (jwt.isNullOrBlank()) {
-            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
         }
         return try {
             val dto = mapper.fromTransactionToDTO(transactionService.cancelTransaction(idTransaction))

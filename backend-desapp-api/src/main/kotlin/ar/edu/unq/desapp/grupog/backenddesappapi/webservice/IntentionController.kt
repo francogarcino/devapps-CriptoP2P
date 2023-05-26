@@ -10,13 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.*
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.RestController
+import java.util.*
 
 @RestController
 @CrossOrigin
 @RequestMapping("/intentions")
 class IntentionController {
+
     @Autowired private lateinit var intentionService: IntentionService
     private var mapper = IntentionMapper()
+    private val messageUnauthorized = "It is not authenticated. Please log in"
 
     @Operation(
         summary = "Get all intentions",
@@ -51,7 +54,7 @@ class IntentionController {
     @GetMapping("/")
     fun getAllIntentions(@CookieValue("jwt") jwt: String?) : ResponseEntity<Any> {
         if (jwt.isNullOrBlank()) {
-            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
         }
         val allIntentions = intentionService.readAll()
         return ResponseEntity.ok(allIntentions.map {
@@ -116,7 +119,7 @@ class IntentionController {
     @GetMapping("/{id}")
     fun getIntention(@CookieValue("jwt") jwt: String?, @PathVariable id: Long) : ResponseEntity<Any> {
         if (jwt.isNullOrBlank()) {
-            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
         }
         return try {
             ResponseEntity.ok().body(mapper.fromIntentionToDTO(intentionService.read(id)))
@@ -158,7 +161,7 @@ class IntentionController {
     @GetMapping("/activeIntentions")
     fun getActiveIntentions(@CookieValue("jwt") jwt: String?) : ResponseEntity<Any> {
         if (jwt.isNullOrBlank()) {
-            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
         }
         val intentions = intentionService.getActiveIntentions()
         return ResponseEntity.ok(intentions.map { intention ->

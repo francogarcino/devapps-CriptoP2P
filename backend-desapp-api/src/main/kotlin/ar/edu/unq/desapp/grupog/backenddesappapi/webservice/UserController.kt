@@ -20,11 +20,13 @@ import java.time.LocalDateTime
 @CrossOrigin
 @RequestMapping("/users")
 class UserController {
+
     @Autowired private lateinit var userService: UserService
     @Autowired private lateinit var intentionService: IntentionService
     private var userMapper = UserMapper()
     private var intentionMapper = IntentionMapper()
     private var transactionMapper = TransactionMapper()
+    private val messageUnauthorized = "It is not authenticated. Please log in"
 
     @Operation(
         summary = "Get a user",
@@ -83,7 +85,7 @@ class UserController {
     @GetMapping("/{id}")
     fun getUser(@CookieValue("jwt") jwt: String?, @PathVariable id: Long) : ResponseEntity<Any>{
         if (jwt.isNullOrBlank()) {
-            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
         }
         return try {
             ResponseEntity.ok().body(userMapper.fromUserToDTO(userService.read(id)))
@@ -125,7 +127,7 @@ class UserController {
     @GetMapping("/")
     fun getAllUsers(@CookieValue("jwt") jwt: String?) : ResponseEntity<Any>{
         if (jwt.isNullOrBlank()) {
-            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
         }
         val users = userService.readAll()
         return ResponseEntity.ok(users.map { u -> userMapper.fromUserToDTO(u) })
@@ -227,7 +229,7 @@ class UserController {
     fun createIntention(@CookieValue("jwt") jwt: String?, @PathVariable id : Long,
                         @RequestBody @Valid newIntentionDTO : IntentionDTO) : ResponseEntity<Any> {
         if (jwt.isNullOrBlank()) {
-            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
         }
         return try {
             val user = userService.read(id)
@@ -299,7 +301,7 @@ class UserController {
                         @PathVariable startDate: LocalDateTime,
                         @PathVariable finishDate: LocalDateTime): ResponseEntity<Any> {
         if (jwt.isNullOrBlank()) {
-            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
         }
         return try {
             val cryptoVolume = userService.getCryptoVolume(userId, startDate, finishDate)
@@ -369,7 +371,7 @@ class UserController {
     fun createTransaction(@CookieValue("jwt") jwt: String?, @PathVariable idUser: Long,
                           @PathVariable idIntention: Long) : ResponseEntity<Any> {
         if (jwt.isNullOrBlank()) {
-            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
         }
         return try {
             val dto = transactionMapper.fromTransactionToDTO(userService.beginTransaction(idUser, idIntention))
@@ -439,7 +441,7 @@ class UserController {
     fun registerTransfer(@CookieValue("jwt") jwt: String?, @PathVariable idUser: Long,
                          @PathVariable idTransaction: Long) : ResponseEntity<Any> {
         if (jwt.isNullOrBlank()) {
-            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
         }
         return try {
             val dto = transactionMapper.fromTransactionToDTO(userService.registerTransfer(idUser, idTransaction))
@@ -509,7 +511,7 @@ class UserController {
     fun registerReleaseCrypto(@CookieValue("jwt") jwt: String?, @PathVariable idUser: Long,
                               @PathVariable idTransaction: Long) : ResponseEntity<Any> {
         if (jwt.isNullOrBlank()) {
-            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
         }
         return try {
             val dto = transactionMapper.fromTransactionToDTO(userService.registerReleaseCrypto(idUser, idTransaction))
@@ -579,7 +581,7 @@ class UserController {
     fun cancelTransaction(@CookieValue("jwt") jwt: String?, @PathVariable idUser: Long,
                           @PathVariable idTransaction: Long) : ResponseEntity<Any> {
         if (jwt.isNullOrBlank()) {
-            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
         }
         return try {
             val dto = transactionMapper.fromTransactionToDTO(userService.cancelTransaction(idUser, idTransaction))
@@ -624,7 +626,7 @@ class UserController {
     @GetMapping("/stats")
     fun getUsersWithStats(@CookieValue("jwt") jwt: String?) : ResponseEntity<Any>{
         if (jwt.isNullOrBlank()) {
-            return ResponseEntity("It is not authenticated. Please log in", HttpStatus.UNAUTHORIZED)
+            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
         }
         val pairs = userService.allUserStats()
         val stats = pairs.map { p -> userMapper.fromDataToStatsDTO(p) }
