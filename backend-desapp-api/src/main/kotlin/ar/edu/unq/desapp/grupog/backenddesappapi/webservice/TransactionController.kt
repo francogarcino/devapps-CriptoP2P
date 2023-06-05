@@ -19,6 +19,7 @@ class TransactionController {
 
     @Autowired private lateinit var transactionService: TransactionService
     private var mapper = TransactionMapper()
+    private val messageUnauthorized = "It is not authenticated. Please log in"
 
     @Operation(
         summary = "Get all transactions",
@@ -35,11 +36,26 @@ class TransactionController {
                         array = ArraySchema(schema = Schema(implementation = TransactionDTO::class)),
                     )
                 ]
+            ),
+            ApiResponse(
+                responseCode = "401",
+                description = "Unauthorized",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
             )
         ]
     )
     @GetMapping("/")
-    fun getAllTransactions() : ResponseEntity<List<TransactionDTO>> {
+    fun getAllTransactions(@CookieValue("jwt") jwt: String?) : ResponseEntity<Any> {
+        if (jwt.isNullOrBlank()) {
+            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
+        }
         val allTransactions = transactionService.readAll()
         return ResponseEntity.ok(allTransactions.map {
                 transaction -> mapper.fromTransactionToDTO(transaction)
@@ -75,6 +91,18 @@ class TransactionController {
                 ]
             ),
             ApiResponse(
+                responseCode = "401",
+                description = "Unauthorized",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            ),
+            ApiResponse(
                 responseCode = "404",
                 description = "Not Found",
                 content = [
@@ -89,7 +117,10 @@ class TransactionController {
         ]
     )
     @GetMapping("/{id}")
-    fun getTransaction(@PathVariable id: Long) : ResponseEntity<Any> {
+    fun getTransaction(@CookieValue("jwt") jwt: String?, @PathVariable id: Long) : ResponseEntity<Any> {
+        if (jwt.isNullOrBlank()) {
+            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
+        }
         return try {
             ResponseEntity.ok().body(mapper.fromTransactionToDTO(transactionService.read(id)))
         } catch (e: NoSuchElementException) {
@@ -126,6 +157,18 @@ class TransactionController {
                 ]
             ),
             ApiResponse(
+                responseCode = "401",
+                description = "Unauthorized",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            ),
+            ApiResponse(
                 responseCode = "404",
                 description = "Not Found",
                 content = [
@@ -140,7 +183,10 @@ class TransactionController {
         ]
     )
     @PutMapping("/cancelTransaction/{idTransaction}")
-    fun cancelTransaction(@PathVariable idTransaction: Long) : ResponseEntity<Any> {
+    fun cancelTransaction(@CookieValue("jwt") jwt: String?, @PathVariable idTransaction: Long) : ResponseEntity<Any> {
+        if (jwt.isNullOrBlank()) {
+            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
+        }
         return try {
             val dto = mapper.fromTransactionToDTO(transactionService.cancelTransaction(idTransaction))
             ResponseEntity.ok().body(dto)

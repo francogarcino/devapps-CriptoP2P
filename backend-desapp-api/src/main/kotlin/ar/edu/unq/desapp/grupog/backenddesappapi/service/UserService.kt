@@ -7,6 +7,7 @@ import java.time.LocalDateTime
 
 
 interface UserService : CrudService<User>{
+    fun findByEmail(email: String): User
     fun getCryptoVolume(userId: Long,  initialDate: LocalDateTime, finalDate: LocalDateTime) : CryptoVolume
     fun beginTransaction(userId: Long, intentionId: Long): Transaction
     fun registerTransfer(userId: Long, transactionId: Long): Transaction

@@ -9,7 +9,6 @@ import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.CryptoActiveDTO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.lang.RuntimeException
 import java.time.LocalDateTime
 
 @Transactional
@@ -53,6 +52,12 @@ class UserServiceImpl : UserService {
         val daoResponse = userDAO.findById(entityId)
         if (daoResponse.isPresent) return daoResponse.get()
         else throw NoSuchElementException("The received ID doesn't match with any user in the database")
+    }
+
+    override fun findByEmail(email: String): User {
+        val daoResponse = userDAO.findByEmail(email)
+        if (daoResponse.isPresent) return daoResponse.get()
+        else throw NoSuchElementException("The received email doesn't match with any user in the database")
     }
 
     override fun readAll(): List<User> = userDAO.findAll().toList()

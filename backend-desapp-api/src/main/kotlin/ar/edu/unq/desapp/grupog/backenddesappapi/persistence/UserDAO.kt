@@ -4,8 +4,12 @@ import ar.edu.unq.desapp.grupog.backenddesappapi.model.User
 import jakarta.persistence.Tuple
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
+import java.util.*
 
 interface UserDAO : JpaRepository<User, Long> {
+
+    fun findByEmail(email: String): Optional<User>
+
     @Query(
         """
             SELECT u, (SELECT COUNT(t)
