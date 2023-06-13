@@ -2,7 +2,9 @@ package ar.edu.unq.desapp.grupog.backenddesappapi.test.webservice
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.DataService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
+import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.DateRangeDTOBuilder
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserBuilder
+import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.DateRangeDTO
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
@@ -89,21 +91,19 @@ class UserControllerTestCase {
         ).andExpect(status().isOk)
         val user = userService.readAll().first()
         mockMvc.perform(
-            MockMvcRequestBuilders.get("/users/cryptoVolume/{userId}/{startDate}/{finishDate}",
-                user.id,
-                LocalDateTime.of(2023, 1, 1, 10, 0),
-                LocalDateTime.now())
+            MockMvcRequestBuilders.get("/users/{userId}/cryptoVolume",
+                user.id)
                 .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(DateRangeDTOBuilder().build()))
         ).andExpect(status().isOk)
     }
 
     @Test
     fun testCannotGetCryptoVolumeWithAnAnInvalidUserId() {
         mockMvc.perform(
-            MockMvcRequestBuilders.get("/users/cryptoVolume/{userId}/{startDate}/{finishDate}",
-                "id",
-                LocalDateTime.of(2023, 1, 1, 10, 0),
-                LocalDateTime.now())
+            MockMvcRequestBuilders.get("/users/{userId}/cryptoVolume",
+                "id")
+                    .content(mapper.writeValueAsString(DateRangeDTOBuilder().build()))
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isBadRequest)
     }

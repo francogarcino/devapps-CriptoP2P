@@ -32,6 +32,7 @@ dependencies {
 	runtimeOnly("com.mysql:mysql-connector-j")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
+	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.0")
 }
 
 sonarqube {

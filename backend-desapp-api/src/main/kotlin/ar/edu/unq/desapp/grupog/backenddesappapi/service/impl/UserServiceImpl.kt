@@ -24,10 +24,13 @@ class UserServiceImpl : UserService {
     override fun getCryptoVolume(userId: Long, initialDate: LocalDateTime, finalDate: LocalDateTime) : CryptoVolume {
         if (!userDAO.existsById(userId))
             throw NoSuchElementException("The received ID doesn't match with any user in the database")
+        val initial = LocalDateTime.of(initialDate.year, initialDate.month, initialDate.dayOfMonth, 0, 0)
+        val final = LocalDateTime.of(finalDate.year, finalDate.month, finalDate.dayOfMonth, 0, 0)
+
         val transactions =  transactionDAO.getFinishedTransactions().
-                            filter { t -> t.user_whoCreate().id == userId &&
-                                    isBetweenDate(t.creationDate, initialDate, finalDate)
-                            }
+        filter { t -> t.user_whoCreate().id == userId &&
+                                    isBetweenDate(t.creationDate, initial, final)
+        }
         val arsAmount = transactions.sumOf { t -> t.arsAmount!! }
         val usdAmount = arsAmount / 400
         val totalActives = transactions.map { t -> t.intention.getCryptoActive() }.toSet()
