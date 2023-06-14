@@ -238,7 +238,9 @@ class UserController {
     @GetMapping("/{userId}/cryptoVolume")
     fun getCryptoVolume(@PathVariable userId: Long, @RequestBody @Valid dateRange: DateRangeDTO): ResponseEntity<Any> {
         return try {
-            val cryptoVolume = userService.getCryptoVolume(userId, dateRange.initialDate, dateRange.finalDate)
+            val init : LocalDateTime = LocalDateTime.of(dateRange.initYear,dateRange.initMonth,dateRange.initDay,0,0,0)
+            val end : LocalDateTime = LocalDateTime.of(dateRange.endYear,dateRange.endMonth,dateRange.endDay,0,0,0)
+            val cryptoVolume = userService.getCryptoVolume(userId, init, end)
             return ResponseEntity.ok().body(cryptoVolume)
         } catch (e: Exception) {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
