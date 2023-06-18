@@ -12,8 +12,6 @@ import javax.crypto.SecretKey
 @Component
 class JwtGenerator {
 
-    private var JWT_SECRET_KEY: SecretKey? = null
-
     fun generateToken(authentication: Authentication): String {
         val username: String = authentication.name
         val currentTime = Date()
@@ -46,5 +44,7 @@ class JwtGenerator {
         JWT_SECRET_KEY = null
     }
 
-    fun getJwtSecretKey() = JWT_SECRET_KEY
+    companion object {
+        var JWT_SECRET_KEY: SecretKey? = null
+    }
 }

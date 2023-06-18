@@ -44,9 +44,8 @@ class IntentionControllerTestCase {
     @Test
     fun testCreateAndReadIntention() {
         val header = addHeader()
-        val user = userService.create(UserBuilder().build())
         mockMvc.perform(
-            MockMvcRequestBuilders.post("/users/{id}/createIntention", user.id)
+            MockMvcRequestBuilders.post("/users/createIntention")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(IntentionDTOBuilder().build()))
                 .header("Authorization", header)
@@ -57,26 +56,6 @@ class IntentionControllerTestCase {
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", header)
         ).andExpect(status().isOk)
-    }
-
-    @Test
-    fun testCannotCreateIntentionWithAnInvalidUserId() {
-        mockMvc.perform(
-            MockMvcRequestBuilders.post("/users/{id}/createIntention", "id")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(IntentionDTOBuilder().build()))
-                .header("Authorization", addHeader())
-        ).andExpect(status().isBadRequest)
-    }
-
-    @Test
-    fun testCannotCreateIntentionWithAnUserIdNotPersisted() {
-        mockMvc.perform(
-            MockMvcRequestBuilders.post("/users/{id}/createIntention", -1)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(IntentionDTOBuilder().build()))
-                .header("Authorization", addHeader())
-        ).andExpect(status().isNotFound)
     }
 
     @Test

@@ -173,7 +173,7 @@ class UserController : ControllerHelper() {
 
     @Operation(
         summary = "Create an intention",
-        description = "Create an intention with a registered user by validating him by his id",
+        description = "Create an intention with the user logged in",
     )
     @ApiResponses(
         value = [
@@ -225,14 +225,14 @@ class UserController : ControllerHelper() {
             )
         ]
     )
-    @PostMapping("/{id}/createIntention")
-    fun createIntention(request: HttpServletRequest, @PathVariable id : Long,
+    @PostMapping("/createIntention")
+    fun createIntention(request: HttpServletRequest,
                         @RequestBody @Valid newIntentionDTO : IntentionDTO) : ResponseEntity<Any> {
         if (jwtDoesNotExistInTheHeader(request)) {
             return ResponseEntity(messageNotAuthenticated, HttpStatus.UNAUTHORIZED)
         }
         return try {
-            val user = userService.read(id)
+            val user = userService.findByEmail(emailOfCurrentUser())
             val newIntention = intentionMapper.fromDTOToIntention(newIntentionDTO, user)
             val dto = intentionMapper.fromIntentionToDTO(intentionService.create(newIntention))
             ResponseEntity.ok().body(dto)
@@ -368,14 +368,15 @@ class UserController : ControllerHelper() {
             )
         ]
     )
-    @PostMapping("/{idUser}/{idIntention}")
-    fun createTransaction(request: HttpServletRequest, @PathVariable idUser: Long,
+    @PostMapping("/createTransaction/{idIntention}")
+    fun createTransaction(request: HttpServletRequest,
                           @PathVariable idIntention: Long) : ResponseEntity<Any> {
         if (jwtDoesNotExistInTheHeader(request)) {
             return ResponseEntity(messageNotAuthenticated, HttpStatus.UNAUTHORIZED)
         }
         return try {
-            val dto = transactionMapper.fromTransactionToDTO(userService.beginTransaction(idUser, idIntention))
+            val user = userService.findByEmail(emailOfCurrentUser())
+            val dto = transactionMapper.fromTransactionToDTO(userService.beginTransaction(user.id!!, idIntention))
             ResponseEntity.ok().body(dto)
         } catch (e: NoSuchElementException) {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
@@ -438,14 +439,15 @@ class UserController : ControllerHelper() {
             )
         ]
     )
-    @PutMapping("/{idUser}/{idTransaction}/registerTransfer")
-    fun registerTransfer(request: HttpServletRequest, @PathVariable idUser: Long,
+    @PutMapping("/registerTransfer/{idTransaction}")
+    fun registerTransfer(request: HttpServletRequest,
                          @PathVariable idTransaction: Long) : ResponseEntity<Any> {
         if (jwtDoesNotExistInTheHeader(request)) {
             return ResponseEntity(messageNotAuthenticated, HttpStatus.UNAUTHORIZED)
         }
         return try {
-            val dto = transactionMapper.fromTransactionToDTO(userService.registerTransfer(idUser, idTransaction))
+            val user = userService.findByEmail(emailOfCurrentUser())
+            val dto = transactionMapper.fromTransactionToDTO(userService.registerTransfer(user.id!!, idTransaction))
             ResponseEntity.ok().body(dto)
         } catch (e: NoSuchElementException) {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
@@ -508,14 +510,15 @@ class UserController : ControllerHelper() {
             )
         ]
     )
-    @PutMapping("/{idUser}/{idTransaction}/registerRelease")
-    fun registerReleaseCrypto(request: HttpServletRequest, @PathVariable idUser: Long,
+    @PutMapping("/registerRelease/{idTransaction}")
+    fun registerReleaseCrypto(request: HttpServletRequest,
                               @PathVariable idTransaction: Long) : ResponseEntity<Any> {
         if (jwtDoesNotExistInTheHeader(request)) {
             return ResponseEntity(messageNotAuthenticated, HttpStatus.UNAUTHORIZED)
         }
         return try {
-            val dto = transactionMapper.fromTransactionToDTO(userService.registerReleaseCrypto(idUser, idTransaction))
+            val user = userService.findByEmail(emailOfCurrentUser())
+            val dto = transactionMapper.fromTransactionToDTO(userService.registerReleaseCrypto(user.id!!, idTransaction))
             ResponseEntity.ok().body(dto)
         } catch (e: NoSuchElementException) {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
@@ -578,14 +581,15 @@ class UserController : ControllerHelper() {
             )
         ]
     )
-    @PutMapping("/{idUser}/{idTransaction}/cancelTransaction")
-    fun cancelTransaction(request: HttpServletRequest, @PathVariable idUser: Long,
+    @PutMapping("/cancelTransaction/{idTransaction}")
+    fun cancelTransaction(request: HttpServletRequest,
                           @PathVariable idTransaction: Long) : ResponseEntity<Any> {
         if (jwtDoesNotExistInTheHeader(request)) {
             return ResponseEntity(messageNotAuthenticated, HttpStatus.UNAUTHORIZED)
         }
         return try {
-            val dto = transactionMapper.fromTransactionToDTO(userService.cancelTransaction(idUser, idTransaction))
+            val user = userService.findByEmail(emailOfCurrentUser())
+            val dto = transactionMapper.fromTransactionToDTO(userService.cancelTransaction(user.id!!, idTransaction))
             ResponseEntity.ok().body(dto)
         } catch (e: NoSuchElementException) {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
