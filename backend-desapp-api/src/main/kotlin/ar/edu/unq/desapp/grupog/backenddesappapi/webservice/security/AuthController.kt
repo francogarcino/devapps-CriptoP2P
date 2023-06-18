@@ -62,7 +62,7 @@ class AuthController : ControllerHelper() {
             UsernamePasswordAuthenticationToken(loginData.email, loginData.password)
         )
         SecurityContextHolder.getContext().authentication = authentication
-        val token = "Bearer " + jwtGenerator.generateToken(authentication)
+        val token = jwtGenerator.generateToken(authentication)
         return ResponseEntity(TokenInfo(token), HttpStatus.OK)
     }
 

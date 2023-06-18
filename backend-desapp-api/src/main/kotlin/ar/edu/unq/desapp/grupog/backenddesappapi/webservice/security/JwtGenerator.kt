@@ -45,4 +45,6 @@ class JwtGenerator {
     fun removeToken() {
         JWT_SECRET_KEY = null
     }
+
+    fun getJwtSecretKey() = JWT_SECRET_KEY
 }
