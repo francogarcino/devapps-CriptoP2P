@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.test.service
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoActiveName
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.UserAlreadyRegisteredException
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.IntentionService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
@@ -31,7 +32,7 @@ class UserServiceTestCase {
     @Test
     fun testCreate_ShouldThrowAnExceptionWhenEmailIsUsed() {
         userService.create(builder.build())
-        assertThrows<RuntimeException> {
+        assertThrows<UserAlreadyRegisteredException> {
             userService.create(
                 builder.withName("Franco")
                     .withLastname("Garcino")
@@ -43,7 +44,7 @@ class UserServiceTestCase {
     @Test
     fun testCreate_ShouldThrowAnExceptionWhenCVUIsUsed() {
         userService.create(builder.build())
-        assertThrows<RuntimeException> {
+        assertThrows<UserAlreadyRegisteredException> {
             userService.create(
                 builder.withName("Franco")
                     .withLastname("Garcino")
@@ -56,7 +57,7 @@ class UserServiceTestCase {
     @Test
     fun testCreate_ShouldThrowAnExceptionWhenWalletIsUsed() {
         userService.create(builder.build())
-        assertThrows<RuntimeException> {
+        assertThrows<UserAlreadyRegisteredException> {
             userService.create(
                 builder.withName("Franco")
                     .withLastname("Garcino")

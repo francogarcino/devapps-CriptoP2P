@@ -7,7 +7,6 @@ import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.IntentionBuilder
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.LoginDTOBuilder
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserBuilder
 import com.fasterxml.jackson.databind.ObjectMapper
-import jakarta.servlet.http.Cookie
 import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -44,7 +43,6 @@ class WorkflowControllerTestCase {
 
     @Test
     fun testCreateTransactionAndRegisterATransfer() {
-        val cookie = addCookie()
         val userCreate = userService.create(UserBuilder().build())
         val userAccept = userService.create(UserBuilder()
             .withEmail("otroemail@gmail.com")
@@ -56,13 +54,12 @@ class WorkflowControllerTestCase {
             MockMvcRequestBuilders.put("/users/{idUser}/{idTransaction}/registerTransfer",
                 userCreate.id, transaction.id)
                 .contentType(MediaType.APPLICATION_JSON)
-                .cookie(cookie)
+                .header("Authorization", addHeader())
         ).andExpect(status().isOk)
     }
 
     @Test
     fun testCannotRegisterATransferWithAnInvalidUserId() {
-        val cookie = addCookie()
         val userCreate = userService.create(UserBuilder().build())
         val userAccept = userService.create(UserBuilder()
             .withEmail("otroemail@gmail.com")
@@ -74,13 +71,12 @@ class WorkflowControllerTestCase {
             MockMvcRequestBuilders.put("/users/{idUser}/{idTransaction}/registerTransfer",
                 "id", transaction.id)
                 .contentType(MediaType.APPLICATION_JSON)
-                .cookie(cookie)
+                .header("Authorization", addHeader())
         ).andExpect(status().isBadRequest)
     }
 
     @Test
     fun testCannotRegisterATransferWithAnUserIdNotPersisted() {
-        val cookie = addCookie()
         val userCreate = userService.create(UserBuilder().build())
         val userAccept = userService.create(UserBuilder()
             .withEmail("otroemail@gmail.com")
@@ -92,13 +88,13 @@ class WorkflowControllerTestCase {
             MockMvcRequestBuilders.put("/users/{idUser}/{idTransaction}/registerTransfer",
                 -1, transaction.id)
                 .contentType(MediaType.APPLICATION_JSON)
-                .cookie(cookie)
+                .header("Authorization", addHeader())
         ).andExpect(status().isNotFound)
     }
 
     @Test
     fun testCreateTransaction_RegisterATransferAndRegisterACryptoRelease() {
-        val cookie = addCookie()
+        val header = addHeader()
         val userCreate = userService.create(UserBuilder().build())
         val userAccept = userService.create(UserBuilder()
             .withEmail("otroemail@gmail.com")
@@ -110,19 +106,18 @@ class WorkflowControllerTestCase {
             MockMvcRequestBuilders.put("/users/{idUser}/{idTransaction}/registerTransfer",
                 userCreate.id, transaction.id)
                 .contentType(MediaType.APPLICATION_JSON)
-                .cookie(cookie)
+                .header("Authorization", header)
         ).andExpect(status().isOk)
         mockMvc.perform(
             MockMvcRequestBuilders.put("/users/{idUser}/{idTransaction}/registerRelease",
                 userAccept.id, transaction.id)
                 .contentType(MediaType.APPLICATION_JSON)
-                .cookie(cookie)
+                .header("Authorization", header)
         ).andExpect(status().isOk)
     }
 
     @Test
     fun testCannotRegisterACryptoReleaseWithAnInvalidUserId() {
-        val cookie = addCookie()
         val userCreate = userService.create(UserBuilder().build())
         val userAccept = userService.create(UserBuilder()
             .withEmail("otroemail@gmail.com")
@@ -134,13 +129,12 @@ class WorkflowControllerTestCase {
             MockMvcRequestBuilders.put("/users/{idUser}/{idTransaction}/registerRelease",
                 "id", transaction.id)
                 .contentType(MediaType.APPLICATION_JSON)
-                .cookie(cookie)
+                .header("Authorization", addHeader())
         ).andExpect(status().isBadRequest)
     }
 
     @Test
     fun testCannotRegisterACryptoReleaseWithAnUserIdNotPersisted() {
-        val cookie = addCookie()
         val userCreate = userService.create(UserBuilder().build())
         val userAccept = userService.create(UserBuilder()
             .withEmail("otroemail@gmail.com")
@@ -152,13 +146,12 @@ class WorkflowControllerTestCase {
             MockMvcRequestBuilders.put("/users/{idUser}/{idTransaction}/registerRelease",
                 -1, transaction.id)
                 .contentType(MediaType.APPLICATION_JSON)
-                .cookie(cookie)
+                .header("Authorization", addHeader())
         ).andExpect(status().isNotFound)
     }
 
     @Test
     fun testCreateTransactionAndCancelIt() {
-        val cookie = addCookie()
         val userCreate = userService.create(UserBuilder().build())
         val userAccept = userService.create(UserBuilder()
             .withEmail("otroemail@gmail.com")
@@ -170,13 +163,12 @@ class WorkflowControllerTestCase {
             MockMvcRequestBuilders.put("/users/{idUser}/{idTransaction}/cancelTransaction",
                 userCreate.id, transaction.id)
                 .contentType(MediaType.APPLICATION_JSON)
-                .cookie(cookie)
+                .header("Authorization", addHeader())
         ).andExpect(status().isOk)
     }
 
     @Test
     fun testCannotCancelATransactionWithAnInvalidUserId() {
-        val cookie = addCookie()
         val userCreate = userService.create(UserBuilder().build())
         val userAccept = userService.create(UserBuilder()
             .withEmail("otroemail@gmail.com")
@@ -188,13 +180,12 @@ class WorkflowControllerTestCase {
             MockMvcRequestBuilders.put("/users/{idUser}/{idTransaction}/cancelTransaction",
                 "id", transaction.id)
                 .contentType(MediaType.APPLICATION_JSON)
-                .cookie(cookie)
+                .header("Authorization", addHeader())
         ).andExpect(status().isBadRequest)
     }
 
     @Test
     fun testCannotCancelATransactionWithAnUserIdNotPersisted() {
-        val cookie = addCookie()
         val userCreate = userService.create(UserBuilder().build())
         val userAccept = userService.create(UserBuilder()
             .withEmail("otroemail@gmail.com")
@@ -206,11 +197,11 @@ class WorkflowControllerTestCase {
             MockMvcRequestBuilders.put("/users/{idUser}/{idTransaction}/cancelTransaction",
                 -1, transaction.id)
                 .contentType(MediaType.APPLICATION_JSON)
-                .cookie(cookie)
+                .header("Authorization", addHeader())
         ).andExpect(status().isNotFound)
     }
 
-    private fun addCookie(): Cookie? {
+    private fun addHeader(): String {
         userService.create(UserBuilder().withEmail("defaultemail2@gmail.com")
             .withCVU("0011223344556677889911").withWallet("10254721").build())
         val login = LoginDTOBuilder().build()
@@ -219,6 +210,8 @@ class WorkflowControllerTestCase {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(login))
         ).andExpect(status().isOk)
-        return response.andReturn().response.cookies[0]
+
+        val stringToken = response.andReturn().response.contentAsString
+        return "Bearer ${stringToken.substring(10, stringToken.length - 2)}"
     }
 }

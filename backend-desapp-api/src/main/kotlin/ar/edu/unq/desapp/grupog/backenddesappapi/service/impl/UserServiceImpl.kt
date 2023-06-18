@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.service.impl
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.*
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.UserAlreadyRegisteredException
 import ar.edu.unq.desapp.grupog.backenddesappapi.persistence.TransactionDAO
 import ar.edu.unq.desapp.grupog.backenddesappapi.persistence.UserDAO
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
@@ -35,11 +36,10 @@ class UserServiceImpl : UserService {
         return CryptoVolume(LocalDateTime.now(), usdAmount, arsAmount, activesData)
     }
     override fun create(entity: User): User {
-        return try {
-            userDAO.save(entity)
-        } catch (e: Exception) {
-            throw RuntimeException(e.message)
-        }
+        if (userDAO.existsByEmail(entity.email)) throw UserAlreadyRegisteredException("email", entity.email)
+        if (userDAO.existsByCVU(entity.cvu)) throw UserAlreadyRegisteredException("cvu", entity.cvu)
+        if (userDAO.existsByWallet(entity.wallet)) throw UserAlreadyRegisteredException("wallet", entity.wallet)
+        return userDAO.save(entity)
     }
 
     override fun update(entity: User): User {
