@@ -3,6 +3,7 @@ package ar.edu.unq.desapp.grupog.backenddesappapi.test.webservice
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.DataService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.LoginDTOBuilder
+import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.DateRangeDTOBuilder
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserBuilder
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.*
@@ -14,7 +15,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
-import java.time.LocalDateTime
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -95,11 +95,10 @@ class UserControllerTestCase {
         ).andExpect(status().isOk)
         val user = userService.readAll().first()
         mockMvc.perform(
-            MockMvcRequestBuilders.get("/users/cryptoVolume/{userId}/{startDate}/{finishDate}",
-                user.id,
-                LocalDateTime.of(2023, 1, 1, 10, 0),
-                LocalDateTime.now())
+            MockMvcRequestBuilders.get("/users/{userId}/cryptoVolume",
+                user.id)
                 .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(DateRangeDTOBuilder().build()))
                 .header("Authorization", addHeader())
         ).andExpect(status().isOk)
     }
@@ -107,11 +106,10 @@ class UserControllerTestCase {
     @Test
     fun testCannotGetCryptoVolumeWithAnAnInvalidUserId() {
         mockMvc.perform(
-            MockMvcRequestBuilders.get("/users/cryptoVolume/{userId}/{startDate}/{finishDate}",
-                "id",
-                LocalDateTime.of(2023, 1, 1, 10, 0),
-                LocalDateTime.now())
+            MockMvcRequestBuilders.get("/users/{userId}/cryptoVolume",
+                "id")
                 .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(DateRangeDTOBuilder().build()))
                 .header("Authorization", addHeader())
         ).andExpect(status().isBadRequest)
     }
@@ -119,11 +117,10 @@ class UserControllerTestCase {
     @Test
     fun testCannotGetCryptoVolumeWithAnUserIdNotPersisted() {
         mockMvc.perform(
-            MockMvcRequestBuilders.get("/users/cryptoVolume/{userId}/{startDate}/{finishDate}",
-                -1,
-                LocalDateTime.of(2023, 1, 1, 10, 0),
-                LocalDateTime.now())
+            MockMvcRequestBuilders.get("/users/{userId}/cryptoVolume",
+                -1)
                 .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(DateRangeDTOBuilder().build()))
                 .header("Authorization", addHeader())
         ).andExpect(status().isNotFound)
     }

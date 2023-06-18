@@ -295,16 +295,17 @@ class UserController : ControllerHelper() {
                 ),
             ]
     )
-    @GetMapping("/cryptoVolume/{userId}/{startDate}/{finishDate}")
+    @GetMapping("/{userId}/cryptoVolume")
     fun getCryptoVolume(request: HttpServletRequest,
                         @PathVariable userId: Long,
-                        @PathVariable startDate: LocalDateTime,
-                        @PathVariable finishDate: LocalDateTime): ResponseEntity<Any> {
+                        @RequestBody @Valid dateRange: DateRangeDTO): ResponseEntity<Any> {
         if (jwtDoesNotExistInTheHeader(request)) {
             return ResponseEntity(messageNotAuthenticated, HttpStatus.UNAUTHORIZED)
         }
         return try {
-            val cryptoVolume = userService.getCryptoVolume(userId, startDate, finishDate)
+            val init : LocalDateTime = LocalDateTime.of(dateRange.initYear,dateRange.initMonth,dateRange.initDay,0,0,0)
+            val end : LocalDateTime = LocalDateTime.of(dateRange.endYear,dateRange.endMonth,dateRange.endDay,0,0,0)
+            val cryptoVolume = userService.getCryptoVolume(userId, init, end)
             return ResponseEntity.ok().body(cryptoVolume)
         } catch (e: Exception) {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
