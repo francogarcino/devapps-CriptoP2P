@@ -31,33 +31,40 @@ class UserServiceTestCase {
 
     @Test
     fun testCreate_ShouldThrowAnExceptionWhenEmailIsUsed() {
-        userService.create(builder.build())
-        assertThrows<UserAlreadyRegisteredException> {
+        val user = userService.create(builder.build())
+        val expectedMsg = UserAlreadyRegisteredException("email", user.email).message
+        try {
             userService.create(
                 builder.withName("Franco")
                     .withLastname("Garcino")
                     .build()
             )
+        } catch (e: UserAlreadyRegisteredException) {
+            Assertions.assertEquals(expectedMsg, e.message)
         }
     }
 
     @Test
     fun testCreate_ShouldThrowAnExceptionWhenCVUIsUsed() {
-        userService.create(builder.build())
-        assertThrows<UserAlreadyRegisteredException> {
+        val user = userService.create(builder.build())
+        val expectedMsg = UserAlreadyRegisteredException("cvu", user.cvu).message
+        try {
             userService.create(
                 builder.withName("Franco")
                     .withLastname("Garcino")
                     .withEmail("fgarcino@gmail.com")
                     .build()
             )
+        } catch (e: UserAlreadyRegisteredException) {
+            Assertions.assertEquals(expectedMsg, e.message)
         }
     }
 
     @Test
     fun testCreate_ShouldThrowAnExceptionWhenWalletIsUsed() {
-        userService.create(builder.build())
-        assertThrows<UserAlreadyRegisteredException> {
+        val user = userService.create(builder.build())
+        val expectedMsg = UserAlreadyRegisteredException("wallet", user.wallet).message
+        try {
             userService.create(
                 builder.withName("Franco")
                     .withLastname("Garcino")
@@ -65,6 +72,8 @@ class UserServiceTestCase {
                     .withCVU("2121212121212121212121")
                     .build()
             )
+        } catch (e: UserAlreadyRegisteredException) {
+            Assertions.assertEquals(expectedMsg, e.message)
         }
     }
 
