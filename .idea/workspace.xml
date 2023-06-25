@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4843dad1-8251-4803-919c-c071461a8dc0" name="Changes" comment="important changes. the only detail is that changes doesn't work.">
+      <change afterPath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/arch/ArchUnitTestCase.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/build.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +95,76 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Gradle.ArchUnitTestCase.testArch_allTestFileNamesEndsWithTestCase">
+    <configuration name="ArchUnitTestCase" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/backend-desapp-api" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;ar.edu.unq.desapp.grupog.backenddesappapi.test.arch.ArchUnitTestCase&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="ArchUnitTestCase.testArch_allFunctionsWithTestAnnontationShouldStartWithTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/backend-desapp-api" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;ar.edu.unq.desapp.grupog.backenddesappapi.test.arch.ArchUnitTestCase.testArch_allFunctionsWithTestAnnontationShouldStartWithTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="ArchUnitTestCase.testArch_allTestFileNamesEndsWithTestCase" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/backend-desapp-api" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;ar.edu.unq.desapp.grupog.backenddesappapi.test.arch.ArchUnitTestCase.testArch_allTestFileNamesEndsWithTestCase&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="UserControllerTestCase.testGetCryptoVolume" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -121,6 +190,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.ArchUnitTestCase.testArch_allTestFileNamesEndsWithTestCase" />
+        <item itemvalue="Gradle.ArchUnitTestCase.testArch_allFunctionsWithTestAnnontationShouldStartWithTest" />
+        <item itemvalue="Gradle.ArchUnitTestCase" />
         <item itemvalue="Gradle.UserControllerTestCase.testGetCryptoVolume" />
       </list>
     </recent_temporary>
@@ -158,16 +230,5 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="important changes. the only detail is that changes doesn't work." />
     <option name="LAST_COMMIT_MESSAGE" value="important changes. the only detail is that changes doesn't work." />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/service/UserServiceTestCase.kt</url>
-          <line>113</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
