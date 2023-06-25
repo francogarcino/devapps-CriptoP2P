@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.webservice
 
+import ar.edu.unq.desapp.grupog.backenddesappapi.NoLogger
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoVolume
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.User
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.*
@@ -163,6 +164,7 @@ class UserController : ControllerHelper() {
             )
         ]
     )
+    @NoLogger
     @PostMapping("/register")
     fun createUser(
         @RequestBody @Valid user: User
