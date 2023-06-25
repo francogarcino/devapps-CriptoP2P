@@ -167,9 +167,10 @@ class UserController : ControllerHelper() {
     @NoLogger
     @PostMapping("/register")
     fun createUser(
-        @RequestBody @Valid user: User
+        @RequestBody @Valid user: UserCreateDTO
     ) : ResponseEntity<Any> {
-        val dto = userMapper.fromUserToDTO(userService.create(user))
+        val newUser = userMapper.fromCreateDTOToUser(user)
+        val dto = userMapper.fromUserToDTO(userService.create(newUser))
         return ResponseEntity.ok().body(dto)
     }
 

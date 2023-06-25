@@ -5,6 +5,7 @@ import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.LoginDTOBuilder
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.DateRangeDTOBuilder
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserBuilder
+import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserCreateDTOBuilder
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
@@ -40,7 +41,7 @@ class UserControllerTestCase {
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users/register")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(UserBuilder().build()))
+                .content(mapper.writeValueAsString(UserCreateDTOBuilder().build()))
         ).andExpect(status().isOk)
         val user = userService.readAll().first()
         mockMvc.perform(
@@ -91,7 +92,7 @@ class UserControllerTestCase {
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users/register")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(UserBuilder().build()))
+                .content(mapper.writeValueAsString(UserCreateDTOBuilder().build()))
         ).andExpect(status().isOk)
         val user = userService.readAll().first()
         mockMvc.perform(
