@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.service.impl
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.*
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.UserAlreadyRegisteredException
 import ar.edu.unq.desapp.grupog.backenddesappapi.persistence.TransactionDAO
 import ar.edu.unq.desapp.grupog.backenddesappapi.persistence.UserDAO
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
@@ -23,10 +24,13 @@ class UserServiceImpl : UserService {
     override fun getCryptoVolume(userId: Long, initialDate: LocalDateTime, finalDate: LocalDateTime) : CryptoVolume {
         if (!userDAO.existsById(userId))
             throw NoSuchElementException("The received ID doesn't match with any user in the database")
+        val initial = LocalDateTime.of(initialDate.year, initialDate.month, initialDate.dayOfMonth, 0, 0)
+        val final = LocalDateTime.of(finalDate.year, finalDate.month, finalDate.dayOfMonth, 0, 0)
+
         val transactions =  transactionDAO.getFinishedTransactions().
-                            filter { t -> t.user_whoCreate().id == userId &&
-                                    isBetweenDate(t.creationDate, initialDate, finalDate)
-                            }
+        filter { t -> t.user_whoCreate().id == userId &&
+                                    isBetweenDate(t.creationDate, initial, final)
+        }
         val arsAmount = transactions.sumOf { t -> t.arsAmount!! }
         val usdAmount = arsAmount / 400
         val totalActives = transactions.map { t -> t.intention.getCryptoActive() }.toSet()
@@ -35,11 +39,10 @@ class UserServiceImpl : UserService {
         return CryptoVolume(LocalDateTime.now(), usdAmount, arsAmount, activesData)
     }
     override fun create(entity: User): User {
-        return try {
-            userDAO.save(entity)
-        } catch (e: Exception) {
-            throw RuntimeException(e.message)
-        }
+        if (userDAO.existsByEmail(entity.email)) throw UserAlreadyRegisteredException("email", entity.email)
+        if (userDAO.existsByCVU(entity.cvu)) throw UserAlreadyRegisteredException("cvu", entity.cvu)
+        if (userDAO.existsByWallet(entity.wallet)) throw UserAlreadyRegisteredException("wallet", entity.wallet)
+        return userDAO.save(entity)
     }
 
     override fun update(entity: User): User {
