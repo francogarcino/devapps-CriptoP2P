@@ -21,9 +21,9 @@ class ExternalApisService {
             ?: throw NotFoundValueException()
     }
 
-    fun getCryptoPrice(cryptoActiveName: CryptoActiveName): Double {
+    fun getCryptoPrice(cryptoActiveName: String): Double {
         return if (System.getenv("API_HANDLER").isNullOrBlank()) {
-            val url = "https://api.binance.com/api/v3/ticker/price?symbol=${cryptoActiveName.name}"
+            val url = "https://api.binance.com/api/v3/ticker/price?symbol=$cryptoActiveName"
             val response = restTemplate.getForEntity(url, Symbol::class.java)
 
             response.body?.price ?: throw NotFoundValueException()
