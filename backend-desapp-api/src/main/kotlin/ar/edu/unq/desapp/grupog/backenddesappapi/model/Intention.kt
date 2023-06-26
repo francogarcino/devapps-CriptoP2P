@@ -42,6 +42,5 @@ class Intention(
     private fun validateIntentionData() {
         if (cryptoAmount < 1) { throw InvalidAttributeValueException("The value of cryptoAmount is not valid") }
         if (cryptoPrice <= 0) { throw InvalidAttributeValueException("The value of cryptoPrice is not valid") }
-        if (arsAmount <= 0) { throw InvalidAttributeValueException("The value of arsAmount is not valid") }
     }
 }

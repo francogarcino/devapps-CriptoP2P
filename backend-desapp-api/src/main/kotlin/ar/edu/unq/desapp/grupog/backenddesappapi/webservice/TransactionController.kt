@@ -1,29 +1,29 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.webservice
 
-import ar.edu.unq.desapp.grupog.backenddesappapi.service.IntentionService
-import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.IntentionDTO
-import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.mappers.IntentionMapper
+import ar.edu.unq.desapp.grupog.backenddesappapi.service.TransactionService
+import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.TransactionDTO
+import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.mappers.TransactionMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.*
 import io.swagger.v3.oas.annotations.responses.*
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.*
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.RestController
-import java.util.*
 
 @RestController
 @CrossOrigin
-@RequestMapping("/intentions")
-class IntentionController {
+@RequestMapping("/transactions")
+class TransactionController {
 
-    @Autowired private lateinit var intentionService: IntentionService
-    private var mapper = IntentionMapper()
+    @Autowired private lateinit var transactionService: TransactionService
+    private var mapper = TransactionMapper()
     private val messageUnauthorized = "It is not authenticated. Please log in"
 
     @Operation(
-        summary = "Get all intentions",
-        description = "Get all intetions",
+        summary = "Get all transactions",
+        description = "Get all transactions",
     )
     @ApiResponses(
         value = [
@@ -33,7 +33,7 @@ class IntentionController {
                 content = [
                     Content(
                         mediaType = "application/json",
-                        array = ArraySchema(schema = Schema(implementation = IntentionDTO::class)),
+                        array = ArraySchema(schema = Schema(implementation = TransactionDTO::class)),
                     )
                 ]
             ),
@@ -52,19 +52,19 @@ class IntentionController {
         ]
     )
     @GetMapping("/")
-    fun getAllIntentions(@CookieValue("jwt") jwt: String?) : ResponseEntity<Any> {
+    fun getAllTransactions(@CookieValue("jwt") jwt: String?) : ResponseEntity<Any> {
         if (jwt.isNullOrBlank()) {
             return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
         }
-        val allIntentions = intentionService.readAll()
-        return ResponseEntity.ok(allIntentions.map {
-            intention -> mapper.fromIntentionToDTO(intention)
+        val allTransactions = transactionService.readAll()
+        return ResponseEntity.ok(allTransactions.map {
+                transaction -> mapper.fromTransactionToDTO(transaction)
         })
     }
 
     @Operation(
-        summary = "Get an intention",
-        description = "Get an intention using the id as the unique identifier",
+        summary = "Get a transaction",
+        description = "Get a transaction using the id as the unique identifier",
     )
     @ApiResponses(
         value = [
@@ -74,7 +74,7 @@ class IntentionController {
                 content = [
                     Content(
                         mediaType = "application/json",
-                        schema = Schema(implementation = IntentionDTO::class),
+                        schema = Schema(implementation = TransactionDTO::class),
                     )
                 ]
             ),
@@ -109,7 +109,7 @@ class IntentionController {
                     Content(
                         mediaType = "application/json",
                         examples = [ExampleObject(
-                            value = "There is no intention with that id"
+                            value = "The received ID doesn't match with any transaction in the database"
                         )]
                     )
                 ]
@@ -117,20 +117,20 @@ class IntentionController {
         ]
     )
     @GetMapping("/{id}")
-    fun getIntention(@CookieValue("jwt") jwt: String?, @PathVariable id: Long) : ResponseEntity<Any> {
+    fun getTransaction(@CookieValue("jwt") jwt: String?, @PathVariable id: Long) : ResponseEntity<Any> {
         if (jwt.isNullOrBlank()) {
             return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
         }
         return try {
-            ResponseEntity.ok().body(mapper.fromIntentionToDTO(intentionService.read(id)))
+            ResponseEntity.ok().body(mapper.fromTransactionToDTO(transactionService.read(id)))
         } catch (e: NoSuchElementException) {
-            ResponseEntity(e.message,HttpStatus.NOT_FOUND)
+            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
         }
     }
 
     @Operation(
-        summary = "Get all active intentions",
-        description = "Get all active intetions",
+        summary = "Cancel a transaction",
+        description = "Cancel a transaction using the id as the unique identifier",
     )
     @ApiResponses(
         value = [
@@ -140,7 +140,19 @@ class IntentionController {
                 content = [
                     Content(
                         mediaType = "application/json",
-                        array = ArraySchema(schema = Schema(implementation = IntentionDTO::class)),
+                        schema = Schema(implementation = TransactionDTO::class),
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Bad Request",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
                     )
                 ]
             ),
@@ -155,17 +167,34 @@ class IntentionController {
                         )]
                     )
                 ]
+            ),
+            ApiResponse(
+                responseCode = "404",
+                description = "Not Found",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "The received ID doesn't match with any transaction in the database"
+                        )]
+                    )
+                ]
             )
         ]
     )
-    @GetMapping("/activeIntentions")
-    fun getActiveIntentions(@CookieValue("jwt") jwt: String?) : ResponseEntity<Any> {
+    @PutMapping("/cancelTransaction/{idTransaction}")
+    fun cancelTransaction(@CookieValue("jwt") jwt: String?, @PathVariable idTransaction: Long) : ResponseEntity<Any> {
         if (jwt.isNullOrBlank()) {
             return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
         }
-        val intentions = intentionService.getActiveIntentions()
-        return ResponseEntity.ok(intentions.map { intention ->
-            mapper.fromIntentionToDTO(intention)
-        })
+        return try {
+            val dto = mapper.fromTransactionToDTO(transactionService.cancelTransaction(idTransaction))
+            ResponseEntity.ok().body(dto)
+        } catch (e: NoSuchElementException) {
+            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+        } catch (e: Throwable) {
+            ResponseEntity.badRequest().body(e.message)
+        }
     }
+
 }

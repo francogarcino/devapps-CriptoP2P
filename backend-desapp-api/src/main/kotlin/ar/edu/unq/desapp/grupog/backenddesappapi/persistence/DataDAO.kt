@@ -12,7 +12,7 @@ open class DataDAO {
 
     fun clear() {
         val nombreDeTablas = entityManager.createNativeQuery("show tables").resultList
-        entityManager.createNativeQuery("SET FOREIGN_KEY_CHECKS=0;").executeUpdate()
+        entityManager.createNativeQuery("SET REFERENTIAL_INTEGRITY FALSE;").executeUpdate()
         nombreDeTablas.forEach { result ->
             var tabla = ""
             when(result){
@@ -21,6 +21,6 @@ open class DataDAO {
             }
             entityManager.createNativeQuery("truncate table $tabla").executeUpdate()
         }
-        entityManager.createNativeQuery("SET FOREIGN_KEY_CHECKS=1;").executeUpdate()
+        entityManager.createNativeQuery("SET REFERENTIAL_INTEGRITY TRUE;").executeUpdate()
     }
 }

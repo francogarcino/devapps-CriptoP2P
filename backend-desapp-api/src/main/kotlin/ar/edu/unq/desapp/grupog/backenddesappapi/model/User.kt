@@ -4,8 +4,10 @@ import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.*
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
 import jakarta.persistence.*
 import java.time.LocalDateTime
+import kotlin.math.max
+import kotlin.math.min
 
-@Entity
+@Entity(name = "UserApp")
 class User(
     @Column(nullable = false) var firstName: String,
     @Column(nullable = false) var lastName: String,
@@ -26,6 +28,9 @@ class User(
     @OneToMany(mappedBy = "user_whoAccept", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     var transactions = mutableSetOf<Transaction>()
 
+    @Column
+    var reputation : Int = 0
+
     fun createIntention(cryptoActive: CryptoActiveName, cryptoAmount: Int, cryptoPrice: Double, trxType: TrxType) : Intention {
         val intention = Intention(cryptoActive, cryptoAmount, cryptoPrice, this, trxType, LocalDateTime.now())
         intentions.add(intention)
@@ -33,8 +38,15 @@ class User(
     }
 
     fun beginTransaction(intention: Intention) : Transaction {
-        if(intention.getUserFromIntention() == this) throw SameUserException()
+        if(isTheSameUser(intention)) throw SameUserException()
         return Transaction(intention, this)
+    }
+
+    private fun isTheSameUser(intention: Intention): Boolean {
+        val u = intention.getUserFromIntention()
+        return (u.cvu == this.cvu)
+                || (u.email == this.email)
+                || (u.wallet == this.wallet)
     }
 
     fun transferMoneyToBankAccount(transaction: Transaction) {
@@ -49,7 +61,13 @@ class User(
         transaction.cancelByMaybeUser(this)
     }
 
-//    fun discountPoints(amount : Int)
+    fun discountReputation(amount : Int) {
+        reputation = max(reputation - amount, 0)
+    }
+
+    fun increaseReputation(amount : Int) {
+        reputation += amount
+    }
 
     init { validateUserData() }
 
