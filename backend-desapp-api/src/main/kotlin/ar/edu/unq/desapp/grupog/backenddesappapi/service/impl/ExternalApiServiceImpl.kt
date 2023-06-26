@@ -4,6 +4,10 @@ import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoActiveName
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.NotFoundValueException
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
+import java.lang.RuntimeException
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 @Service
 class ExternalApisService {
@@ -21,9 +25,9 @@ class ExternalApisService {
             ?: throw NotFoundValueException()
     }
 
-    fun getCryptoPrice(cryptoActiveName: String): Double {
+    fun getCryptoPrice(cryptoActiveName: CryptoActiveName): Double {
         return if (System.getenv("API_HANDLER").isNullOrBlank()) {
-            val url = "https://api.binance.com/api/v3/ticker/price?symbol=$cryptoActiveName"
+            val url = "https://api.binance.com/api/v3/ticker/price?symbol=${cryptoActiveName.name}"
             val response = restTemplate.getForEntity(url, Symbol::class.java)
 
             response.body?.price ?: throw NotFoundValueException()
@@ -32,27 +36,29 @@ class ExternalApisService {
         }
     }
 
-    fun getCryptosPrices(cryptos: List<CryptoActiveName>): Map<String, Double> {
+    fun getLast24Hours(cryptoActiveName: CryptoActiveName): List<PriceWithTime> {
         return if (System.getenv("API_HANDLER").isNullOrBlank()) {
-            cryptos.map { c -> c.name }.toSet()
-            val symbols =
-                cryptos.joinToString(
-                    prefix = "[",
-                    postfix = "]",
-                    separator = ",",
-                    transform = { c -> "\"" + c + "\"" })
-            val url = "https://api.binance.com/api/v3/ticker/price?symbols=$symbols"
+            val url = "https://api.binance.com/api/v3/klines?" +
+                    "symbol=${cryptoActiveName.name}&interval=3m&limit=480"
+            val response = restTemplate.getForEntity(url, Array<Array<Any>>::class.java)
 
-            val response = restTemplate.getForEntity(url, Array<Symbol>::class.java)
+            if (response.body != null) {
+                val filtered = response.body!!.map {
+                    item -> PriceWithTime(
+                        LocalDateTime.ofInstant(
+                            Instant.ofEpochMilli(item[0] as Long),
+                            ZoneId.systemDefault()
+                        ),
+                        item[1] as String
+                    )
+                }
 
-            response.body?.associate { it.symbol!! to it.price!! }
-                ?: throw NotFoundValueException()
-        } else {
-            val map = mutableMapOf<String, Double>()
-            for (c in cryptos) {
-                map[c.name] = 1.0
+                filtered
+            } else {
+                throw RuntimeException("Something fail")
             }
-            map
+        } else {
+            throw RuntimeException("Something fail")
         }
     }
 }
@@ -71,4 +77,9 @@ data class Root(
 data class Symbol(
     var symbol: String?,
     var price: Double?,
+)
+
+data class PriceWithTime(
+    var dateTime: LocalDateTime,
+    var price: String
 )

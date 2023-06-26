@@ -5,9 +5,8 @@ import ar.edu.unq.desapp.grupog.backenddesappapi.service.impl.ExternalApisServic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 // TODO borrar de la branch
@@ -15,15 +14,12 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @CrossOrigin
 @RequestMapping("/values")
-class UseController {
-    @Autowired lateinit var s : ExternalApisService
-
-    @GetMapping("/dolar")
-    fun dolar() = s.getDollarPrice()
+class CryptoActivesController {
+    @Autowired lateinit var apisService : ExternalApisService
 
     @GetMapping("/crypto/{c}")
-    fun crypto(@RequestParam c: String) = s.getCryptoPrice(c)
+    fun crypto(@PathVariable c: CryptoActiveName) = apisService.getCryptoPrice(c)
 
-    @GetMapping("/cs/{c}")
-    fun cryptos(@RequestBody c: List<CryptoActiveName>) = s.getCryptosPrices(c)
+    @GetMapping("/daily/{c}")
+    fun daily(@PathVariable c: CryptoActiveName) = apisService.getLast24Hours(c)
 }
