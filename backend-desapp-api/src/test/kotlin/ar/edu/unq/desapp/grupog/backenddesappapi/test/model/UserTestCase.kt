@@ -149,7 +149,7 @@ class UserTestCase {
     }
 
     @Test
-    fun userAcceptsAnIntention_andATransactionIsCreated() {
+    fun testUserAcceptsAnIntention_andATransactionIsCreated() {
         val userWhoCreates = builder.withName("Valen").build()
         val userWhoAccepts = builder.withCVU("2222222222222222222222")
             .withWallet("98798798").withEmail("aRandomEmail@hotmail.com").build()

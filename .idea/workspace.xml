@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4843dad1-8251-4803-919c-c071461a8dc0" name="Changes" comment="important changes. the only detail is that changes doesn't work.">
-      <change afterPath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/arch/ArchUnitTestCase.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/arch/ArchUnitTestCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/arch/ArchUnitTestCase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/model/UserTestCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/model/UserTestCase.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,13 +90,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
-}</component>
-  <component name="RunManager" selected="Gradle.ArchUnitTestCase.testArch_allTestFileNamesEndsWithTestCase">
+}]]></component>
+  <component name="RunManager" selected="Gradle.ArchUnitTestCase">
     <configuration name="ArchUnitTestCase" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -190,9 +192,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.ArchUnitTestCase.testArch_allTestFileNamesEndsWithTestCase" />
-        <item itemvalue="Gradle.ArchUnitTestCase.testArch_allFunctionsWithTestAnnontationShouldStartWithTest" />
         <item itemvalue="Gradle.ArchUnitTestCase" />
+        <item itemvalue="Gradle.ArchUnitTestCase.testArch_allFunctionsWithTestAnnontationShouldStartWithTest" />
+        <item itemvalue="Gradle.ArchUnitTestCase.testArch_allTestFileNamesEndsWithTestCase" />
         <item itemvalue="Gradle.UserControllerTestCase.testGetCryptoVolume" />
       </list>
     </recent_temporary>
