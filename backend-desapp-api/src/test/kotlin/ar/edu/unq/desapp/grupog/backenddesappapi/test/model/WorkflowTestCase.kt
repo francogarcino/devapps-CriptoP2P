@@ -43,7 +43,7 @@ class WorkflowTestCase {
 
         Assertions.assertTrue(intention.available)
 
-        anotherUser.beginTransaction(intention)
+        anotherUser.beginTransaction(intention, 1.0)
 
         Assertions.assertFalse(intention.available)
     }
@@ -60,7 +60,7 @@ class WorkflowTestCase {
 
         Assertions.assertTrue(intention.available)
 
-        val trx = anotherUser.beginTransaction(intention)
+        val trx = anotherUser.beginTransaction(intention, 1.0)
 
         Assertions.assertFalse(intention.available)
 
@@ -78,7 +78,7 @@ class WorkflowTestCase {
             .build()
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
-        val trx = anotherUser.beginTransaction(intention)
+        val trx = anotherUser.beginTransaction(intention, 1.0)
 
         val expectedMsg = UnableActionException().message
         try { defaultUser.releaseCrypto(trx) } catch (e: Throwable) {
@@ -95,7 +95,7 @@ class WorkflowTestCase {
             .build()
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
-        val trx = anotherUser.beginTransaction(intention)
+        val trx = anotherUser.beginTransaction(intention, 1.0)
         anotherUser.cancelTransaction(trx)
 
         Assertions.assertEquals(TrxStatus.CANCELLED, trx.status)
@@ -110,7 +110,7 @@ class WorkflowTestCase {
             .build()
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
-        val trx = anotherUser.beginTransaction(intention)
+        val trx = anotherUser.beginTransaction(intention, 1.0)
         anotherUser.cancelTransaction(trx)
 
         val expectedMsg = ActionOnEndedTransactionException().message
@@ -128,7 +128,7 @@ class WorkflowTestCase {
             .build()
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
-        val trx = anotherUser.beginTransaction(intention)
+        val trx = anotherUser.beginTransaction(intention, 1.0)
         defaultUser.transferMoneyToBankAccount(trx)
 
         Assertions.assertEquals(TrxStatus.CHECKING, trx.status)
@@ -143,7 +143,7 @@ class WorkflowTestCase {
             .build()
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
-        val trx = anotherUser.beginTransaction(intention)
+        val trx = anotherUser.beginTransaction(intention, 1.0)
         defaultUser.transferMoneyToBankAccount(trx)
 
         val expectedMsg = UnableActionException().message
@@ -161,7 +161,7 @@ class WorkflowTestCase {
             .build()
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
-        val trx = anotherUser.beginTransaction(intention)
+        val trx = anotherUser.beginTransaction(intention, 1.0)
         defaultUser.transferMoneyToBankAccount(trx)
         anotherUser.cancelTransaction(trx)
 
@@ -177,7 +177,7 @@ class WorkflowTestCase {
             .build()
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
-        val trx = anotherUser.beginTransaction(intention)
+        val trx = anotherUser.beginTransaction(intention, 1.0)
         defaultUser.transferMoneyToBankAccount(trx)
         defaultUser.cancelTransaction(trx)
 
@@ -196,7 +196,7 @@ class WorkflowTestCase {
             .build()
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
-        val trx = anotherUser.beginTransaction(intention)
+        val trx = anotherUser.beginTransaction(intention, 1.0)
         defaultUser.transferMoneyToBankAccount(trx)
         anotherUser.releaseCrypto(trx)
 
@@ -212,7 +212,7 @@ class WorkflowTestCase {
             .build()
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
-        val trx = anotherUser.beginTransaction(intention)
+        val trx = anotherUser.beginTransaction(intention, 1.0)
         defaultUser.cancelTransaction(trx)
 
         val expectedMsg = ActionOnEndedTransactionException().message
@@ -236,7 +236,7 @@ class WorkflowTestCase {
             .build()
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
-        val trx = anotherUser.beginTransaction(intention)
+        val trx = anotherUser.beginTransaction(intention, 1.0)
         defaultUser.transferMoneyToBankAccount(trx)
         anotherUser.releaseCrypto(trx)
 
@@ -262,7 +262,7 @@ class WorkflowTestCase {
         val expectedMsg = ExternalUserActionException().message
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
-        val trx = anotherUser.beginTransaction(intention)
+        val trx = anotherUser.beginTransaction(intention, 1.0)
 
         try { externalUser.transferMoneyToBankAccount(trx) } catch (e: Throwable) { Assertions.assertEquals(expectedMsg, e.message) }
         defaultUser.transferMoneyToBankAccount(trx)
@@ -277,7 +277,7 @@ class WorkflowTestCase {
             .withWallet("98798798").withEmail("aRandomEmail@hotmail.com").build()
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
-        val trx = anotherUser.beginTransaction(intention)
+        val trx = anotherUser.beginTransaction(intention, 1.0)
 
         defaultUser.transferMoneyToBankAccount(trx)
         anotherUser.releaseCrypto(trx)
@@ -293,7 +293,7 @@ class WorkflowTestCase {
             .withWallet("98798798").withEmail("aRandomEmail@hotmail.com").build()
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
-        val trx = anotherUser.beginTransaction(intention)
+        val trx = anotherUser.beginTransaction(intention, 1.0)
         trx.apply { creationDate = LocalDateTime.now().minusDays(5) }
 
         defaultUser.transferMoneyToBankAccount(trx)
@@ -310,7 +310,7 @@ class WorkflowTestCase {
             .withWallet("98798798").withEmail("aRandomEmail@hotmail.com").build()
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
-        val trx = anotherUser.beginTransaction(intention)
+        val trx = anotherUser.beginTransaction(intention, 1.0)
 
         anotherUser.apply { reputation = 45 }
         anotherUser.cancelTransaction(trx)
@@ -324,7 +324,7 @@ class WorkflowTestCase {
             .withWallet("98798798").withEmail("aRandomEmail@hotmail.com").build()
 
         val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
-        val trx = anotherUser.beginTransaction(intention)
+        val trx = anotherUser.beginTransaction(intention, 1.0)
 
         anotherUser.cancelTransaction(trx)
         Assertions.assertEquals(0, anotherUser.reputation)
