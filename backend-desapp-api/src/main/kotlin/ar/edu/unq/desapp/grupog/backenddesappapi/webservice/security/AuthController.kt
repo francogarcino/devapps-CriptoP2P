@@ -1,11 +1,14 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.webservice.security
 
+import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.ControllerHelper
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.LoginDTO
+import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.UserCreateDTO
+import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.UserDTO
+import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.mappers.UserMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.*
 import io.swagger.v3.oas.annotations.responses.*
-import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
@@ -23,6 +26,8 @@ class AuthController : ControllerHelper() {
 
     @Autowired private lateinit var authenticationManager: AuthenticationManager
     @Autowired private lateinit var jwtGenerator: JwtGenerator
+    @Autowired private lateinit var userService: UserService
+    private var userMapper = UserMapper()
 
     @Operation(
         summary = "Log in to the app",
@@ -98,7 +103,6 @@ class AuthController : ControllerHelper() {
             )
         ]
     )
-    @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/log-out")
     fun logout(request: HttpServletRequest): ResponseEntity<Any> {
         if (jwtDoesNotExistInTheHeader(request)) {
@@ -106,5 +110,44 @@ class AuthController : ControllerHelper() {
         }
         jwtGenerator.removeToken()
         return ResponseEntity("You successfully logged out", HttpStatus.OK)
+    }
+
+    @Operation(
+        summary = "Create a user",
+        description = "Create a user using the email, cvu and wallet as unique identifiers",
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "Success",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        schema = Schema(implementation = UserDTO::class),
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Bad Request",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            )
+        ]
+    )
+    @PostMapping("/users/register")
+    fun createUser(
+        @RequestBody @Valid user: UserCreateDTO
+    ) : ResponseEntity<Any> {
+        val newUser = userMapper.fromCreateDTOToUser(user)
+        val dto = userMapper.fromUserToDTO(userService.create(newUser))
+        return ResponseEntity.ok().body(dto)
     }
 }

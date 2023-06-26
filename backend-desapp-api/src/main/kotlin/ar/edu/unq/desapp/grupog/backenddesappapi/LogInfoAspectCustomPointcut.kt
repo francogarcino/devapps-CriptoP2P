@@ -24,17 +24,27 @@ class LogInfoAspectCustomPointcut : ControllerHelper() {
     @Around("execution(* ar.edu.unq.desapp.grupog.backenddesappapi.webservice.security.AuthController.*(..))")
     @Throws(Throwable::class)
     fun logEntryAndArgumentsOfAuthControllerAnnotation(joinPoint: ProceedingJoinPoint): Any {
-        return logOfAuthControllerAndCreateUser(joinPoint)
+        val timeStamp = DateTimeFormatter.ISO_INSTANT.format(Instant.now())
+        val method = joinPoint.signature.toString().substring(40)
+        val arguments = getArguments(joinPoint)
+        val initialTime = System.currentTimeMillis()
+        val proceed = joinPoint.proceed()
+        val executionTime = System.currentTimeMillis() - initialTime
+
+        logger.info(
+            "///////// \n {} \n Method: {} \n with parameters: \n{} Execution time: {} ms \n /////////",
+            timeStamp,
+            method,
+            arguments,
+            executionTime
+        )
+
+        return proceed
     }
 
-    @Around("execution(* ar.edu.unq.desapp.grupog.backenddesappapi.webservice.UserController.createUser(..))")
-    @Throws(Throwable::class)
-    fun logEntryAndArgumentsOfCreateUserAnnotation(joinPoint: ProceedingJoinPoint): Any {
-        return logOfAuthControllerAndCreateUser(joinPoint)
-    }
-
-    @Around("execution(* ar.edu.unq.desapp.grupog.backenddesappapi.webservice.*.*(..))"
-            + "&& !@annotation(ar.edu.unq.desapp.grupog.backenddesappapi.NoLogger)")
+    @Around("execution(* ar.edu.unq.desapp.grupog.backenddesappapi.webservice.UserController.*(..))"
+            + "|| execution(* ar.edu.unq.desapp.grupog.backenddesappapi.webservice.IntentionController.*(..))"
+            + "|| execution(* ar.edu.unq.desapp.grupog.backenddesappapi.webservice.TransactionController.*(..))")
     @Throws(Throwable::class)
     fun logEntryAndArgumentsOfControllersAnnotation(joinPoint: ProceedingJoinPoint): Any {
         val timeStamp = DateTimeFormatter.ISO_INSTANT.format(Instant.now())
@@ -49,25 +59,6 @@ class LogInfoAspectCustomPointcut : ControllerHelper() {
             "///////// \n {} \n User: {} \n Method: {} \n with parameters: \n{} Execution time: {} ms \n /////////",
             timeStamp,
             userName,
-            method,
-            arguments,
-            executionTime
-        )
-
-        return proceed
-    }
-
-    private fun logOfAuthControllerAndCreateUser(joinPoint: ProceedingJoinPoint): Any {
-        val timeStamp = DateTimeFormatter.ISO_INSTANT.format(Instant.now())
-        val method = joinPoint.signature.toString().substring(40)
-        val arguments = getArguments(joinPoint)
-        val initialTime = System.currentTimeMillis()
-        val proceed = joinPoint.proceed()
-        val executionTime = System.currentTimeMillis() - initialTime
-
-        logger.info(
-            "///////// \n {} \n Method: {} \n with parameters: \n{} Execution time: {} ms \n /////////",
-            timeStamp,
             method,
             arguments,
             executionTime
