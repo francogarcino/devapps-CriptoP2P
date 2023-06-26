@@ -1,7 +1,11 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.service.impl
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.*
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.OutOfRangePriceException
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.OverPriceException
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.UnderPriceException
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.UserAlreadyRegisteredException
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
 import ar.edu.unq.desapp.grupog.backenddesappapi.persistence.TransactionDAO
 import ar.edu.unq.desapp.grupog.backenddesappapi.persistence.UserDAO
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
@@ -21,6 +25,8 @@ class UserServiceImpl : UserService {
     @Autowired private lateinit var transactionService: TransactionService
     @Autowired private lateinit var intentionService: IntentionService
 
+    @Autowired private lateinit var apisService: ExternalApisServiceImpl
+
     override fun getCryptoVolume(userId: Long, initialDate: LocalDateTime, finalDate: LocalDateTime) : CryptoVolume {
         if (!userDAO.existsById(userId))
             throw NoSuchElementException("The received ID doesn't match with any user in the database")
@@ -32,7 +38,7 @@ class UserServiceImpl : UserService {
                                     isBetweenDate(t.creationDate, initial, final)
         }
         val arsAmount = transactions.sumOf { t -> t.arsAmount!! }
-        val usdAmount = arsAmount / 400
+        val usdAmount = arsAmount / apisService.getDollarPrice()
         val totalActives = transactions.map { t -> t.intention.getCryptoActive() }.toSet()
         val activesData = totalActives.map { active -> getActiveData(active, transactions) }
 
@@ -69,7 +75,9 @@ class UserServiceImpl : UserService {
         val user = read(userId)
         val intention = intentionService.read(intentionId)
 
-        val transaction = user.beginTransaction(intention)
+        // TODO creo y si tengo que cerrarla, se cierra
+            // TODO varios los test de modelo van a romper
+        val transaction = user.beginTransaction(intention, 1.0)
         return transactionService.create(transaction)
     }
 
@@ -117,7 +125,8 @@ class UserServiceImpl : UserService {
     private fun getActiveData(active: CryptoActiveName, transactions: List<Transaction>): CryptoActiveDTO {
         val transactionsWithActive = transactions.filter { t -> t.cryptoActive().toString() == active.name }
         val cryptoAmount = transactionsWithActive.sumOf { t -> t.cryptoAmount() }
-        val arsPrice : Double = 1.0 * 400.0 * cryptoAmount
-        return CryptoActiveDTO(active, cryptoAmount, 1.0, arsPrice)
+        val cryptoPrice = apisService.getCryptoPrice(active)
+        val arsPrice : Double = cryptoPrice * apisService.getDollarPrice() * cryptoAmount
+        return CryptoActiveDTO(active, cryptoAmount, cryptoPrice, arsPrice)
     }
 }
