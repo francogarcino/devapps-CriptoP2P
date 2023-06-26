@@ -1,8 +1,6 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.webservice
 
-import io.jsonwebtoken.ExpiredJwtException
-import jakarta.servlet.http.Cookie
-import jakarta.servlet.http.HttpServletResponse
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.UserAlreadyRegisteredException
 import org.springframework.http.*
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.annotation.*
@@ -37,14 +35,9 @@ class GeneralControllerAdvise {
         return ResponseEntity.badRequest().body(ex.message)
     }
 
-    @ExceptionHandler(ExpiredJwtException::class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    fun handleExpiredJwtException(response: HttpServletResponse): ResponseEntity<Any> {
-        val cookie = Cookie("jwt", null)
-        cookie.isHttpOnly = true
-        cookie.maxAge = 0
-        response.addCookie(cookie)
-        return ResponseEntity("Your token expired", HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(UserAlreadyRegisteredException::class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    fun handleUserAlreadyRegisteredException(ex: UserAlreadyRegisteredException): ResponseEntity<Any> {
+        return ResponseEntity.badRequest().body(ex.message)
     }
-
 }

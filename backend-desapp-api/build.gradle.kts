@@ -36,6 +36,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
 	testImplementation("com.tngtech.archunit:archunit:1.0.1")
+	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.0")
 }
 
 sonarqube {
