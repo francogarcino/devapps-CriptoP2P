@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 
 @Service
-class ExternalApisService {
+class ExternalApisServiceImpl {
     val restTemplate = RestTemplate()
 
     fun getDollarPrice(): Double {
