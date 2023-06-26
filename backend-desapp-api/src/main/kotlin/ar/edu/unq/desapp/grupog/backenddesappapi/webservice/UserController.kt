@@ -188,13 +188,13 @@ class UserController : ControllerHelper() {
     )
     @PostMapping("/createIntention")
     fun createIntention(request: HttpServletRequest,
-                        @RequestBody @Valid newIntentionDTO : IntentionDTO) : ResponseEntity<Any> {
+                        @RequestBody @Valid newIntentionDTO : IntentionCreateDTO) : ResponseEntity<Any> {
         if (jwtDoesNotExistInTheHeader(request)) {
             return ResponseEntity(messageNotAuthenticated, HttpStatus.UNAUTHORIZED)
         }
         return try {
             val user = userService.findByEmail(emailOfCurrentUser())
-            val newIntention = intentionMapper.fromDTOToIntention(newIntentionDTO, user)
+            val newIntention = intentionMapper.fromCreateDTOToIntention(newIntentionDTO, user)
             val dto = intentionMapper.fromIntentionToDTO(intentionService.create(newIntention))
             ResponseEntity.ok().body(dto)
         } catch (e : NoSuchElementException) {

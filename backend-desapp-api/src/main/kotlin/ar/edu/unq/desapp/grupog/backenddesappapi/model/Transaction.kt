@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.model
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.ExternalUserActionException
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.IntentionNotAvailableException
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.trx.UnableActionException
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxStateClasses.*
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxStatus
@@ -80,6 +81,7 @@ class Transaction(
 
         status = TrxStatus.CANCELLED
         stateBehavior = EndedBehavior()
+        intention.available = true
     }
 
     fun address(): String {
@@ -100,4 +102,12 @@ class Transaction(
         else -> user_whoAccept.wallet
     }
 
+    private fun validateAvailableIntention() {
+        if(!intention.available) throw IntentionNotAvailableException()
+    }
+
+    init {
+        validateAvailableIntention()
+        intention.available = false
+    }
 }

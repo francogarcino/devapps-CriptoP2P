@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.webservice
 
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.IntentionNotAvailableException
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.UserAlreadyRegisteredException
 import org.springframework.http.*
 import org.springframework.http.converter.HttpMessageNotReadableException
@@ -38,6 +39,12 @@ class GeneralControllerAdvise {
     @ExceptionHandler(UserAlreadyRegisteredException::class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     fun handleUserAlreadyRegisteredException(ex: UserAlreadyRegisteredException): ResponseEntity<Any> {
+        return ResponseEntity.badRequest().body(ex.message)
+    }
+
+    @ExceptionHandler(IntentionNotAvailableException::class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    fun handleIntentionNotAvailableException(ex: IntentionNotAvailableException): ResponseEntity<Any> {
         return ResponseEntity.badRequest().body(ex.message)
     }
 }
