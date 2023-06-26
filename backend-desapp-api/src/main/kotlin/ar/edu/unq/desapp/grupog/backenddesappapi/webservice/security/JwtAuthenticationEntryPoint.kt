@@ -15,6 +15,9 @@ class JwtAuthenticationEntryPoint : AuthenticationEntryPoint {
         response: HttpServletResponse,
         authException: AuthenticationException
     ) {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.message)
+        response.status = HttpServletResponse.SC_UNAUTHORIZED
+        response.contentType = "text/plain"
+        val out = response.writer
+        out.println(authException.message)
     }
 }

@@ -1,7 +1,6 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.webservice
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoVolume
-import ar.edu.unq.desapp.grupog.backenddesappapi.model.User
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.*
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.*
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.mappers.*
@@ -131,44 +130,6 @@ class UserController : ControllerHelper() {
         }
         val users = userService.readAll()
         return ResponseEntity.ok(users.map { u -> userMapper.fromUserToDTO(u) })
-    }
-
-    @Operation(
-        summary = "Create a user",
-        description = "Create a user using the email, cvu and wallet as unique identifiers",
-    )
-    @ApiResponses(
-        value = [
-            ApiResponse(
-                responseCode = "200",
-                description = "Success",
-                content = [
-                    Content(
-                        mediaType = "application/json",
-                        schema = Schema(implementation = UserDTO::class),
-                    )
-                ]
-            ),
-            ApiResponse(
-                responseCode = "400",
-                description = "Bad Request",
-                content = [
-                    Content(
-                        mediaType = "application/json",
-                        examples = [ExampleObject(
-                            value = "A error"
-                        )]
-                    )
-                ]
-            )
-        ]
-    )
-    @PostMapping("/register")
-    fun createUser(
-        @RequestBody @Valid user: User
-    ) : ResponseEntity<Any> {
-        val dto = userMapper.fromUserToDTO(userService.create(user))
-        return ResponseEntity.ok().body(dto)
     }
 
     @Operation(

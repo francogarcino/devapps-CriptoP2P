@@ -11,7 +11,6 @@ open class ControllerHelper {
 
     protected val messageNotAuthenticated = "It is not authenticated. Please log in"
     private var passwordEncrypt: SecretKey? = null
-    private lateinit var currentHeader: String
 
     protected fun jwtDoesNotExistInTheHeader(request: HttpServletRequest): Boolean {
         currentHeader = request.getHeader(HttpHeaders.AUTHORIZATION)
@@ -28,5 +27,9 @@ open class ControllerHelper {
         passwordEncrypt = JwtGenerator.JWT_SECRET_KEY
         val header = currentHeader.substring(7, currentHeader.length)
         return Jwts.parser().setSigningKey(passwordEncrypt).parseClaimsJws(header).body.subject
+    }
+
+    companion object {
+        var currentHeader: String = ""
     }
 }
