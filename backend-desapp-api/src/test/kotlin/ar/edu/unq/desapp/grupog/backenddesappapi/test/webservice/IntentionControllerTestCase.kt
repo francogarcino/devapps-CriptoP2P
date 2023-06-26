@@ -3,6 +3,7 @@ package ar.edu.unq.desapp.grupog.backenddesappapi.test.webservice
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.DataService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.IntentionService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
+import ar.edu.unq.desapp.grupog.backenddesappapi.service.impl.ExternalApisServiceImpl
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.IntentionCreateDTOBuilder
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.LoginDTOBuilder
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserBuilder
@@ -32,6 +33,7 @@ class IntentionControllerTestCase {
     private lateinit var intentionService: IntentionService
     @Autowired
     private lateinit var dataService: DataService
+    @Autowired private lateinit var apisService: ExternalApisServiceImpl
 
     private val mapper = ObjectMapper()
 
@@ -47,7 +49,7 @@ class IntentionControllerTestCase {
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users/createIntention")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(IntentionCreateDTOBuilder().build()))
+                .content(mapper.writeValueAsString(IntentionCreateDTOBuilder().build().apply { cryptoPrice = apisService.getCryptoPrice(cryptoActive) }))
                 .header("Authorization", header)
         ).andExpect(status().isOk)
         val intention = intentionService.readAll().first()

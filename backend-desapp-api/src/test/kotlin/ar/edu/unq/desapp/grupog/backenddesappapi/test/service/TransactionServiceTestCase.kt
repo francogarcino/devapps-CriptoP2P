@@ -6,6 +6,7 @@ import ar.edu.unq.desapp.grupog.backenddesappapi.service.DataService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.IntentionService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.TransactionService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
+import ar.edu.unq.desapp.grupog.backenddesappapi.service.impl.ExternalApisServiceImpl
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.TransactionBuilder
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserBuilder
 import org.junit.jupiter.api.*
@@ -18,6 +19,7 @@ class TransactionServiceTestCase {
     @Autowired private lateinit var transactionService: TransactionService
     @Autowired private lateinit var userService: UserService
     @Autowired private lateinit var intentionService: IntentionService
+    @Autowired private lateinit var apisService: ExternalApisServiceImpl
     @Autowired private lateinit var dataService: DataService
 
     private lateinit var transactionBuilder : TransactionBuilder
@@ -40,10 +42,10 @@ class TransactionServiceTestCase {
         userService.create(user)
         userService.create(anotherUser)
 
-        val intention = user.createIntention(CryptoActiveName.ETHUSDT, 100, 1.0, TrxType.BUY)
+        val intention = user.createIntention(CryptoActiveName.ETHUSDT, 100, apisService.getCryptoPrice(CryptoActiveName.ETHUSDT), TrxType.BUY)
         intentionService.create(intention)
 
-        val transaction = anotherUser.beginTransaction(intention)
+        val transaction = anotherUser.beginTransaction(intention, apisService.getCryptoPrice(CryptoActiveName.ETHUSDT))
 
         transactionService.create(transaction)
         val read = transactionService.read(transaction.id!!)

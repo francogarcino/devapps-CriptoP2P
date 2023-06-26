@@ -5,6 +5,7 @@ import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.UserAlreadyReg
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.IntentionService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
+import ar.edu.unq.desapp.grupog.backenddesappapi.service.impl.ExternalApisServiceImpl
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserBuilder
 import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,6 +17,7 @@ import java.lang.RuntimeException
 class UserServiceTestCase {
     @Autowired private lateinit var userService: UserService
     @Autowired private lateinit var intentionService: IntentionService
+    @Autowired private lateinit var apisService: ExternalApisServiceImpl
     private lateinit var builder: UserBuilder
 
     @BeforeEach fun setup() {
@@ -175,7 +177,7 @@ class UserServiceTestCase {
         val user = userService.create(builder.build())
         val anotherUser = userService.create(builder.withEmail("e@gmail.com").withCVU("0147896321478963214785")
             .withWallet("64646464").build())
-        val intention = intentionService.create(user.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY))
+        val intention = intentionService.create(user.createIntention(CryptoActiveName.ETHUSDT, 20, apisService.getCryptoPrice(CryptoActiveName.ETHUSDT), TrxType.BUY))
         val trx = userService.beginTransaction(anotherUser.id!!, intention.getId()!!)
 
         userService.registerTransfer(user.id!!, trx.id!!)
@@ -193,7 +195,7 @@ class UserServiceTestCase {
             .withWallet("64646464").build())
         val externalUser = userService.create(builder.withEmail("ext@gmail.com").withCVU("0147896321478963214000")
             .withWallet("64646000").build())
-        val intention = intentionService.create(user.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY))
+        val intention = intentionService.create(user.createIntention(CryptoActiveName.ETHUSDT, 20, apisService.getCryptoPrice(CryptoActiveName.ETHUSDT), TrxType.BUY))
         val trx = userService.beginTransaction(anotherUser.id!!, intention.getId()!!)
 
         userService.registerTransfer(user.id!!, trx.id!!)

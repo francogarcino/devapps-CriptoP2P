@@ -1,6 +1,8 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.test.webservice
 
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoActiveName
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.*
+import ar.edu.unq.desapp.grupog.backenddesappapi.service.impl.ExternalApisServiceImpl
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.IntentionBuilder
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.LoginDTOBuilder
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserBuilder
@@ -32,6 +34,7 @@ class TransactionControllerTestCase {
     private lateinit var transactionService: TransactionService
     @Autowired
     private lateinit var dataService: DataService
+    @Autowired private lateinit var apisService : ExternalApisServiceImpl
 
     private val mapper = ObjectMapper()
 
@@ -45,7 +48,7 @@ class TransactionControllerTestCase {
     fun testCreateAndReadTransaction() {
         val header = addHeader()
         val userCreate = userService.create(UserBuilder().build())
-        val intention = intentionService.create(IntentionBuilder().withUser(userCreate).build())
+        val intention = intentionService.create(IntentionBuilder().withCryptoPrice(1.0).withUser(userCreate).build())
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users/createTransaction/{idIntention}",
                 intention.getId())
@@ -109,7 +112,9 @@ class TransactionControllerTestCase {
     fun testCreateTransactionAndSystemCancelsIt() {
         val header = addHeader()
         val userCreate = userService.create(UserBuilder().build())
-        val intention = intentionService.create(IntentionBuilder().withUser(userCreate).build())
+        val intention = intentionService.create(IntentionBuilder().withUser(userCreate).withCryptoPrice(apisService.getCryptoPrice(
+            CryptoActiveName.ALICEUSDT
+        )).build())
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users/createTransaction/{idIntention}",
                 intention.getId())

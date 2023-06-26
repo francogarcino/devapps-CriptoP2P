@@ -75,11 +75,28 @@ class UserServiceImpl : UserService {
         val user = read(userId)
         val intention = intentionService.read(intentionId)
 
-        // TODO creo y si tengo que cerrarla, se cierra
-            // TODO varios los test de modelo van a romper
-        val transaction = user.beginTransaction(intention, 1.0)
-        return transactionService.create(transaction)
+        val transaction = transactionService.create(user.beginTransaction(intention, apisService.getCryptoPrice(intention.getCryptoActive())))
+        if (isUnderPrice(intention, transaction)) {
+            transactionService.cancelTransaction(transaction.id!!)
+            throw UnderPriceException()
+        }
+        else if (isOverPrice(intention, transaction)) {
+            transactionService.cancelTransaction(transaction.id!!)
+            throw OverPriceException()
+        }
+
+        return transaction
     }
+
+    private fun isUnderPrice(
+        intention: Intention,
+        transaction: Transaction
+    ) = intention.getTrxType() == TrxType.SELL && transaction.cryptoPrice < intention.getCryptoPrice()
+
+    private fun isOverPrice(
+        intention: Intention,
+        transaction: Transaction
+    ) = intention.getTrxType() == TrxType.BUY && transaction.cryptoPrice > intention.getCryptoPrice()
 
     override fun registerTransfer(userId: Long, transactionId: Long): Transaction {
         val transaction = transactionService.read(transactionId)

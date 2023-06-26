@@ -8,6 +8,7 @@ class TransactionBuilder {
 
     private var anIntention: Intention = IntentionBuilder().build()
     private var anUser: User = UserBuilder().build()
+    private var aPrice : Double = 1.0
 
     fun withIntention(newIntention: Intention) {
         this.apply { anIntention = newIntention }
@@ -17,7 +18,11 @@ class TransactionBuilder {
         this.apply { anUser = newUser }
     }
 
+    fun withPrice(newPrice: Double) {
+        this.apply { aPrice = newPrice }
+    }
+
     fun build() : Transaction {
-        return Transaction(anIntention, anUser)
+        return Transaction(anIntention, anUser, aPrice)
     }
 }

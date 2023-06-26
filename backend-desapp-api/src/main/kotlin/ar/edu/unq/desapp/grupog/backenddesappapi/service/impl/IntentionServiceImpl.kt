@@ -25,7 +25,6 @@ class IntentionServiceImpl : IntentionService {
         if (!(actualPrice*0.95 <= entity.getCryptoPrice() && entity.getCryptoPrice() <= actualPrice*1.05)) {
             throw OutOfRangePriceException()
         }
-
         return intentionDAO.save(entity)
     }
 
