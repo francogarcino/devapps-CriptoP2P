@@ -23,7 +23,7 @@ class ArchUnitTestCase {
     }
 
     @Test
-    fun testArch_allTestFileNamesEndsWithTestCase() {
+    fun testArch_testClassesNameShouldEndWithTestCase() {
         classes().that().resideInAPackage("..test..")
             .and().areAnnotatedWith(SpringBootTest::class.java)
             .should().haveSimpleNameEndingWith("TestCase")
@@ -31,7 +31,7 @@ class ArchUnitTestCase {
     }
 
     @Test
-    fun testArch_allFunctionsWithTestAnnontationShouldStartWithTest() {
+    fun testArch_testMethodsShouldStartWithTest() {
         methods().that().areDeclaredInClassesThat().resideInAPackage("..test..")
             .and().areAnnotatedWith(Test::class.java)
             .should().haveNameStartingWith("test")
