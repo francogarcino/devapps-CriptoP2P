@@ -5,7 +5,6 @@ import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
 import jakarta.persistence.*
 import java.time.LocalDateTime
 import kotlin.math.max
-import kotlin.math.min
 
 @Entity(name = "UserApp")
 class User(

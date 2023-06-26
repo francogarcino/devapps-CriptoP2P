@@ -6,6 +6,7 @@ import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.mappers.IntentionMap
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.*
 import io.swagger.v3.oas.annotations.responses.*
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.*
 import org.springframework.web.bind.annotation.*
@@ -15,11 +16,10 @@ import java.util.*
 @RestController
 @CrossOrigin
 @RequestMapping("/intentions")
-class IntentionController {
+class IntentionController : ControllerHelper() {
 
     @Autowired private lateinit var intentionService: IntentionService
     private var mapper = IntentionMapper()
-    private val messageUnauthorized = "It is not authenticated. Please log in"
 
     @Operation(
         summary = "Get all intentions",
@@ -52,9 +52,9 @@ class IntentionController {
         ]
     )
     @GetMapping("/")
-    fun getAllIntentions(@CookieValue("jwt") jwt: String?) : ResponseEntity<Any> {
-        if (jwt.isNullOrBlank()) {
-            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
+    fun getAllIntentions(request: HttpServletRequest) : ResponseEntity<Any> {
+        if (jwtDoesNotExistInTheHeader(request)) {
+            return ResponseEntity(messageNotAuthenticated, HttpStatus.UNAUTHORIZED)
         }
         val allIntentions = intentionService.readAll()
         return ResponseEntity.ok(allIntentions.map {
@@ -117,9 +117,9 @@ class IntentionController {
         ]
     )
     @GetMapping("/{id}")
-    fun getIntention(@CookieValue("jwt") jwt: String?, @PathVariable id: Long) : ResponseEntity<Any> {
-        if (jwt.isNullOrBlank()) {
-            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
+    fun getIntention(request: HttpServletRequest, @PathVariable id: Long) : ResponseEntity<Any> {
+        if (jwtDoesNotExistInTheHeader(request)) {
+            return ResponseEntity(messageNotAuthenticated, HttpStatus.UNAUTHORIZED)
         }
         return try {
             ResponseEntity.ok().body(mapper.fromIntentionToDTO(intentionService.read(id)))
@@ -159,9 +159,9 @@ class IntentionController {
         ]
     )
     @GetMapping("/activeIntentions")
-    fun getActiveIntentions(@CookieValue("jwt") jwt: String?) : ResponseEntity<Any> {
-        if (jwt.isNullOrBlank()) {
-            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
+    fun getActiveIntentions(request: HttpServletRequest) : ResponseEntity<Any> {
+        if (jwtDoesNotExistInTheHeader(request)) {
+            return ResponseEntity(messageNotAuthenticated, HttpStatus.UNAUTHORIZED)
         }
         val intentions = intentionService.getActiveIntentions()
         return ResponseEntity.ok(intentions.map { intention ->

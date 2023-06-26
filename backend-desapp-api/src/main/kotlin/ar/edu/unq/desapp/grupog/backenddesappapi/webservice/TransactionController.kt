@@ -6,6 +6,7 @@ import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.mappers.TransactionM
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.*
 import io.swagger.v3.oas.annotations.responses.*
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -15,11 +16,10 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @CrossOrigin
 @RequestMapping("/transactions")
-class TransactionController {
+class TransactionController : ControllerHelper() {
 
     @Autowired private lateinit var transactionService: TransactionService
     private var mapper = TransactionMapper()
-    private val messageUnauthorized = "It is not authenticated. Please log in"
 
     @Operation(
         summary = "Get all transactions",
@@ -52,9 +52,9 @@ class TransactionController {
         ]
     )
     @GetMapping("/")
-    fun getAllTransactions(@CookieValue("jwt") jwt: String?) : ResponseEntity<Any> {
-        if (jwt.isNullOrBlank()) {
-            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
+    fun getAllTransactions(request: HttpServletRequest) : ResponseEntity<Any> {
+        if (jwtDoesNotExistInTheHeader(request)) {
+            return ResponseEntity(messageNotAuthenticated, HttpStatus.UNAUTHORIZED)
         }
         val allTransactions = transactionService.readAll()
         return ResponseEntity.ok(allTransactions.map {
@@ -117,9 +117,9 @@ class TransactionController {
         ]
     )
     @GetMapping("/{id}")
-    fun getTransaction(@CookieValue("jwt") jwt: String?, @PathVariable id: Long) : ResponseEntity<Any> {
-        if (jwt.isNullOrBlank()) {
-            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
+    fun getTransaction(request: HttpServletRequest, @PathVariable id: Long) : ResponseEntity<Any> {
+        if (jwtDoesNotExistInTheHeader(request)) {
+            return ResponseEntity(messageNotAuthenticated, HttpStatus.UNAUTHORIZED)
         }
         return try {
             ResponseEntity.ok().body(mapper.fromTransactionToDTO(transactionService.read(id)))
@@ -183,9 +183,9 @@ class TransactionController {
         ]
     )
     @PutMapping("/cancelTransaction/{idTransaction}")
-    fun cancelTransaction(@CookieValue("jwt") jwt: String?, @PathVariable idTransaction: Long) : ResponseEntity<Any> {
-        if (jwt.isNullOrBlank()) {
-            return ResponseEntity(messageUnauthorized, HttpStatus.UNAUTHORIZED)
+    fun cancelTransaction(request: HttpServletRequest, @PathVariable idTransaction: Long) : ResponseEntity<Any> {
+        if (jwtDoesNotExistInTheHeader(request)) {
+            return ResponseEntity(messageNotAuthenticated, HttpStatus.UNAUTHORIZED)
         }
         return try {
             val dto = mapper.fromTransactionToDTO(transactionService.cancelTransaction(idTransaction))
