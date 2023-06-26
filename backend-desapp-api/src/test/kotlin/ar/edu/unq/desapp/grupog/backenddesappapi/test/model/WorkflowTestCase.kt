@@ -32,6 +32,44 @@ class WorkflowTestCase {
     }
 
     @Test
+    fun testFlow_AfterCreatingATransaction_TheIntentionIsNotAvailable() {
+        val defaultUser = userBuilder.build()
+        val anotherUser = userBuilder.withEmail("another@gmail.com")
+            .withCVU("6600660066006600660066")
+            .withWallet("80000000")
+            .build()
+
+        val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
+
+        Assertions.assertTrue(intention.available)
+
+        anotherUser.beginTransaction(intention)
+
+        Assertions.assertFalse(intention.available)
+    }
+
+    @Test
+    fun testFlow_AfterCancelATransaction_TheIntentionIsAvailable() {
+        val defaultUser = userBuilder.build()
+        val anotherUser = userBuilder.withEmail("another@gmail.com")
+            .withCVU("6600660066006600660066")
+            .withWallet("80000000")
+            .build()
+
+        val intention = defaultUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
+
+        Assertions.assertTrue(intention.available)
+
+        val trx = anotherUser.beginTransaction(intention)
+
+        Assertions.assertFalse(intention.available)
+
+        anotherUser.cancelTransaction(trx)
+
+        Assertions.assertTrue(intention.available)
+    }
+
+    @Test
     fun testFlow_TheUserCannotReleaseCryptosWhenTheTransactionStateIsWaiting() {
         val defaultUser = userBuilder.build()
         val anotherUser = userBuilder.withEmail("another@gmail.com")

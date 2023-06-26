@@ -3,7 +3,7 @@ package ar.edu.unq.desapp.grupog.backenddesappapi.test.webservice
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.DataService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.IntentionService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
-import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.IntentionDTOBuilder
+import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.IntentionCreateDTOBuilder
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.LoginDTOBuilder
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserBuilder
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -47,7 +47,7 @@ class IntentionControllerTestCase {
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users/createIntention")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(IntentionDTOBuilder().build()))
+                .content(mapper.writeValueAsString(IntentionCreateDTOBuilder().build()))
                 .header("Authorization", header)
         ).andExpect(status().isOk)
         val intention = intentionService.readAll().first()
