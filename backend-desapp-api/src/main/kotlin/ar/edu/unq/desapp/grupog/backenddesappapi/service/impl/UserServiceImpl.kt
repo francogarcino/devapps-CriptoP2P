@@ -75,7 +75,9 @@ class UserServiceImpl : UserService {
         val user = read(userId)
         val intention = intentionService.read(intentionId)
 
-        val transaction = transactionService.create(user.beginTransaction(intention, apisService.getCryptoPrice(intention.getCryptoActive())))
+        val transaction = transactionService.create(user.beginTransaction(intention, apisService.getCryptoPrice(intention.getCryptoActive())).apply {
+            arsAmount = cryptoPrice * cryptoAmount() * apisService.getDollarPrice()
+        })
         if (isUnderPrice(intention, transaction)) {
             transactionService.cancelTransaction(transaction.id!!)
             throw UnderPriceException()

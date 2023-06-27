@@ -48,7 +48,7 @@ class TransactionControllerTestCase {
     fun testCreateAndReadTransaction() {
         val header = addHeader()
         val userCreate = userService.create(UserBuilder().build())
-        val intention = intentionService.create(IntentionBuilder().withCryptoPrice(1.0).withUser(userCreate).build())
+        val intention = intentionService.create(IntentionBuilder().withCryptoPrice(apisService.getCryptoPrice(CryptoActiveName.ALICEUSDT)).withUser(userCreate).build())
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users/createTransaction/{idIntention}",
                 intention.getId())
