@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.test.service
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoActiveName
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.UnderPriceException
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.UserAlreadyRegisteredException
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.IntentionService
@@ -205,6 +206,34 @@ class UserServiceTestCase {
 
         Assertions.assertTrue(list.any { p -> p.second == 0 && p.first.email == "ext@gmail.com"})
         Assertions.assertEquals(2, list.filter { p -> p.second == 1 }.size)
+    }
+
+    @Test
+    fun testBeginTrx_ShouldThrowAnExceptionWhenTheActualPriceIsUnderTheExpected() {
+        val user = userService.create(builder.build())
+        val anotherUser = userService.create(builder.withEmail("e@gmail.com").withCVU("0147896321478963214785")
+            .withWallet("64646464").build())
+        val intention = intentionService.create(user.createIntention(CryptoActiveName.ETHUSDT, 20, apisService.getCryptoPrice(CryptoActiveName.ETHUSDT)*1.02, TrxType.BUY))
+        val expectedMsg = UnderPriceException().message
+        try {
+            userService.beginTransaction(anotherUser.id!!, intention.getId()!!)
+        } catch (e: UnderPriceException) {
+            Assertions.assertEquals(expectedMsg, e.message)
+        }
+    }
+
+    @Test
+    fun testBeginTrx_ShouldThrowAnExceptionWhenTheActualPriceIsOverTheExpected() {
+        val user = userService.create(builder.build())
+        val anotherUser = userService.create(builder.withEmail("e@gmail.com").withCVU("0147896321478963214785")
+            .withWallet("64646464").build())
+        val intention = intentionService.create(user.createIntention(CryptoActiveName.ETHUSDT, 20, apisService.getCryptoPrice(CryptoActiveName.ETHUSDT)*0.98, TrxType.SELL))
+        val expectedMsg = UnderPriceException().message
+        try {
+            userService.beginTransaction(anotherUser.id!!, intention.getId()!!)
+        } catch (e: UnderPriceException) {
+            Assertions.assertEquals(expectedMsg, e.message)
+        }
     }
 
 //    @AfterEach fun teardown() { userService.deleteAll() }
