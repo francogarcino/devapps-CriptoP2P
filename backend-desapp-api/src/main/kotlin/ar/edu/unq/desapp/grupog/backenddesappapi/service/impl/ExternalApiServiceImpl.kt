@@ -1,8 +1,11 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.service.impl
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoActiveName
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoActiveName.*
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.NotFoundValueException
+import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.Cacheable
+import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import java.lang.RuntimeException
@@ -13,6 +16,7 @@ import java.time.ZoneId
 @Service
 class ExternalApisServiceImpl {
     val restTemplate = RestTemplate()
+    val logger = LoggerFactory.getLogger(ExternalApisServiceImpl::class.java)
 
     fun getDollarPrice(): Double {
         val url = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
@@ -66,6 +70,21 @@ class ExternalApisServiceImpl {
             throw RuntimeException("Something fail")
         }
     }
+
+    @Scheduled(fixedDelay = 600000)
+    fun priceEveryTenMinutes() {
+        var actives = setOf(ALICEUSDT, MATICUSDT, AXSUSDT, AAVEUSDT, ATOMUSDT, NEOUSDT, DOTUSDT,
+            ETHUSDT, CAKEUSDT, BTCUSDT, BNBUSDT, ADAUSDT, TRXUSDT, AUDIOUSDT)
+        val prices = mutableMapOf<CryptoActiveName,PriceWithTime>()
+        actives.forEach { active ->
+            prices[active] = PriceWithTime(
+                LocalDateTime.now(), getCryptoPrice(active).toString()
+            )
+        }
+        logger.info("""Prices updated: 
+            |$prices""".trimMargin())
+    }
+
 }
 
 data class Casa(
