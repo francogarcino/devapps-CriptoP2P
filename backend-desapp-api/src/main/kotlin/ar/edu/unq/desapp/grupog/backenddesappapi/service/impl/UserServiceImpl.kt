@@ -1,7 +1,6 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.service.impl
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.*
-import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.OutOfRangePriceException
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.OverPriceException
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.UnderPriceException
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.UserAlreadyRegisteredException
