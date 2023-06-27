@@ -39,7 +39,7 @@ class ExternalApisServiceImpl {
 
     @Cacheable(
         value = ["daily"],
-        key = "cryptoActiveName"
+        key = "#cryptoActiveName"
     )
     fun getLast24Hours(cryptoActiveName: CryptoActiveName): List<PriceWithTime> {
         return if (System.getenv("API_HANDLER").isNullOrBlank()) {
