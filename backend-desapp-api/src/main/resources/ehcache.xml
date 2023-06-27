@@ -7,14 +7,14 @@
 
     <cache alias="daily">
         <key-type>ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoActiveName</key-type>
-        <value-type>java.util.List&lt;ar.edu.unq.desapp.grupog.backenddesappapi.service.impl.PriceWithTime&gt;</value-type>
+        <value-type>java.util.List</value-type>
         <expiry>
             <ttl unit="seconds">60</ttl>
         </expiry>
 
         <listeners>
             <listener>
-                <class>com.baeldung.cachetest.config.CacheEventLogger</class>
+                <class>ar.edu.unq.desapp.grupog.backenddesappapi.webservice.cache.CacheEventLogger</class>
                 <event-firing-mode>ASYNCHRONOUS</event-firing-mode>
                 <event-ordering-mode>UNORDERED</event-ordering-mode>
                 <events-to-fire-on>CREATED</events-to-fire-on>

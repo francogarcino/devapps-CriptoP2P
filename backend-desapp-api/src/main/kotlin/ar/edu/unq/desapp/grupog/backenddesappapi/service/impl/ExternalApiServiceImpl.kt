@@ -102,8 +102,3 @@ data class Symbol(
     var symbol: String?,
     var price: Double?,
 )
-
-data class PriceWithTime(
-    var dateTime: LocalDateTime,
-    var price: String
-)
