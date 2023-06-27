@@ -19,7 +19,7 @@ class ExternalApisServiceImpl {
     val logger = LoggerFactory.getLogger(ExternalApisServiceImpl::class.java)
 
     fun getDollarPrice(): Double {
-        val url = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
+        val url = "https://www.dolarsi.us/api/api.php?type=valoresprincipales"
         val response = restTemplate.getForEntity(url, Array<Root>::class.java)
 
         val officialRate = response.body?.first {
@@ -32,7 +32,7 @@ class ExternalApisServiceImpl {
 
     fun getCryptoPrice(cryptoActiveName: CryptoActiveName): Double {
         return if (System.getenv("API_HANDLER").isNullOrBlank()) {
-            val url = "https://api.binance.com/api/v3/ticker/price?symbol=${cryptoActiveName.name}"
+            val url = "https://api.binance.us/api/v3/ticker/price?symbol=${cryptoActiveName.name}"
             val response = restTemplate.getForEntity(url, Symbol::class.java)
 
             response.body?.price ?: throw NotFoundValueException()
@@ -47,7 +47,7 @@ class ExternalApisServiceImpl {
     )
     fun getLast24Hours(cryptoActiveName: CryptoActiveName): List<PriceWithTime> {
         return if (System.getenv("API_HANDLER").isNullOrBlank()) {
-            val url = "https://api.binance.com/api/v3/klines?" +
+            val url = "https://api.binance.us/api/v3/klines?" +
                     "symbol=${cryptoActiveName.name}&interval=3m&limit=480"
             val response = restTemplate.getForEntity(url, Array<Array<Any>>::class.java)
 
