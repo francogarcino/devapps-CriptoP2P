@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.test.service
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoActiveName
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.OverPriceException
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.UnderPriceException
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.UserAlreadyRegisteredException
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
@@ -213,7 +214,7 @@ class UserServiceTestCase {
         val user = userService.create(builder.build())
         val anotherUser = userService.create(builder.withEmail("e@gmail.com").withCVU("0147896321478963214785")
             .withWallet("64646464").build())
-        val intention = intentionService.create(user.createIntention(CryptoActiveName.ETHUSDT, 20, apisService.getCryptoPrice(CryptoActiveName.ETHUSDT)*1.02, TrxType.BUY))
+        val intention = intentionService.create(user.createIntention(CryptoActiveName.ETHUSDT, 20, apisService.getCryptoPrice(CryptoActiveName.ETHUSDT)*1.02, TrxType.SELL))
         val expectedMsg = UnderPriceException().message
         try {
             userService.beginTransaction(anotherUser.id!!, intention.getId()!!)
@@ -227,11 +228,11 @@ class UserServiceTestCase {
         val user = userService.create(builder.build())
         val anotherUser = userService.create(builder.withEmail("e@gmail.com").withCVU("0147896321478963214785")
             .withWallet("64646464").build())
-        val intention = intentionService.create(user.createIntention(CryptoActiveName.ETHUSDT, 20, apisService.getCryptoPrice(CryptoActiveName.ETHUSDT)*0.98, TrxType.SELL))
-        val expectedMsg = UnderPriceException().message
+        val intention = intentionService.create(user.createIntention(CryptoActiveName.ETHUSDT, 20, apisService.getCryptoPrice(CryptoActiveName.ETHUSDT)*0.98, TrxType.BUY))
+        val expectedMsg = OverPriceException().message
         try {
             userService.beginTransaction(anotherUser.id!!, intention.getId()!!)
-        } catch (e: UnderPriceException) {
+        } catch (e: OverPriceException) {
             Assertions.assertEquals(expectedMsg, e.message)
         }
     }

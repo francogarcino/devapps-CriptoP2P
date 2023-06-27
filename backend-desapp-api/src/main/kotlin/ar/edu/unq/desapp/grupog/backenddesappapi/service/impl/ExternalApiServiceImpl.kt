@@ -74,15 +74,16 @@ class ExternalApisServiceImpl {
     @Scheduled(fixedDelay = 600000)
     fun priceEveryTenMinutes() {
         var actives = setOf(ALICEUSDT, MATICUSDT, AXSUSDT, AAVEUSDT, ATOMUSDT, NEOUSDT, DOTUSDT,
-            ETHUSDT, CAKEUSDT, BTCUSDT, BNBUSDT, ADAUSDT, TRXUSDT, AUDIOUSDT)
+            ETHUSDT, BTCUSDT, BNBUSDT, ADAUSDT, TRXUSDT, AUDIOUSDT)
         val prices = mutableMapOf<CryptoActiveName,PriceWithTime>()
         actives.forEach { active ->
             prices[active] = PriceWithTime(
                 LocalDateTime.now(), getCryptoPrice(active).toString()
             )
         }
-        logger.info("""Prices updated: 
-            |$prices""".trimMargin())
+        val sb = StringBuilder()
+        prices.forEach { t, u ->  sb.append("$t: " + u.price + " " + u.dateTime + "\n")}
+        logger.info("Prices updated:\n$sb")
     }
 
 }

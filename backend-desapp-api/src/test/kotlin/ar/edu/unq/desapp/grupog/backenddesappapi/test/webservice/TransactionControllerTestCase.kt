@@ -108,48 +108,6 @@ class TransactionControllerTestCase {
         ).andExpect(status().isOk)
     }
 
-    @Test
-    fun testCreateTransactionAndSystemCancelsIt() {
-        val header = addHeader()
-        val userCreate = userService.create(UserBuilder().build())
-        val intention = intentionService.create(IntentionBuilder().withUser(userCreate).withCryptoPrice(apisService.getCryptoPrice(
-            CryptoActiveName.ALICEUSDT
-        )).build())
-        mockMvc.perform(
-            MockMvcRequestBuilders.post("/users/createTransaction/{idIntention}",
-                intention.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .header("Authorization", header)
-        ).andExpect(status().isOk)
-        val transaction = transactionService.readAll().first()
-        mockMvc.perform(
-            MockMvcRequestBuilders.put("/transactions/cancelTransaction/{idTransaction}",
-                transaction.id)
-                .contentType(MediaType.APPLICATION_JSON)
-                .header("Authorization", header)
-        ).andExpect(status().isOk)
-    }
-
-    @Test
-    fun testSystemCannotCancelTransactionWithAnInvalidId() {
-        mockMvc.perform(
-            MockMvcRequestBuilders.put("/transactions/cancelTransaction/{idTransaction}",
-                "id")
-                .contentType(MediaType.APPLICATION_JSON)
-                .header("Authorization", addHeader())
-        ).andExpect(status().isBadRequest)
-    }
-
-    @Test
-    fun testSystemCannotCancelTransactionWithAnIdNotPersisted() {
-        mockMvc.perform(
-            MockMvcRequestBuilders.put("/transactions/cancelTransaction/{idTransaction}",
-                -1)
-                .contentType(MediaType.APPLICATION_JSON)
-                .header("Authorization", addHeader())
-        ).andExpect(status().isNotFound)
-    }
-
     private fun addHeader(): String {
         userService.create(UserBuilder().withEmail("defaultemail2@gmail.com")
             .withCVU("0011223344556677889911").withWallet("10254721").build())

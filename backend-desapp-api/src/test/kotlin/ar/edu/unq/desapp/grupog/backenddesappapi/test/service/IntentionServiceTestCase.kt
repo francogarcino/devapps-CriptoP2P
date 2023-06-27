@@ -2,8 +2,6 @@ package ar.edu.unq.desapp.grupog.backenddesappapi.test.service
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoActiveName
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.OutOfRangePriceException
-import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.OverPriceException
-import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.UnderPriceException
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.DataService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.IntentionService
