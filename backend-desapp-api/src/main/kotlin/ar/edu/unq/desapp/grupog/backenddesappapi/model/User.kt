@@ -36,9 +36,9 @@ class User(
         return intention
     }
 
-    fun beginTransaction(intention: Intention) : Transaction {
+    fun beginTransaction(intention: Intention, price: Double) : Transaction {
         if(isTheSameUser(intention)) throw SameUserException()
-        return Transaction(intention, this)
+        return Transaction(intention, this, price)
     }
 
     private fun isTheSameUser(intention: Intention): Boolean {

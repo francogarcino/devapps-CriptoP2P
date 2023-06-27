@@ -1,8 +1,10 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.test.webservice
 
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoActiveName
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.DataService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.IntentionService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
+import ar.edu.unq.desapp.grupog.backenddesappapi.service.impl.ExternalApisServiceImpl
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.IntentionBuilder
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.LoginDTOBuilder
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserBuilder
@@ -32,7 +34,8 @@ class WorkflowControllerTestCase {
     private lateinit var intentionService: IntentionService
     @Autowired
     private lateinit var dataService: DataService
-
+    @Autowired
+    private lateinit var apisService: ExternalApisServiceImpl
     private val mapper = ObjectMapper()
 
     @BeforeEach
@@ -46,7 +49,7 @@ class WorkflowControllerTestCase {
         val header = addHeader()
         val userCreate = userService.findByEmail("defaultemail2@gmail.com")
         val userAccept = userService.create(UserBuilder().build())
-        val intention = intentionService.create(IntentionBuilder().withUser(userCreate).build())
+        val intention = intentionService.create(IntentionBuilder().withCryptoPrice(apisService.getCryptoPrice(CryptoActiveName.ALICEUSDT)).withUser(userCreate).build())
         val transaction = userService.beginTransaction(userAccept.id!!, intention.getId()!!)
         mockMvc.perform(
             MockMvcRequestBuilders.put("/users/registerTransfer/{idTransaction}",
@@ -83,7 +86,7 @@ class WorkflowControllerTestCase {
         val userAccept = userService.create(
             UserBuilder().withEmail("otroemail@gmail.com").withCVU("1212121212454545454578")
                 .withWallet("12344321").build())
-        val intention = intentionService.create(IntentionBuilder().withUser(userCreate).build())
+        val intention = intentionService.create(IntentionBuilder().withCryptoPrice(apisService.getCryptoPrice(CryptoActiveName.ALICEUSDT)).withUser(userCreate).build())
         val transaction = userService.beginTransaction(userAccept.id!!, intention.getId()!!)
         mockMvc.perform(
             MockMvcRequestBuilders.put("/users/registerTransfer/{idTransaction}",
@@ -133,7 +136,7 @@ class WorkflowControllerTestCase {
         val header = addHeader()
         val userCreate = userService.create(UserBuilder().build())
         val userAccept = userService.findByEmail("defaultemail2@gmail.com")
-        val intention = intentionService.create(IntentionBuilder().withUser(userCreate).build())
+        val intention = intentionService.create(IntentionBuilder().withCryptoPrice(apisService.getCryptoPrice(CryptoActiveName.ALICEUSDT)).withUser(userCreate).build())
         val transaction = userService.beginTransaction(userAccept.id!!, intention.getId()!!)
         mockMvc.perform(
             MockMvcRequestBuilders.put("/users/cancelTransaction/{idTransaction}",

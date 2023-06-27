@@ -21,7 +21,8 @@ class LogInfoAspectCustomPointcut : ControllerHelper() {
 
     @Autowired private lateinit var userService: UserService
 
-    @Around("execution(* ar.edu.unq.desapp.grupog.backenddesappapi.webservice.security.AuthController.*(..))")
+    @Around("execution(* ar.edu.unq.desapp.grupog.backenddesappapi.webservice.security.AuthController.*(..))"
+            + "|| execution(* ar.edu.unq.desapp.grupog.backenddesappapi.webservice.CryptoActivesController.*(..))")
     @Throws(Throwable::class)
     fun logEntryAndArgumentsOfAuthControllerAnnotation(joinPoint: ProceedingJoinPoint): Any {
         val timeStamp = DateTimeFormatter.ISO_INSTANT.format(Instant.now())

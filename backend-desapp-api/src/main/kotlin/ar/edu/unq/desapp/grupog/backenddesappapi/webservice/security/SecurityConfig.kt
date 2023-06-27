@@ -44,6 +44,7 @@ class SecurityConfig {
             .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and().authorizeHttpRequests()
             .requestMatchers(HttpMethod.POST, "/login").permitAll()
+            .requestMatchers("/prices/**").permitAll()
             .requestMatchers("/docs/**").permitAll()
             .requestMatchers("/v3/api-docs/**").permitAll()
             .requestMatchers("/swagger-ui/**").permitAll()

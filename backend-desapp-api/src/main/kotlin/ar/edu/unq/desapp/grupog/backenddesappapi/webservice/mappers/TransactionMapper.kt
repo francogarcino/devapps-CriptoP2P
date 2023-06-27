@@ -13,7 +13,7 @@ class TransactionMapper {
         return TransactionDTO(transaction.id,
                 transaction.cryptoActive(),
                 transaction.cryptoAmount(),
-                transaction.cryptoPrice(),
+                transaction.cryptoPrice,
                 transaction.arsAmount!!,
                 userWhoCreateDTO,
                 userWhoAcceptDTO,
