@@ -2,6 +2,7 @@ package ar.edu.unq.desapp.grupog.backenddesappapi.service.impl
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoActiveName
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.NotFoundValueException
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import java.lang.RuntimeException
@@ -36,6 +37,10 @@ class ExternalApisServiceImpl {
         }
     }
 
+    @Cacheable(
+        value = ["daily"],
+        key = "cryptoActiveName"
+    )
     fun getLast24Hours(cryptoActiveName: CryptoActiveName): List<PriceWithTime> {
         return if (System.getenv("API_HANDLER").isNullOrBlank()) {
             val url = "https://api.binance.com/api/v3/klines?" +
