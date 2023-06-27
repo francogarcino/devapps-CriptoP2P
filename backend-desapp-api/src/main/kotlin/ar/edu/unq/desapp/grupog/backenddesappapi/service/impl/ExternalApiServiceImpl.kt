@@ -19,7 +19,7 @@ class ExternalApisServiceImpl {
     val logger = LoggerFactory.getLogger(ExternalApisServiceImpl::class.java)
 
     fun getDollarPrice(): Double {
-        val url = "https://www.dolarsi.us/api/api.php?type=valoresprincipales"
+        val url = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
         val response = restTemplate.getForEntity(url, Array<Root>::class.java)
 
         val officialRate = response.body?.first {
