@@ -1,0 +1,253 @@
+2023-06-27 21:26:10,069 INFO o.h.v.i.u.Version [background-preinit] HV000001: Hibernate Validator 8.0.0.Final
+2023-06-27 21:26:10,103 INFO o.s.b.StartupInfoLogger [restartedMain] Starting BackendDesappApiApplicationKt using Java 17.0.6 with PID 2400 (/Users/valen/unq/devapps/devapps-CriptoP2P/backend-desapp-api/build/classes/kotlin/main started by valen in /Users/valen/unq/devapps/devapps-CriptoP2P)
+2023-06-27 21:26:10,104 INFO o.s.b.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-06-27 21:26:10,138 INFO o.s.b.l.DeferredLog [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-06-27 21:26:10,138 INFO o.s.b.l.DeferredLog [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-06-27 21:26:10,709 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-06-27 21:26:10,749 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 36 ms. Found 3 JPA repository interfaces.
+2023-06-27 21:26:11,200 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-06-27 21:26:11,206 INFO o.a.j.l.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-06-27 21:26:11,206 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-06-27 21:26:11,206 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/10.1.7]
+2023-06-27 21:26:11,241 INFO o.a.j.l.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-06-27 21:26:11,242 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 1102 ms
+2023-06-27 21:26:11,263 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2023-06-27 21:26:11,375 INFO c.z.h.p.HikariPool [restartedMain] HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:desapp-api user=ROOT
+2023-06-27 21:26:11,376 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2023-06-27 21:26:11,383 INFO o.s.b.a.h.H2ConsoleAutoConfiguration [restartedMain] H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:desapp-api'
+2023-06-27 21:26:11,665 INFO o.e.s.o.t.o.p.UpfrontAllocatingPageSource [restartedMain] Allocating 10.0MB in chunks
+2023-06-27 21:26:11,677 INFO o.e.c.EhcacheManager [restartedMain] Cache 'daily' created in EhcacheManager.
+2023-06-27 21:26:11,709 INFO o.e.j.Eh107CacheManager [restartedMain] Registering Ehcache MBean javax.cache:type=CacheStatistics,CacheManager=file./Users/valen/unq/devapps/devapps-CriptoP2P/backend-desapp-api/build/resources/main/ehcache.xml,Cache=daily
+2023-06-27 21:26:11,713 INFO o.e.j.Eh107CacheManager [restartedMain] Registering Ehcache MBean javax.cache:type=CacheStatistics,CacheManager=file./Users/valen/unq/devapps/devapps-CriptoP2P/backend-desapp-api/build/resources/main/ehcache.xml,Cache=daily
+2023-06-27 21:26:11,757 INFO o.h.j.i.u.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-06-27 21:26:11,789 INFO o.h.Version [restartedMain] HHH000412: Hibernate ORM core version 6.1.7.Final
+2023-06-27 21:26:11,936 INFO o.h.e.j.d.i.DialectFactoryImpl [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2023-06-27 21:26:12,268 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-06-27 21:26:12,272 INFO o.s.o.j.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-06-27 21:26:12,920 WARN a.e.u.d.g.b.s.InitServiceInMemory [restartedMain] Init Data Using H2 DB
+2023-06-27 21:26:13,132 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-06-27 21:26:13,772 INFO o.s.s.w.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4b327b96, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1444fd58, org.springframework.security.web.context.SecurityContextHolderFilter@f35e89, org.springframework.security.web.header.HeaderWriterFilter@650a73ad, org.springframework.security.web.authentication.logout.LogoutFilter@37fb6c20, ar.edu.unq.desapp.grupog.backenddesappapi.webservice.security.JwtAuthenticationFilter@44487da, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@6819ac83, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2674ebf5, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@62453625, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@311c26e7, org.springframework.security.web.session.SessionManagementFilter@6cd76daa, org.springframework.security.web.access.ExceptionTranslationFilter@4c20f743, org.springframework.security.web.access.intercept.AuthorizationFilter@3ce18fa5]
+2023-06-27 21:26:13,779 WARN o.s.s.c.a.w.b.WebSecurity [restartedMain] You are asking Spring Security to ignore Ant [pattern='/h2-console/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-06-27 21:26:13,779 INFO o.s.s.w.DefaultSecurityFilterChain [restartedMain] Will not secure Ant [pattern='/h2-console/**']
+2023-06-27 21:26:13,780 WARN o.s.s.c.a.w.b.WebSecurity [restartedMain] You are asking Spring Security to ignore Ant [pattern='/health']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-06-27 21:26:13,780 INFO o.s.s.w.DefaultSecurityFilterChain [restartedMain] Will not secure Ant [pattern='/health']
+2023-06-27 21:26:13,780 WARN o.s.s.c.a.w.b.WebSecurity [restartedMain] You are asking Spring Security to ignore Ant [pattern='/users/register']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-06-27 21:26:13,780 INFO o.s.s.w.DefaultSecurityFilterChain [restartedMain] Will not secure Ant [pattern='/users/register']
+2023-06-27 21:26:13,918 INFO o.s.b.d.a.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-06-27 21:26:13,928 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-06-27 21:26:13,939 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-06-27 21:26:13,947 INFO o.s.b.StartupInfoLogger [restartedMain] Started BackendDesappApiApplicationKt in 4.075 seconds (process running for 4.372)
+2023-06-27 21:26:17,134 INFO a.e.u.d.g.b.s.i.ExternalApisServiceImpl [scheduling-1] Prices updated:
+ALICEUSDT: 0.849 2023-06-27T21:26:13.946253
+MATICUSDT: 0.6465 2023-06-27T21:26:14.705296
+AXSUSDT: 5.87 2023-06-27T21:26:15.167800
+AAVEUSDT: 64.2 2023-06-27T21:26:15.344645
+ATOMUSDT: 9.341 2023-06-27T21:26:15.532128
+NEOUSDT: 8.93 2023-06-27T21:26:15.709717
+DOTUSDT: 5.037 2023-06-27T21:26:15.889206
+ETHUSDT: 1872.74 2023-06-27T21:26:16.085096
+BTCUSDT: 30534.0 2023-06-27T21:26:16.264331
+BNBUSDT: 235.6 2023-06-27T21:26:16.436486
+ADAUSDT: 0.2814 2023-06-27T21:26:16.607041
+TRXUSDT: 0.06697 2023-06-27T21:26:16.783079
+AUDIOUSDT: 0.1813 2023-06-27T21:26:16.961248
+
+2023-06-27 21:36:20,148 INFO a.e.u.d.g.b.s.i.ExternalApisServiceImpl [scheduling-1] Prices updated:
+ALICEUSDT: 0.849 2023-06-27T21:36:17.187882
+MATICUSDT: 0.6458 2023-06-27T21:36:17.770782
+AXSUSDT: 5.87 2023-06-27T21:36:17.953166
+AAVEUSDT: 63.6 2023-06-27T21:36:18.408896
+ATOMUSDT: 9.337 2023-06-27T21:36:18.584884
+NEOUSDT: 9.03 2023-06-27T21:36:18.758879
+DOTUSDT: 5.022 2023-06-27T21:36:18.941406
+ETHUSDT: 1869.96 2023-06-27T21:36:19.117765
+BTCUSDT: 30555.0 2023-06-27T21:36:19.287599
+BNBUSDT: 235.3 2023-06-27T21:36:19.465400
+ADAUSDT: 0.2823 2023-06-27T21:36:19.636871
+TRXUSDT: 0.06697 2023-06-27T21:36:19.804498
+AUDIOUSDT: 0.1813 2023-06-27T21:36:19.976083
+
+2023-06-27 21:43:31,459 INFO o.a.j.l.DirectJDKLog [http-nio-8080-exec-2] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-06-27 21:43:31,460 INFO o.s.w.s.FrameworkServlet [http-nio-8080-exec-2] Initializing Servlet 'dispatcherServlet'
+2023-06-27 21:43:31,464 INFO o.s.w.s.FrameworkServlet [http-nio-8080-exec-2] Completed initialization in 4 ms
+2023-06-27 21:43:31,814 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [http-nio-8080-exec-2] ///////// 
+ 2023-06-28T00:43:31.500618Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@33df8c70 
+ Execution time: 313 ms 
+ /////////
+2023-06-27 21:45:09,703 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [http-nio-8080-exec-6] ///////// 
+ 2023-06-28T00:45:09.692397Z 
+ User: Valentin Ferreyra 
+ Method: backenddesappapi.webservice.UserController.getUser(HttpServletRequest,long) 
+ with parameters: 
+  SecurityContextHolderAwareRequestWrapper[ org.springframework.security.web.header.HeaderWriterFilter$HeaderWriterRequest@6ffed804] 
+  1 
+ Execution time: 8 ms 
+ /////////
+2023-06-27 21:46:23,079 INFO a.e.u.d.g.b.s.i.ExternalApisServiceImpl [scheduling-1] Prices updated:
+ALICEUSDT: 0.849 2023-06-27T21:46:20.145181
+MATICUSDT: 0.6471 2023-06-27T21:46:20.703992
+AXSUSDT: 5.87 2023-06-27T21:46:21.150492
+AAVEUSDT: 63.1 2023-06-27T21:46:21.334809
+ATOMUSDT: 9.353 2023-06-27T21:46:21.511496
+NEOUSDT: 9.02 2023-06-27T21:46:21.687374
+DOTUSDT: 5.022 2023-06-27T21:46:21.857022
+ETHUSDT: 1871.82 2023-06-27T21:46:22.032489
+BTCUSDT: 30541.0 2023-06-27T21:46:22.218922
+BNBUSDT: 234.6 2023-06-27T21:46:22.388485
+ADAUSDT: 0.2813 2023-06-27T21:46:22.558364
+TRXUSDT: 0.06697 2023-06-27T21:46:22.724235
+AUDIOUSDT: 0.1813 2023-06-27T21:46:22.915176
+
+2023-06-27 21:50:42,278 INFO a.e.u.d.g.b.w.c.CacheEventLogger [Ehcache [_default_]-0] CacheLogger Triggered
+2023-06-27 21:50:42,279 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [http-nio-8080-exec-4] ///////// 
+ 2023-06-28T00:50:41.373011Z 
+ Method: backenddesappapi.webservice.CryptoActivesController.daily(CryptoActiveName) 
+ with parameters: 
+  ALICEUSDT 
+ Execution time: 906 ms 
+ /////////
+2023-06-27 21:50:57,521 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [http-nio-8080-exec-6] ///////// 
+ 2023-06-28T00:50:57.495219Z 
+ Method: backenddesappapi.webservice.CryptoActivesController.daily(CryptoActiveName) 
+ with parameters: 
+  ALICEUSDT 
+ Execution time: 26 ms 
+ /////////
+2023-06-27 21:50:58,950 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [http-nio-8080-exec-7] ///////// 
+ 2023-06-28T00:50:58.950152Z 
+ Method: backenddesappapi.webservice.CryptoActivesController.daily(CryptoActiveName) 
+ with parameters: 
+  ALICEUSDT 
+ Execution time: 0 ms 
+ /////////
+2023-06-27 21:51:00,209 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [http-nio-8080-exec-8] ///////// 
+ 2023-06-28T00:51:00.209134Z 
+ Method: backenddesappapi.webservice.CryptoActivesController.daily(CryptoActiveName) 
+ with parameters: 
+  ALICEUSDT 
+ Execution time: 0 ms 
+ /////////
+2023-06-27 21:51:00,908 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [http-nio-8080-exec-9] ///////// 
+ 2023-06-28T00:51:00.907948Z 
+ Method: backenddesappapi.webservice.CryptoActivesController.daily(CryptoActiveName) 
+ with parameters: 
+  ALICEUSDT 
+ Execution time: 0 ms 
+ /////////
+2023-06-27 21:51:01,433 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [http-nio-8080-exec-10] ///////// 
+ 2023-06-28T00:51:01.433032Z 
+ Method: backenddesappapi.webservice.CryptoActivesController.daily(CryptoActiveName) 
+ with parameters: 
+  ALICEUSDT 
+ Execution time: 0 ms 
+ /////////
+2023-06-27 21:51:02,584 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [http-nio-8080-exec-1] ///////// 
+ 2023-06-28T00:51:02.584062Z 
+ Method: backenddesappapi.webservice.CryptoActivesController.daily(CryptoActiveName) 
+ with parameters: 
+  ALICEUSDT 
+ Execution time: 0 ms 
+ /////////
+2023-06-27 21:51:03,457 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [http-nio-8080-exec-2] ///////// 
+ 2023-06-28T00:51:03.456622Z 
+ Method: backenddesappapi.webservice.CryptoActivesController.daily(CryptoActiveName) 
+ with parameters: 
+  ALICEUSDT 
+ Execution time: 1 ms 
+ /////////
+2023-06-27 21:51:44,444 INFO a.e.u.d.g.b.w.c.CacheEventLogger [Ehcache [_default_]-1] CacheLogger Triggered
+2023-06-27 21:51:44,444 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [http-nio-8080-exec-3] ///////// 
+ 2023-06-28T00:51:43.540626Z 
+ Method: backenddesappapi.webservice.CryptoActivesController.daily(CryptoActiveName) 
+ with parameters: 
+  ETHUSDT 
+ Execution time: 904 ms 
+ /////////
+2023-06-27 21:51:48,205 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [http-nio-8080-exec-5] ///////// 
+ 2023-06-28T00:51:48.178295Z 
+ Method: backenddesappapi.webservice.CryptoActivesController.daily(CryptoActiveName) 
+ with parameters: 
+  ETHUSDT 
+ Execution time: 27 ms 
+ /////////
+2023-06-27 21:51:49,957 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [http-nio-8080-exec-4] ///////// 
+ 2023-06-28T00:51:49.956524Z 
+ Method: backenddesappapi.webservice.CryptoActivesController.daily(CryptoActiveName) 
+ with parameters: 
+  ETHUSDT 
+ Execution time: 1 ms 
+ /////////
+2023-06-27 21:54:21,564 INFO o.s.o.j.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-06-27 21:54:21,965 WARN o.s.b.f.s.DisposableBeanAdapter [SpringApplicationShutdownHook] Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de datos ya esta cerrada (para des-habilitar el cerrado automatico durante el shutdown de la VM, agregue ";DB_CLOSE_ON_EXIT=FALSE" a la URL de conexión)
+Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
+2023-06-27 21:54:21,973 INFO o.e.c.EhcacheManager [SpringApplicationShutdownHook] Cache 'daily' removed from EhcacheManager.
+2023-06-27 21:54:21,975 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2023-06-27 21:54:22,096 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
+2023-06-27 21:54:24,196 INFO o.h.v.i.u.Version [background-preinit] HV000001: Hibernate Validator 8.0.0.Final
+2023-06-27 21:54:24,223 INFO o.s.b.StartupInfoLogger [restartedMain] Starting BackendDesappApiApplicationKt using Java 17.0.6 with PID 2797 (/Users/valen/unq/devapps/devapps-CriptoP2P/backend-desapp-api/build/classes/kotlin/main started by valen in /Users/valen/unq/devapps/devapps-CriptoP2P)
+2023-06-27 21:54:24,223 INFO o.s.b.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-06-27 21:54:24,254 INFO o.s.b.l.DeferredLog [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-06-27 21:54:24,254 INFO o.s.b.l.DeferredLog [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-06-27 21:54:24,777 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-06-27 21:54:24,818 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 36 ms. Found 3 JPA repository interfaces.
+2023-06-27 21:54:25,238 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-06-27 21:54:25,244 INFO o.a.j.l.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-06-27 21:54:25,244 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-06-27 21:54:25,244 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/10.1.7]
+2023-06-27 21:54:25,278 INFO o.a.j.l.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-06-27 21:54:25,278 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 1024 ms
+2023-06-27 21:54:25,296 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2023-06-27 21:54:25,392 INFO c.z.h.p.HikariPool [restartedMain] HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:desapp-api user=ROOT
+2023-06-27 21:54:25,393 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2023-06-27 21:54:25,400 INFO o.s.b.a.h.H2ConsoleAutoConfiguration [restartedMain] H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:desapp-api'
+2023-06-27 21:54:25,669 INFO o.e.s.o.t.o.p.UpfrontAllocatingPageSource [restartedMain] Allocating 10.0MB in chunks
+2023-06-27 21:54:25,681 INFO o.e.c.EhcacheManager [restartedMain] Cache 'daily' created in EhcacheManager.
+2023-06-27 21:54:25,712 INFO o.e.j.Eh107CacheManager [restartedMain] Registering Ehcache MBean javax.cache:type=CacheStatistics,CacheManager=file./Users/valen/unq/devapps/devapps-CriptoP2P/backend-desapp-api/build/resources/main/ehcache.xml,Cache=daily
+2023-06-27 21:54:25,716 INFO o.e.j.Eh107CacheManager [restartedMain] Registering Ehcache MBean javax.cache:type=CacheStatistics,CacheManager=file./Users/valen/unq/devapps/devapps-CriptoP2P/backend-desapp-api/build/resources/main/ehcache.xml,Cache=daily
+2023-06-27 21:54:25,761 INFO o.h.j.i.u.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-06-27 21:54:25,783 INFO o.h.Version [restartedMain] HHH000412: Hibernate ORM core version 6.1.7.Final
+2023-06-27 21:54:25,924 INFO o.h.e.j.d.i.DialectFactoryImpl [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2023-06-27 21:54:26,263 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-06-27 21:54:26,267 INFO o.s.o.j.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-06-27 21:54:26,943 WARN a.e.u.d.g.b.s.InitServiceInMemory [restartedMain] Init Data Using H2 DB
+2023-06-27 21:54:27,155 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-06-27 21:54:27,620 INFO o.s.s.w.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3ce18fa5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@36841d79, org.springframework.security.web.context.SecurityContextHolderFilter@6dccf0ed, org.springframework.security.web.header.HeaderWriterFilter@d45f5c2, org.springframework.security.web.authentication.logout.LogoutFilter@76e9788e, ar.edu.unq.desapp.grupog.backenddesappapi.webservice.security.JwtAuthenticationFilter@4f8099ec, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@648516fa, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@f35c193, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@599c8498, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7a7aff95, org.springframework.security.web.session.SessionManagementFilter@500b18a9, org.springframework.security.web.access.ExceptionTranslationFilter@41af26c8, org.springframework.security.web.access.intercept.AuthorizationFilter@468dc1fc]
+2023-06-27 21:54:27,626 WARN o.s.s.c.a.w.b.WebSecurity [restartedMain] You are asking Spring Security to ignore Ant [pattern='/h2-console/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-06-27 21:54:27,626 INFO o.s.s.w.DefaultSecurityFilterChain [restartedMain] Will not secure Ant [pattern='/h2-console/**']
+2023-06-27 21:54:27,626 WARN o.s.s.c.a.w.b.WebSecurity [restartedMain] You are asking Spring Security to ignore Ant [pattern='/health']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-06-27 21:54:27,626 INFO o.s.s.w.DefaultSecurityFilterChain [restartedMain] Will not secure Ant [pattern='/health']
+2023-06-27 21:54:27,627 WARN o.s.s.c.a.w.b.WebSecurity [restartedMain] You are asking Spring Security to ignore Ant [pattern='/users/register']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-06-27 21:54:27,627 INFO o.s.s.w.DefaultSecurityFilterChain [restartedMain] Will not secure Ant [pattern='/users/register']
+2023-06-27 21:54:27,768 INFO o.s.b.d.a.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-06-27 21:54:27,776 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-06-27 21:54:27,789 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-06-27 21:54:27,797 INFO o.s.b.StartupInfoLogger [restartedMain] Started BackendDesappApiApplicationKt in 3.796 seconds (process running for 4.119)
+2023-06-27 21:54:30,982 INFO a.e.u.d.g.b.s.i.ExternalApisServiceImpl [scheduling-1] Prices updated:
+ALICEUSDT: 0.849 2023-06-27T21:54:27.795581
+MATICUSDT: 0.6498 2023-06-27T21:54:28.536365
+AXSUSDT: 5.87 2023-06-27T21:54:28.704496
+AAVEUSDT: 63.0 2023-06-27T21:54:28.892556
+ATOMUSDT: 9.377 2023-06-27T21:54:29.068941
+NEOUSDT: 8.99 2023-06-27T21:54:29.515647
+DOTUSDT: 5.04 2023-06-27T21:54:29.694880
+ETHUSDT: 1874.16 2023-06-27T21:54:29.879669
+BTCUSDT: 30605.63 2023-06-27T21:54:30.067847
+BNBUSDT: 235.5 2023-06-27T21:54:30.247820
+ADAUSDT: 0.2828 2023-06-27T21:54:30.434215
+TRXUSDT: 0.06697 2023-06-27T21:54:30.618050
+AUDIOUSDT: 0.1851 2023-06-27T21:54:30.805167
+
+2023-06-27 21:54:41,506 INFO o.a.j.l.DirectJDKLog [http-nio-8080-exec-2] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-06-27 21:54:41,507 INFO o.s.w.s.FrameworkServlet [http-nio-8080-exec-2] Initializing Servlet 'dispatcherServlet'
+2023-06-27 21:54:41,508 INFO o.s.w.s.FrameworkServlet [http-nio-8080-exec-2] Completed initialization in 1 ms
+2023-06-27 21:54:42,444 INFO a.e.u.d.g.b.w.c.CacheEventLogger [Ehcache [_default_]-0] CacheLogger Triggered
+2023-06-27 21:54:42,445 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [http-nio-8080-exec-2] ///////// 
+ 2023-06-28T00:54:41.545011Z 
+ Method: backenddesappapi.webservice.CryptoActivesController.daily(CryptoActiveName) 
+ with parameters: 
+  ETHUSDT 
+ Execution time: 899 ms 
+ /////////

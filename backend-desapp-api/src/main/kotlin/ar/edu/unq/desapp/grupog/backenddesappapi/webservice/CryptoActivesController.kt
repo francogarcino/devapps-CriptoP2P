@@ -87,7 +87,7 @@ class CryptoActivesController : ControllerHelper() {
             )
         ]
     )
-    @GetMapping("/daily/{activeName}")
+    @GetMapping("/daily/crypto/{activeName}")
     fun daily(@PathVariable activeName: CryptoActiveName): ResponseEntity<List<PriceWithTime>> {
         return ResponseEntity.ok().body(apisService.getLast24Hours(activeName))
     }
