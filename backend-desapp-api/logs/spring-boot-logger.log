@@ -1765,3 +1765,579 @@ AUDIOUSDT: 0.1851 2023-06-27T21:54:58.295532
 2023-06-27 21:55:13,124 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
 2023-06-27 21:55:13,125 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
 2023-06-27 21:55:13,129 INFO o.e.c.EhcacheManager [SpringApplicationShutdownHook] Cache 'daily' removed from EhcacheManager.
+2023-06-27 22:09:15,530 INFO o.h.v.i.u.Version [background-preinit] HV000001: Hibernate Validator 8.0.0.Final
+2023-06-27 22:09:15,570 INFO o.s.b.StartupInfoLogger [Test worker] Starting BackendDesappApiApplicationTests using Java 17.0.6 with PID 3450 (started by valen in /Users/valen/unq/devapps/devapps-CriptoP2P/backend-desapp-api)
+2023-06-27 22:09:15,571 INFO o.s.b.SpringApplication [Test worker] No active profile set, falling back to 1 default profile: "default"
+2023-06-27 22:09:16,556 INFO o.s.d.r.c.RepositoryConfigurationDelegate [Test worker] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-06-27 22:09:16,608 INFO o.s.d.r.c.RepositoryConfigurationDelegate [Test worker] Finished Spring Data repository scanning in 45 ms. Found 3 JPA repository interfaces.
+2023-06-27 22:09:17,244 INFO o.e.s.o.t.o.p.UpfrontAllocatingPageSource [Test worker] Allocating 10.0MB in chunks
+2023-06-27 22:09:17,263 INFO o.e.c.EhcacheManager [Test worker] Cache 'daily' created in EhcacheManager.
+2023-06-27 22:09:17,301 INFO o.e.j.Eh107CacheManager [Test worker] Registering Ehcache MBean javax.cache:type=CacheStatistics,CacheManager=file./Users/valen/unq/devapps/devapps-CriptoP2P/backend-desapp-api/build/resources/main/ehcache.xml,Cache=daily
+2023-06-27 22:09:17,307 INFO o.e.j.Eh107CacheManager [Test worker] Registering Ehcache MBean javax.cache:type=CacheStatistics,CacheManager=file./Users/valen/unq/devapps/devapps-CriptoP2P/backend-desapp-api/build/resources/main/ehcache.xml,Cache=daily
+2023-06-27 22:09:17,413 INFO o.h.j.i.u.LogHelper [Test worker] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-06-27 22:09:17,451 INFO o.h.Version [Test worker] HHH000412: Hibernate ORM core version 6.1.7.Final
+2023-06-27 22:09:17,664 INFO c.z.h.HikariDataSource [Test worker] HikariPool-1 - Starting...
+2023-06-27 22:09:17,870 INFO c.z.h.p.HikariPool [Test worker] HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:desapp-api user=ROOT
+2023-06-27 22:09:17,871 INFO c.z.h.HikariDataSource [Test worker] HikariPool-1 - Start completed.
+2023-06-27 22:09:17,889 INFO o.h.e.j.d.i.DialectFactoryImpl [Test worker] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2023-06-27 22:09:18,404 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [Test worker] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-06-27 22:09:18,413 INFO o.s.o.j.AbstractEntityManagerFactoryBean [Test worker] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-06-27 22:09:19,312 WARN a.e.u.d.g.b.s.InitServiceInMemory [Test worker] Init Data Using H2 DB
+2023-06-27 22:09:19,669 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [Test worker] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-06-27 22:09:20,421 INFO o.s.s.w.DefaultSecurityFilterChain [Test worker] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1c9054f0, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3b7c809, org.springframework.security.web.context.SecurityContextHolderFilter@205b1a8, org.springframework.security.web.header.HeaderWriterFilter@7bedd5f3, org.springframework.security.web.authentication.logout.LogoutFilter@47f0e132, ar.edu.unq.desapp.grupog.backenddesappapi.webservice.security.JwtAuthenticationFilter@1a57aee2, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@791587ec, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@61d0584c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@42e49c9d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@56c80574, org.springframework.security.web.session.SessionManagementFilter@6722c24d, org.springframework.security.web.access.ExceptionTranslationFilter@64b670c, org.springframework.security.web.access.intercept.AuthorizationFilter@ed346e]
+2023-06-27 22:09:20,430 WARN o.s.s.c.a.w.b.WebSecurity [Test worker] You are asking Spring Security to ignore Ant [pattern='/h2-console/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-06-27 22:09:20,430 INFO o.s.s.w.DefaultSecurityFilterChain [Test worker] Will not secure Ant [pattern='/h2-console/**']
+2023-06-27 22:09:20,430 WARN o.s.s.c.a.w.b.WebSecurity [Test worker] You are asking Spring Security to ignore Ant [pattern='/health']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-06-27 22:09:20,431 INFO o.s.s.w.DefaultSecurityFilterChain [Test worker] Will not secure Ant [pattern='/health']
+2023-06-27 22:09:20,431 WARN o.s.s.c.a.w.b.WebSecurity [Test worker] You are asking Spring Security to ignore Ant [pattern='/users/register']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-06-27 22:09:20,431 INFO o.s.s.w.DefaultSecurityFilterChain [Test worker] Will not secure Ant [pattern='/users/register']
+2023-06-27 22:09:20,696 INFO o.s.b.StartupInfoLogger [Test worker] Started BackendDesappApiApplicationTests in 5.399 seconds (process running for 6.325)
+2023-06-27 22:09:20,898 INFO o.s.t.c.s.AnnotationConfigContextLoaderUtils [Test worker] Could not detect default configuration classes for test class [ar.edu.unq.desapp.grupog.backenddesappapi.test.arch.ArchUnitTestCase]: ArchUnitTestCase does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-06-27 22:09:20,904 INFO o.s.b.t.c.SpringBootTestContextBootstrapper [Test worker] Found @SpringBootConfiguration ar.edu.unq.desapp.grupog.backenddesappapi.BackendDesappApiApplication for test class ar.edu.unq.desapp.grupog.backenddesappapi.test.arch.ArchUnitTestCase
+2023-06-27 22:09:20,931 INFO c.t.a.c.PluginLoader$PluginSupplier [Test worker] Detected Java version 17.0.6
+2023-06-27 22:09:23,167 INFO o.s.t.c.s.AnnotationConfigContextLoaderUtils [Test worker] Could not detect default configuration classes for test class [ar.edu.unq.desapp.grupog.backenddesappapi.test.model.IntentionTestCase]: IntentionTestCase does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-06-27 22:09:23,174 INFO o.s.b.t.c.SpringBootTestContextBootstrapper [Test worker] Found @SpringBootConfiguration ar.edu.unq.desapp.grupog.backenddesappapi.BackendDesappApiApplication for test class ar.edu.unq.desapp.grupog.backenddesappapi.test.model.IntentionTestCase
+2023-06-27 22:09:23,186 INFO o.s.t.c.s.AnnotationConfigContextLoaderUtils [Test worker] Could not detect default configuration classes for test class [ar.edu.unq.desapp.grupog.backenddesappapi.test.model.TransactionTestCase]: TransactionTestCase does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-06-27 22:09:23,188 INFO o.s.b.t.c.SpringBootTestContextBootstrapper [Test worker] Found @SpringBootConfiguration ar.edu.unq.desapp.grupog.backenddesappapi.BackendDesappApiApplication for test class ar.edu.unq.desapp.grupog.backenddesappapi.test.model.TransactionTestCase
+2023-06-27 22:09:23,201 INFO o.s.t.c.s.AnnotationConfigContextLoaderUtils [Test worker] Could not detect default configuration classes for test class [ar.edu.unq.desapp.grupog.backenddesappapi.test.model.UserTestCase]: UserTestCase does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-06-27 22:09:23,202 INFO o.s.b.t.c.SpringBootTestContextBootstrapper [Test worker] Found @SpringBootConfiguration ar.edu.unq.desapp.grupog.backenddesappapi.BackendDesappApiApplication for test class ar.edu.unq.desapp.grupog.backenddesappapi.test.model.UserTestCase
+2023-06-27 22:09:23,236 INFO o.s.t.c.s.AnnotationConfigContextLoaderUtils [Test worker] Could not detect default configuration classes for test class [ar.edu.unq.desapp.grupog.backenddesappapi.test.model.WorkflowTestCase]: WorkflowTestCase does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-06-27 22:09:23,237 INFO o.s.b.t.c.SpringBootTestContextBootstrapper [Test worker] Found @SpringBootConfiguration ar.edu.unq.desapp.grupog.backenddesappapi.BackendDesappApiApplication for test class ar.edu.unq.desapp.grupog.backenddesappapi.test.model.WorkflowTestCase
+2023-06-27 22:09:23,279 INFO o.s.t.c.s.AnnotationConfigContextLoaderUtils [Test worker] Could not detect default configuration classes for test class [ar.edu.unq.desapp.grupog.backenddesappapi.test.service.IntentionServiceTestCase]: IntentionServiceTestCase does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-06-27 22:09:23,284 INFO o.s.b.t.c.SpringBootTestContextBootstrapper [Test worker] Found @SpringBootConfiguration ar.edu.unq.desapp.grupog.backenddesappapi.BackendDesappApiApplication for test class ar.edu.unq.desapp.grupog.backenddesappapi.test.service.IntentionServiceTestCase
+2023-06-27 22:09:24,159 INFO a.e.u.d.g.b.s.i.ExternalApisServiceImpl [scheduling-1] Prices updated:
+ALICEUSDT: 0.849 2023-06-27T22:09:20.695245
+MATICUSDT: 0.6509 2023-06-27T22:09:21.637803
+AXSUSDT: 5.87 2023-06-27T22:09:22.108611
+AAVEUSDT: 63.7 2023-06-27T22:09:22.280770
+ATOMUSDT: 9.384 2023-06-27T22:09:22.454812
+NEOUSDT: 9.02 2023-06-27T22:09:22.629913
+DOTUSDT: 5.062 2023-06-27T22:09:22.830714
+ETHUSDT: 1876.77 2023-06-27T22:09:23.054435
+BTCUSDT: 30652.96 2023-06-27T22:09:23.241532
+BNBUSDT: 235.9 2023-06-27T22:09:23.424778
+ADAUSDT: 0.2824 2023-06-27T22:09:23.601026
+TRXUSDT: 0.06697 2023-06-27T22:09:23.810305
+AUDIOUSDT: 0.1851 2023-06-27T22:09:23.986516
+
+2023-06-27 22:09:25,269 INFO o.s.t.c.s.AnnotationConfigContextLoaderUtils [Test worker] Could not detect default configuration classes for test class [ar.edu.unq.desapp.grupog.backenddesappapi.test.service.TransactionServiceTestCase]: TransactionServiceTestCase does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-06-27 22:09:25,270 INFO o.s.b.t.c.SpringBootTestContextBootstrapper [Test worker] Found @SpringBootConfiguration ar.edu.unq.desapp.grupog.backenddesappapi.BackendDesappApiApplication for test class ar.edu.unq.desapp.grupog.backenddesappapi.test.service.TransactionServiceTestCase
+2023-06-27 22:09:25,829 INFO o.s.t.c.s.AnnotationConfigContextLoaderUtils [Test worker] Could not detect default configuration classes for test class [ar.edu.unq.desapp.grupog.backenddesappapi.test.service.UserServiceTestCase]: UserServiceTestCase does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-06-27 22:09:25,830 INFO o.s.b.t.c.SpringBootTestContextBootstrapper [Test worker] Found @SpringBootConfiguration ar.edu.unq.desapp.grupog.backenddesappapi.BackendDesappApiApplication for test class ar.edu.unq.desapp.grupog.backenddesappapi.test.service.UserServiceTestCase
+2023-06-27 22:09:29,955 INFO o.s.t.c.s.AnnotationConfigContextLoaderUtils [Test worker] Could not detect default configuration classes for test class [ar.edu.unq.desapp.grupog.backenddesappapi.test.webservice.IntentionControllerTestCase]: IntentionControllerTestCase does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-06-27 22:09:29,963 INFO o.s.b.t.c.SpringBootTestContextBootstrapper [Test worker] Found @SpringBootConfiguration ar.edu.unq.desapp.grupog.backenddesappapi.BackendDesappApiApplication for test class ar.edu.unq.desapp.grupog.backenddesappapi.test.webservice.IntentionControllerTestCase
+2023-06-27 22:09:29,978 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:29,979 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:29,980 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 1 ms
+2023-06-27 22:09:30,355 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:30.062061Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@604c1f80 
+ Execution time: 292 ms 
+ /////////
+2023-06-27 22:09:30,410 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:30.394072Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.IntentionController.getIntention(HttpServletRequest,long) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@6d56bffc 
+  -1 
+ Execution time: 2 ms 
+ /////////
+2023-06-27 22:09:30,415 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:30,415 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:30,415 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 0 ms
+2023-06-27 22:09:30,586 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:30.422477Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@37e73707 
+ Execution time: 164 ms 
+ /////////
+2023-06-27 22:09:30,970 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:30.780151Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.UserController.createIntention(HttpServletRequest,IntentionCreateDTO) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@3bb1b5e7 
+  backenddesappapi.webservice.dtos.IntentionCreateDTO@438627be 
+ Execution time: 188 ms 
+ /////////
+2023-06-27 22:09:31,071 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:31.063556Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.IntentionController.getIntention(HttpServletRequest,long) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@740f974e 
+  7 
+ Execution time: 4 ms 
+ /////////
+2023-06-27 22:09:31,079 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:31,079 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:31,081 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 2 ms
+2023-06-27 22:09:31,259 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:31.089027Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@632d2f92 
+ Execution time: 170 ms 
+ /////////
+2023-06-27 22:09:31,270 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:31,270 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:31,271 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 1 ms
+2023-06-27 22:09:31,443 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:31.278119Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@1fbef078 
+ Execution time: 165 ms 
+ /////////
+2023-06-27 22:09:31,460 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:31.446249Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.IntentionController.getActiveIntentions(HttpServletRequest) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@78ef35b 
+ Execution time: 10 ms 
+ /////////
+2023-06-27 22:09:31,467 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:31,467 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:31,468 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 1 ms
+2023-06-27 22:09:31,641 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:31.471823Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@6ff54584 
+ Execution time: 170 ms 
+ /////////
+2023-06-27 22:09:31,649 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:31.643170Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.IntentionController.getAllIntentions(HttpServletRequest) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@31f288d3 
+ Execution time: 1 ms 
+ /////////
+2023-06-27 22:09:31,653 INFO o.s.t.c.s.AnnotationConfigContextLoaderUtils [Test worker] Could not detect default configuration classes for test class [ar.edu.unq.desapp.grupog.backenddesappapi.test.webservice.TransactionControllerTestCase]: TransactionControllerTestCase does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-06-27 22:09:31,654 INFO o.s.b.t.c.SpringBootTestContextBootstrapper [Test worker] Found @SpringBootConfiguration ar.edu.unq.desapp.grupog.backenddesappapi.BackendDesappApiApplication for test class ar.edu.unq.desapp.grupog.backenddesappapi.test.webservice.TransactionControllerTestCase
+2023-06-27 22:09:31,659 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:31,659 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:31,660 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 1 ms
+2023-06-27 22:09:31,847 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:31.664956Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@16b1cd94 
+ Execution time: 183 ms 
+ /////////
+2023-06-27 22:09:31,854 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:31.849374Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.TransactionController.getAllTransactions(HttpServletRequest) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@3e2ac304 
+ Execution time: 2 ms 
+ /////////
+2023-06-27 22:09:31,868 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:31,868 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:31,869 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 1 ms
+2023-06-27 22:09:32,040 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:31.874788Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@30c96b18 
+ Execution time: 166 ms 
+ /////////
+2023-06-27 22:09:32,047 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:32,047 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:32,048 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 0 ms
+2023-06-27 22:09:32,234 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:32.053915Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@4b6f9500 
+ Execution time: 181 ms 
+ /////////
+2023-06-27 22:09:32,264 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:32.236917Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.UserController.createTransaction(HttpServletRequest,long) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@78cb3b25 
+  -1 
+ Execution time: 14 ms 
+ /////////
+2023-06-27 22:09:32,274 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:32,275 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:32,277 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 1 ms
+2023-06-27 22:09:32,460 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:32.283015Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@6691c201 
+ Execution time: 177 ms 
+ /////////
+2023-06-27 22:09:33,504 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:32.818466Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.UserController.createTransaction(HttpServletRequest,long) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@2489c1a5 
+  8 
+ Execution time: 683 ms 
+ /////////
+2023-06-27 22:09:33,534 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:33.524079Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.TransactionController.getTransaction(HttpServletRequest,long) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@189572c4 
+  6 
+ Execution time: 6 ms 
+ /////////
+2023-06-27 22:09:33,540 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:33,540 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:33,540 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 0 ms
+2023-06-27 22:09:33,709 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:33.545898Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@71e62dd6 
+ Execution time: 164 ms 
+ /////////
+2023-06-27 22:09:33,715 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:33,715 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:33,716 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 1 ms
+2023-06-27 22:09:33,889 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:33.720144Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@328c1871 
+ Execution time: 169 ms 
+ /////////
+2023-06-27 22:09:33,896 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:33.890812Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.TransactionController.getTransaction(HttpServletRequest,long) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@8719a80 
+  -1 
+ Execution time: 2 ms 
+ /////////
+2023-06-27 22:09:33,898 INFO o.s.t.c.s.AnnotationConfigContextLoaderUtils [Test worker] Could not detect default configuration classes for test class [ar.edu.unq.desapp.grupog.backenddesappapi.test.webservice.UserControllerTestCase]: UserControllerTestCase does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-06-27 22:09:33,899 INFO o.s.b.t.c.SpringBootTestContextBootstrapper [Test worker] Found @SpringBootConfiguration ar.edu.unq.desapp.grupog.backenddesappapi.BackendDesappApiApplication for test class ar.edu.unq.desapp.grupog.backenddesappapi.test.webservice.UserControllerTestCase
+2023-06-27 22:09:33,906 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:33,906 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:33,907 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 1 ms
+2023-06-27 22:09:34,080 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:33.915202Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@1c9d8124 
+ Execution time: 165 ms 
+ /////////
+2023-06-27 22:09:34,086 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:34,086 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:34,087 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 1 ms
+2023-06-27 22:09:34,097 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:34.093448Z 
+ Method: backenddesappapi.webservice.security.AuthController.createUser(UserCreateDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.UserCreateDTO@4b8a2fd5 
+ Execution time: 4 ms 
+ /////////
+2023-06-27 22:09:34,279 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:34.115633Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@69b01ce0 
+ Execution time: 164 ms 
+ /////////
+2023-06-27 22:09:34,464 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:34.285156Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.UserController.getCryptoVolume(HttpServletRequest,long,DateRangeDTO) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@721a7163 
+  46 
+  backenddesappapi.webservice.dtos.DateRangeDTO@77ac4d79 
+ Execution time: 175 ms 
+ /////////
+2023-06-27 22:09:34,475 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:34,476 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:34,477 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 1 ms
+2023-06-27 22:09:34,480 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:34.478468Z 
+ Method: backenddesappapi.webservice.security.AuthController.createUser(UserCreateDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.UserCreateDTO@4f5cc537 
+ Execution time: 2 ms 
+ /////////
+2023-06-27 22:09:34,653 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:34.488898Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@6f80c3dd 
+ Execution time: 165 ms 
+ /////////
+2023-06-27 22:09:34,659 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:34.654891Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.UserController.getUser(HttpServletRequest,long) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@4b5e4a29 
+  48 
+ Execution time: 2 ms 
+ /////////
+2023-06-27 22:09:34,664 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:34,664 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:34,664 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 0 ms
+2023-06-27 22:09:34,835 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:34.668870Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@7a6bceb8 
+ Execution time: 167 ms 
+ /////////
+2023-06-27 22:09:34,840 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:34,840 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:34,841 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 1 ms
+2023-06-27 22:09:35,013 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:34.845156Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@362cdf94 
+ Execution time: 168 ms 
+ /////////
+2023-06-27 22:09:35,022 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:35.015036Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.UserController.getUser(HttpServletRequest,long) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@7b35cb6e 
+  -1 
+ Execution time: 3 ms 
+ /////////
+2023-06-27 22:09:35,033 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:35,033 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:35,034 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 1 ms
+2023-06-27 22:09:35,206 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:35.039031Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@6fff99c3 
+ Execution time: 167 ms 
+ /////////
+2023-06-27 22:09:35,212 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:35.208969Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.UserController.getAllUsers(HttpServletRequest) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@60cfdc2c 
+ Execution time: 1 ms 
+ /////////
+2023-06-27 22:09:35,216 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:35,217 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:35,217 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 0 ms
+2023-06-27 22:09:35,391 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:35.221120Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@20131572 
+ Execution time: 170 ms 
+ /////////
+2023-06-27 22:09:35,397 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:35.392537Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.UserController.getCryptoVolume(HttpServletRequest,long,DateRangeDTO) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@47fcc768 
+  -1 
+  backenddesappapi.webservice.dtos.DateRangeDTO@46f6bfc0 
+ Execution time: 1 ms 
+ /////////
+2023-06-27 22:09:35,402 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:35,402 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:35,402 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 0 ms
+2023-06-27 22:09:35,571 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:35.407506Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@73913d20 
+ Execution time: 164 ms 
+ /////////
+2023-06-27 22:09:35,577 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:35.572841Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.UserController.getUsersWithStats(HttpServletRequest) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@6448868d 
+ Execution time: 3 ms 
+ /////////
+2023-06-27 22:09:35,584 INFO o.s.t.c.s.AnnotationConfigContextLoaderUtils [Test worker] Could not detect default configuration classes for test class [ar.edu.unq.desapp.grupog.backenddesappapi.test.webservice.WorkflowControllerTestCase]: WorkflowControllerTestCase does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-06-27 22:09:35,585 INFO o.s.b.t.c.SpringBootTestContextBootstrapper [Test worker] Found @SpringBootConfiguration ar.edu.unq.desapp.grupog.backenddesappapi.BackendDesappApiApplication for test class ar.edu.unq.desapp.grupog.backenddesappapi.test.webservice.WorkflowControllerTestCase
+2023-06-27 22:09:35,589 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:35,590 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:35,591 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 1 ms
+2023-06-27 22:09:35,764 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:35.596708Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@1052c19d 
+ Execution time: 168 ms 
+ /////////
+2023-06-27 22:09:36,531 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:36.519132Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.UserController.cancelTransaction(HttpServletRequest,long) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@2ebb5539 
+  7 
+ Execution time: 10 ms 
+ /////////
+2023-06-27 22:09:36,535 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:36,535 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:36,535 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 0 ms
+2023-06-27 22:09:36,696 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:36.539434Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@5066e95a 
+ Execution time: 157 ms 
+ /////////
+2023-06-27 22:09:36,700 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:36,700 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:36,701 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 0 ms
+2023-06-27 22:09:36,877 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:36.704811Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@47f8f937 
+ Execution time: 173 ms 
+ /////////
+2023-06-27 22:09:37,584 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:37.571327Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.UserController.registerTransfer(HttpServletRequest,long) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@696ab1ae 
+  8 
+ Execution time: 11 ms 
+ /////////
+2023-06-27 22:09:37,767 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:37.587961Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@11236a3b 
+ Execution time: 179 ms 
+ /////////
+2023-06-27 22:09:37,784 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:37.769120Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.UserController.registerReleaseCrypto(HttpServletRequest,long) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@58780162 
+  8 
+ Execution time: 12 ms 
+ /////////
+2023-06-27 22:09:37,788 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:37,789 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:37,789 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 0 ms
+2023-06-27 22:09:37,949 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:37.793344Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@1cb5795b 
+ Execution time: 156 ms 
+ /////////
+2023-06-27 22:09:37,953 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:37,953 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:37,954 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 1 ms
+2023-06-27 22:09:38,115 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:37.956786Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@3ef0ced0 
+ Execution time: 159 ms 
+ /////////
+2023-06-27 22:09:38,890 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:38.867559Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.UserController.registerTransfer(HttpServletRequest,long) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@17f08b8b 
+  9 
+ Execution time: 19 ms 
+ /////////
+2023-06-27 22:09:38,896 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:38,896 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:38,897 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 1 ms
+2023-06-27 22:09:39,069 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:38.902502Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@5e1c1e44 
+ Execution time: 167 ms 
+ /////////
+2023-06-27 22:09:39,076 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:39.071102Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.UserController.registerReleaseCrypto(HttpServletRequest,long) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@4ba84e66 
+  -1 
+ Execution time: 2 ms 
+ /////////
+2023-06-27 22:09:39,079 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:39,079 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:39,080 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 1 ms
+2023-06-27 22:09:39,234 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:39.082990Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@3f61ea7f 
+ Execution time: 151 ms 
+ /////////
+2023-06-27 22:09:39,238 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:39,238 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:39,239 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 1 ms
+2023-06-27 22:09:39,393 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:39.241952Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@5ec2d7cf 
+ Execution time: 152 ms 
+ /////////
+2023-06-27 22:09:39,399 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:39.394448Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.UserController.registerTransfer(HttpServletRequest,long) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@2cacc43b 
+  -1 
+ Execution time: 3 ms 
+ /////////
+2023-06-27 22:09:39,402 INFO o.s.m.w.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2023-06-27 22:09:39,402 INFO o.s.w.s.FrameworkServlet [Test worker] Initializing Servlet ''
+2023-06-27 22:09:39,403 INFO o.s.w.s.FrameworkServlet [Test worker] Completed initialization in 0 ms
+2023-06-27 22:09:39,556 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:39.406109Z 
+ Method: backenddesappapi.webservice.security.AuthController.login(LoginDTO) 
+ with parameters: 
+  backenddesappapi.webservice.dtos.LoginDTO@16eaea15 
+ Execution time: 150 ms 
+ /////////
+2023-06-27 22:09:39,562 INFO a.e.u.d.g.b.LogInfoAspectCustomPointcut [Test worker] ///////// 
+ 2023-06-28T01:09:39.558111Z 
+ User: no firstname no lastname 
+ Method: backenddesappapi.webservice.UserController.cancelTransaction(HttpServletRequest,long) 
+ with parameters: 
+  org.springframework.mock.web.MockHttpServletRequest@1906b4ec 
+  -1 
+ Execution time: 2 ms 
+ /////////
+2023-06-27 22:09:39,573 INFO o.s.o.j.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-06-27 22:09:39,736 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2023-06-27 22:09:39,737 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
+2023-06-27 22:09:39,740 INFO o.e.c.EhcacheManager [SpringApplicationShutdownHook] Cache 'daily' removed from EhcacheManager.
