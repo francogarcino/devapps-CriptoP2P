@@ -1,4 +1,21 @@
 ---------------------------------------------------------------------
+TAG 1.2.0
+---------------------------------------------------------------------
+NEW FEATURES (lo que están entregando y está funcionando):
+* Endpoints para:
+  * Pedir cotizaciones de cryptos (tanto actuales como de las ultimas 24 horas)
+* Integración de JWT para seguridad
+* Cacheo de un método de cotizaciones
+
+NOTES (ej: funcionalidad que falta, alguna consideración especial):
+* Se utilizaron urls de binance de dominio .us, la cual no funciona con la crypto CAKEUSDT
+* Algunos handleos de errores retornan un estado 401 (Unauthorized) a causa del JWT
+
+KNOWN ISSUES (ej: funcionalidad que saben que están funcionando diferente, algún error conocido en la funcionalidad terminada, etc) :
+* Nada raro
+
+
+---------------------------------------------------------------------
 TAG 1.1.0
 ---------------------------------------------------------------------
 NEW FEATURES (lo que están entregando y está funcionando):
