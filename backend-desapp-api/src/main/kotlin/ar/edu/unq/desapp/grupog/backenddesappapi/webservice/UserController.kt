@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.webservice
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoVolume
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.OutOfRangePriceException
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.*
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.*
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.mappers.*
@@ -199,6 +200,8 @@ class UserController : ControllerHelper() {
             ResponseEntity.ok().body(dto)
         } catch (e : NoSuchElementException) {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+        } catch (e : OutOfRangePriceException) {
+            ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
         }
     }
 
@@ -260,10 +263,10 @@ class UserController : ControllerHelper() {
     fun getCryptoVolume(request: HttpServletRequest,
                         @PathVariable userId: Long,
                         @RequestBody @Valid dateRange: DateRangeDTO): ResponseEntity<Any> {
-        if (jwtDoesNotExistInTheHeader(request)) {
-            return ResponseEntity(messageNotAuthenticated, HttpStatus.UNAUTHORIZED)
-        }
         return try {
+            if (jwtDoesNotExistInTheHeader(request)) {
+                return ResponseEntity(messageNotAuthenticated, HttpStatus.UNAUTHORIZED)
+            }
             val init : LocalDateTime = LocalDateTime.of(dateRange.initYear,dateRange.initMonth,dateRange.initDay,0,0,0)
             val end : LocalDateTime = LocalDateTime.of(dateRange.endYear,dateRange.endMonth,dateRange.endDay,0,0,0)
             val cryptoVolume = userService.getCryptoVolume(userId, init, end)
