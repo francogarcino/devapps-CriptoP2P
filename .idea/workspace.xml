@@ -4,16 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4843dad1-8251-4803-919c-c071461a8dc0" name="Changes" comment="Change in URL for CI test">
+    <list default="true" id="4843dad1-8251-4803-919c-c071461a8dc0" name="Changes" comment="refactor in architecture test names">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/model/Transaction.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/model/Transaction.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/service/impl/ExternalApiServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/service/impl/ExternalApiServiceImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/webservice/TransactionController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/webservice/TransactionController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/webservice/mappers/TransactionMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/webservice/mappers/TransactionMapper.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/model/UserTestCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/model/UserTestCase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/service/IntentionServiceTestCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/service/IntentionServiceTestCase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/service/UserServiceTestCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/service/UserServiceTestCase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/webservice/TransactionControllerTestCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/test/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/test/webservice/TransactionControllerTestCase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-desapp-api/logs/spring-boot-logger.log" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/logs/spring-boot-logger.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/webservice/CryptoActivesController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend-desapp-api/src/main/kotlin/ar/edu/unq/desapp/grupog/backenddesappapi/webservice/CryptoActivesController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/spring-boot-logger.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/spring-boot-logger.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +101,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
 }</component>
-  <component name="RunManager" selected="Gradle.Tests in 'backend-desapp-api.test'">
+  <component name="RunManager" selected="Kotlin.BackendDesappApiApplicationKt">
     <configuration name="ArchUnitTestCase" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -197,36 +192,20 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="UserControllerTestCase.testGetCryptoVolume" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/backend-desapp-api" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;ar.edu.unq.desapp.grupog.backenddesappapi.test.webservice.UserControllerTestCase.testGetCryptoVolume&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
+    <configuration name="BackendDesappApiApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ar.edu.unq.desapp.grupog.backenddesappapi.BackendDesappApiApplicationKt" />
+      <module name="backend-desapp-api.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Kotlin.BackendDesappApiApplicationKt" />
         <item itemvalue="Gradle.Tests in 'backend-desapp-api.test'" />
         <item itemvalue="Gradle.ArchUnitTestCase" />
         <item itemvalue="Gradle.ArchUnitTestCase.testArch_allFunctionsWithTestAnnontationShouldStartWithTest" />
         <item itemvalue="Gradle.ArchUnitTestCase.testArch_allTestFileNamesEndsWithTestCase" />
-        <item itemvalue="Gradle.UserControllerTestCase.testGetCryptoVolume" />
       </list>
     </recent_temporary>
   </component>
