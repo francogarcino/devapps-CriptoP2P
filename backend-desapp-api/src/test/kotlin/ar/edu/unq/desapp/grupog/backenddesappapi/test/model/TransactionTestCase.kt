@@ -32,10 +32,10 @@ class TransactionTestCase {
         val anotherUser = userBuilder.withName("Alternative Name").withCVU("2222222222222222222222")
             .withWallet("98798798").withEmail("aRandomEmail@hotmail.com").build()
         val aTrx = anotherUser.beginTransaction(
-            anUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
+            anUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY), 1.0
         )
         val anotherTrx = anotherUser.beginTransaction(
-            anUser.createIntention(CryptoActiveName.BNBUSDT, 20, 1.0, TrxType.SELL)
+            anUser.createIntention(CryptoActiveName.BNBUSDT, 20, 1.0, TrxType.SELL), 1.0
         )
 
         Assertions.assertEquals(aTrx.typeTransaction(), TrxType.BUY)
@@ -51,7 +51,7 @@ class TransactionTestCase {
         val anotherUser = userBuilder.withCVU("2222222222222222222222")
             .withWallet("98798798").withEmail("aRandomEmail@hotmail.com").build()
         val aTrx = anotherUser.beginTransaction(
-            anUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY)
+            anUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.BUY), 1.0
         )
 
         Assertions.assertEquals(aTrx.address(), anotherUser.cvu)
@@ -70,7 +70,7 @@ class TransactionTestCase {
         val anotherUser = userBuilder.withCVU("2222222222222222222222")
             .withWallet("98798798").withEmail("aRandomEmail@hotmail.com").build()
         val aTrx = anotherUser.beginTransaction(
-            anUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.SELL)
+            anUser.createIntention(CryptoActiveName.ETHUSDT, 20, 1.0, TrxType.SELL), 1.0
         )
 
         Assertions.assertEquals(aTrx.address(), anUser.cvu)

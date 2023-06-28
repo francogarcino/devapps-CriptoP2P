@@ -2,7 +2,10 @@ package ar.edu.unq.desapp.grupog.backenddesappapi.test.webservice
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.DataService
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.UserService
+import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.LoginDTOBuilder
+import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.DateRangeDTOBuilder
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserBuilder
+import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserCreateDTOBuilder
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,7 +16,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
-import java.time.LocalDateTime
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -39,12 +41,13 @@ class UserControllerTestCase {
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users/register")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(UserBuilder().build()))
+                .content(mapper.writeValueAsString(UserCreateDTOBuilder().build()))
         ).andExpect(status().isOk)
         val user = userService.readAll().first()
         mockMvc.perform(
             MockMvcRequestBuilders.get("/users/{id}", user.id)
                 .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", addHeader())
         ).andExpect(status().isOk)
     }
 
@@ -53,6 +56,7 @@ class UserControllerTestCase {
         mockMvc.perform(
             MockMvcRequestBuilders.get("/users/{id}", "id")
                 .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", addHeader())
         ).andExpect(status().isBadRequest)
     }
 
@@ -61,6 +65,7 @@ class UserControllerTestCase {
         mockMvc.perform(
             MockMvcRequestBuilders.get("/users/{id}", -1)
                 .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", addHeader())
         ).andExpect(status().isNotFound)
     }
 
@@ -69,6 +74,7 @@ class UserControllerTestCase {
         mockMvc.perform(
             MockMvcRequestBuilders.get("/users/")
                 .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", addHeader())
         ).andExpect(status().isOk)
     }
 
@@ -77,6 +83,7 @@ class UserControllerTestCase {
         mockMvc.perform(
             MockMvcRequestBuilders.get("/users/stats")
                 .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", addHeader())
         ).andExpect(status().isOk)
     }
 
@@ -85,38 +92,51 @@ class UserControllerTestCase {
         mockMvc.perform(
             MockMvcRequestBuilders.post("/users/register")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(UserBuilder().build()))
+                .content(mapper.writeValueAsString(UserCreateDTOBuilder().build()))
         ).andExpect(status().isOk)
         val user = userService.readAll().first()
         mockMvc.perform(
-            MockMvcRequestBuilders.get("/users/cryptoVolume/{userId}/{startDate}/{finishDate}",
-                user.id,
-                LocalDateTime.of(2023, 1, 1, 10, 0),
-                LocalDateTime.now())
+            MockMvcRequestBuilders.get("/users/{userId}/cryptoVolume",
+                user.id)
                 .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(DateRangeDTOBuilder().build()))
+                .header("Authorization", addHeader())
         ).andExpect(status().isOk)
     }
 
     @Test
     fun testCannotGetCryptoVolumeWithAnAnInvalidUserId() {
         mockMvc.perform(
-            MockMvcRequestBuilders.get("/users/cryptoVolume/{userId}/{startDate}/{finishDate}",
-                "id",
-                LocalDateTime.of(2023, 1, 1, 10, 0),
-                LocalDateTime.now())
+            MockMvcRequestBuilders.get("/users/{userId}/cryptoVolume",
+                "id")
                 .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(DateRangeDTOBuilder().build()))
+                .header("Authorization", addHeader())
         ).andExpect(status().isBadRequest)
     }
 
     @Test
     fun testCannotGetCryptoVolumeWithAnUserIdNotPersisted() {
         mockMvc.perform(
-            MockMvcRequestBuilders.get("/users/cryptoVolume/{userId}/{startDate}/{finishDate}",
-                -1,
-                LocalDateTime.of(2023, 1, 1, 10, 0),
-                LocalDateTime.now())
+            MockMvcRequestBuilders.get("/users/{userId}/cryptoVolume",
+                -1)
                 .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(DateRangeDTOBuilder().build()))
+                .header("Authorization", addHeader())
         ).andExpect(status().isNotFound)
     }
 
+    private fun addHeader(): String {
+        userService.create(UserBuilder().withEmail("defaultemail2@gmail.com")
+            .withCVU("0011223344556677889911").withWallet("10254721").build())
+        val login = LoginDTOBuilder().build()
+        val response = mockMvc.perform(
+            MockMvcRequestBuilders.post("/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(login))
+        ).andExpect(status().isOk)
+
+        val stringToken = response.andReturn().response.contentAsString
+        return "Bearer ${stringToken.substring(10, stringToken.length - 2)}"
+    }
 }

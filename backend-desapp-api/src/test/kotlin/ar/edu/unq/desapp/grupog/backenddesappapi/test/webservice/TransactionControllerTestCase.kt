@@ -1,8 +1,12 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.test.webservice
 
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoActiveName
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.*
+import ar.edu.unq.desapp.grupog.backenddesappapi.service.impl.ExternalApisServiceImpl
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.IntentionBuilder
+import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.LoginDTOBuilder
 import ar.edu.unq.desapp.grupog.backenddesappapi.test.utils.UserBuilder
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -30,6 +34,9 @@ class TransactionControllerTestCase {
     private lateinit var transactionService: TransactionService
     @Autowired
     private lateinit var dataService: DataService
+    @Autowired private lateinit var apisService : ExternalApisServiceImpl
+
+    private val mapper = ObjectMapper()
 
     @BeforeEach
     fun setup() {
@@ -39,41 +46,38 @@ class TransactionControllerTestCase {
 
     @Test
     fun testCreateAndReadTransaction() {
+        val header = addHeader()
         val userCreate = userService.create(UserBuilder().build())
-        val userAccept = userService.create(UserBuilder()
-            .withEmail("otroemail@gmail.com")
-            .withCVU("1212121212454545454578")
-            .withWallet("12344321").build())
-        val intention = intentionService.create(IntentionBuilder().withUser(userCreate).build())
+        val intention = intentionService.create(IntentionBuilder().withCryptoPrice(apisService.getCryptoPrice(CryptoActiveName.ALICEUSDT)).withUser(userCreate).build())
         mockMvc.perform(
-            MockMvcRequestBuilders.post("/users/{idUser}/{idIntention}",
-                userAccept.id, intention.getId())
+            MockMvcRequestBuilders.post("/users/createTransaction/{idIntention}",
+                intention.getId())
                 .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", header)
         ).andExpect(status().isOk)
         val transaction = transactionService.readAll().first()
         mockMvc.perform(
             MockMvcRequestBuilders.get("/transactions/{id}", transaction.id)
                 .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", header)
         ).andExpect(status().isOk)
     }
 
     @Test
-    fun testCannotCreateTransactionWithAnInvalidUserId() {
-        val userCreate = userService.create(UserBuilder().build())
-        val intention = intentionService.create(IntentionBuilder().withUser(userCreate).build())
+    fun testCannotCreateTransactionWithAnInvalidIntentionId() {
         mockMvc.perform(
-            MockMvcRequestBuilders.post("/users/{idUser}/{idIntention}", "id", intention.getId())
+            MockMvcRequestBuilders.post("/users/createTransaction/{idIntention}", "id")
                 .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", addHeader())
         ).andExpect(status().isBadRequest)
     }
 
     @Test
-    fun testCannotCreateTransactionWithAnUserIdNotPersisted() {
-        val userCreate = userService.create(UserBuilder().build())
-        val intention = intentionService.create(IntentionBuilder().withUser(userCreate).build())
+    fun testCannotCreateTransactionWithAnIntentionIdNotPersisted() {
         mockMvc.perform(
-            MockMvcRequestBuilders.post("/users/{idUser}/{idIntention}", -1, intention.getId())
+            MockMvcRequestBuilders.post("/users/createTransaction/{idIntention}", -1)
                 .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", addHeader())
         ).andExpect(status().isNotFound)
     }
 
@@ -82,6 +86,7 @@ class TransactionControllerTestCase {
         mockMvc.perform(
             MockMvcRequestBuilders.get("/transactions/{id}", "id")
                 .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", addHeader())
         ).andExpect(status().isBadRequest)
     }
 
@@ -90,6 +95,7 @@ class TransactionControllerTestCase {
         mockMvc.perform(
             MockMvcRequestBuilders.get("/transactions/{id}", -1)
                 .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", addHeader())
         ).andExpect(status().isNotFound)
     }
 
@@ -98,43 +104,21 @@ class TransactionControllerTestCase {
         mockMvc.perform(
             MockMvcRequestBuilders.get("/transactions/")
                 .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", addHeader())
         ).andExpect(status().isOk)
     }
 
-    @Test
-    fun testCreateTransactionAndSystemCancelsIt() {
-        val userCreate = userService.create(UserBuilder().build())
-        val userAccept = userService.create(UserBuilder()
-            .withEmail("otroemail@gmail.com")
-            .withCVU("1212121212454545454578")
-            .withWallet("12344321").build())
-        val intention = intentionService.create(IntentionBuilder().withUser(userCreate).build())
-        mockMvc.perform(
-            MockMvcRequestBuilders.post("/users/{idUser}/{idIntention}",
-                userAccept.id, intention.getId())
+    private fun addHeader(): String {
+        userService.create(UserBuilder().withEmail("defaultemail2@gmail.com")
+            .withCVU("0011223344556677889911").withWallet("10254721").build())
+        val login = LoginDTOBuilder().build()
+        val response = mockMvc.perform(
+            MockMvcRequestBuilders.post("/login")
                 .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(login))
         ).andExpect(status().isOk)
-        val transaction = transactionService.readAll().first()
-        mockMvc.perform(
-            MockMvcRequestBuilders.put("/transactions/cancelTransaction/{idTransaction}", transaction.id)
-                .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isOk)
-    }
 
-    @Test
-    fun testSystemCannotCancelTransactionWithAnInvalidId() {
-        mockMvc.perform(
-            MockMvcRequestBuilders.put("/transactions/cancelTransaction/{idTransaction}", "id")
-                .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isBadRequest)
+        val stringToken = response.andReturn().response.contentAsString
+        return "Bearer ${stringToken.substring(10, stringToken.length - 2)}"
     }
-
-    @Test
-    fun testSystemCannotCancelTransactionWithAnIdNotPersisted() {
-        mockMvc.perform(
-            MockMvcRequestBuilders.put("/transactions/cancelTransaction/{idTransaction}", -1)
-                .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isNotFound)
-    }
-
 }

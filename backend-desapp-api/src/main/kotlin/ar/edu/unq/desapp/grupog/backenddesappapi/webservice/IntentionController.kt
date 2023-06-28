@@ -6,15 +6,18 @@ import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.mappers.IntentionMap
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.*
 import io.swagger.v3.oas.annotations.responses.*
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.*
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.RestController
+import java.util.*
 
 @RestController
 @CrossOrigin
 @RequestMapping("/intentions")
-class IntentionController {
+class IntentionController : ControllerHelper() {
+
     @Autowired private lateinit var intentionService: IntentionService
     private var mapper = IntentionMapper()
 
@@ -33,11 +36,26 @@ class IntentionController {
                         array = ArraySchema(schema = Schema(implementation = IntentionDTO::class)),
                     )
                 ]
+            ),
+            ApiResponse(
+                responseCode = "401",
+                description = "Unauthorized",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
             )
         ]
     )
     @GetMapping("/")
-    fun getAllIntentions() : ResponseEntity<List<IntentionDTO>> {
+    fun getAllIntentions(request: HttpServletRequest) : ResponseEntity<Any> {
+        if (jwtDoesNotExistInTheHeader(request)) {
+            return ResponseEntity(messageNotAuthenticated, HttpStatus.UNAUTHORIZED)
+        }
         val allIntentions = intentionService.readAll()
         return ResponseEntity.ok(allIntentions.map {
             intention -> mapper.fromIntentionToDTO(intention)
@@ -73,6 +91,18 @@ class IntentionController {
                 ]
             ),
             ApiResponse(
+                responseCode = "401",
+                description = "Unauthorized",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
+            ),
+            ApiResponse(
                 responseCode = "404",
                 description = "Not Found",
                 content = [
@@ -87,7 +117,10 @@ class IntentionController {
         ]
     )
     @GetMapping("/{id}")
-    fun getIntention(@PathVariable id: Long) : ResponseEntity<Any> {
+    fun getIntention(request: HttpServletRequest, @PathVariable id: Long) : ResponseEntity<Any> {
+        if (jwtDoesNotExistInTheHeader(request)) {
+            return ResponseEntity(messageNotAuthenticated, HttpStatus.UNAUTHORIZED)
+        }
         return try {
             ResponseEntity.ok().body(mapper.fromIntentionToDTO(intentionService.read(id)))
         } catch (e: NoSuchElementException) {
@@ -110,11 +143,26 @@ class IntentionController {
                         array = ArraySchema(schema = Schema(implementation = IntentionDTO::class)),
                     )
                 ]
+            ),
+            ApiResponse(
+                responseCode = "401",
+                description = "Unauthorized",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [ExampleObject(
+                            value = "A error"
+                        )]
+                    )
+                ]
             )
         ]
     )
     @GetMapping("/activeIntentions")
-    fun getActiveIntentions() : ResponseEntity<List<IntentionDTO>> {
+    fun getActiveIntentions(request: HttpServletRequest) : ResponseEntity<Any> {
+        if (jwtDoesNotExistInTheHeader(request)) {
+            return ResponseEntity(messageNotAuthenticated, HttpStatus.UNAUTHORIZED)
+        }
         val intentions = intentionService.getActiveIntentions()
         return ResponseEntity.ok(intentions.map { intention ->
             mapper.fromIntentionToDTO(intention)

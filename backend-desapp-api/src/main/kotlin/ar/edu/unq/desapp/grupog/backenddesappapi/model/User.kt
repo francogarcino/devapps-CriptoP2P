@@ -5,7 +5,6 @@ import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
 import jakarta.persistence.*
 import java.time.LocalDateTime
 import kotlin.math.max
-import kotlin.math.min
 
 @Entity(name = "UserApp")
 class User(
@@ -37,9 +36,9 @@ class User(
         return intention
     }
 
-    fun beginTransaction(intention: Intention) : Transaction {
+    fun beginTransaction(intention: Intention, price: Double) : Transaction {
         if(isTheSameUser(intention)) throw SameUserException()
-        return Transaction(intention, this)
+        return Transaction(intention, this, price)
     }
 
     private fun isTheSameUser(intention: Intention): Boolean {

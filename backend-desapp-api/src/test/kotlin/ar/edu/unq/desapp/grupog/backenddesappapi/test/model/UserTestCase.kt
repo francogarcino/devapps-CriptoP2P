@@ -149,13 +149,13 @@ class UserTestCase {
     }
 
     @Test
-    fun userAcceptsAnIntention_andATransactionIsCreated() {
+    fun testUserAcceptsAnIntention_andATransactionIsCreated() {
         val userWhoCreates = builder.withName("Valen").build()
         val userWhoAccepts = builder.withCVU("2222222222222222222222")
             .withWallet("98798798").withEmail("aRandomEmail@hotmail.com").build()
 
         val createdIntention = userWhoCreates.createIntention(CryptoActiveName.AAVEUSDT, 2, 2.0, TrxType.SELL)
-        val createdTransaction = userWhoAccepts.beginTransaction(createdIntention)
+        val createdTransaction = userWhoAccepts.beginTransaction(createdIntention, 1.0)
 
         Assertions.assertEquals(createdTransaction.intention, createdIntention)
         Assertions.assertEquals(createdTransaction.user_whoCreate(), userWhoCreates)
@@ -167,8 +167,21 @@ class UserTestCase {
         val user = builder.build()
         val createdIntention = user.createIntention(CryptoActiveName.AAVEUSDT, 2, 2.0, TrxType.SELL)
 
-        try { user.beginTransaction(createdIntention) }
+        try { user.beginTransaction(createdIntention, 1.0) }
         catch (e: Throwable) { Assertions.assertEquals(SameUserException().message, e.message) }
+    }
+
+    @Test
+    fun testTransactionCreation_ShouldThrowAnExceptionWhenIntentionIsNotAvailable() {
+        val user = builder.build()
+        val anotherUser = builder.withCVU("2222222222222222222222")
+            .withWallet("98798798").withEmail("aRandomEmail@hotmail.com").build()
+
+        val createdIntention = user.createIntention(CryptoActiveName.AAVEUSDT, 2, 2.0, TrxType.SELL)
+        anotherUser.beginTransaction(createdIntention, 1.0)
+
+        try { anotherUser.beginTransaction(createdIntention, 1.0) }
+        catch (e: Throwable) { Assertions.assertEquals(IntentionNotAvailableException().message, e.message) }
     }
 
     @Test
@@ -178,7 +191,7 @@ class UserTestCase {
 
         val createdIntention = user.createIntention(CryptoActiveName.AAVEUSDT, 2, 2.0, TrxType.SELL)
 
-        try { anotherUser.beginTransaction(createdIntention) }
+        try { anotherUser.beginTransaction(createdIntention, 1.0) }
         catch (e: Throwable) { Assertions.assertEquals(SameUserException().message, e.message) }
     }
 
@@ -189,7 +202,7 @@ class UserTestCase {
 
         val createdIntention = user.createIntention(CryptoActiveName.AAVEUSDT, 2, 2.0, TrxType.SELL)
 
-        try { anotherUser.beginTransaction(createdIntention) }
+        try { anotherUser.beginTransaction(createdIntention, 1.0) }
         catch (e: Throwable) { Assertions.assertEquals(SameUserException().message, e.message) }
     }
 
@@ -200,7 +213,7 @@ class UserTestCase {
 
         val createdIntention = user.createIntention(CryptoActiveName.AAVEUSDT, 2, 2.0, TrxType.SELL)
 
-        try { anotherUser.beginTransaction(createdIntention) }
+        try { anotherUser.beginTransaction(createdIntention, 1.0) }
         catch (e: Throwable) { Assertions.assertEquals(SameUserException().message, e.message) }
     }
 }

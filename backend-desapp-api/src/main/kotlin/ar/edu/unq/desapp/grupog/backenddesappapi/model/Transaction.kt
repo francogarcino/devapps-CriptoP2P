@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.model
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.ExternalUserActionException
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.IntentionNotAvailableException
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.trx.UnableActionException
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxStateClasses.*
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxStatus
@@ -13,7 +14,8 @@ class Transaction(
     @ManyToOne
     var intention: Intention,
     @ManyToOne
-    var user_whoAccept: User
+    var user_whoAccept: User,
+    var cryptoPrice : Double
 ) {
     @Enumerated(EnumType.STRING)
     var status: TrxStatus = TrxStatus.WAITING
@@ -31,7 +33,6 @@ class Transaction(
     fun cryptoAmount() = intention.getCryptoAmount()
     fun typeTransaction() = intention.getTrxType()
     fun user_whoCreate() = intention.getUserFromIntention()
-    fun cryptoPrice() = intention.getCryptoPrice()
 
     fun registerTransfer(user: User) {
         // Si es compra, quien debe pagar en ARS es el user_whoCreate
@@ -80,6 +81,7 @@ class Transaction(
 
         status = TrxStatus.CANCELLED
         stateBehavior = EndedBehavior()
+        intention.available = true
     }
 
     fun address(): String {
@@ -100,19 +102,12 @@ class Transaction(
         else -> user_whoAccept.wallet
     }
 
-    private fun setInformation() {
-        // A futuro, el 400 será el valor retornado por la api al consultar el precio del dólar + cryptoPrice será consumido desde la API de Binance
-        arsAmount = cryptoAmount() * 400 * cryptoPrice()
+    private fun validateAvailableIntention() {
+        if(!intention.available) throw IntentionNotAvailableException()
     }
 
-    /*
-        Si la trx es cancelada por un usuario → descontar 20 pts de reputación
-        Si la trx es cancelada por el sistema → nada
-        Si la trx es realizada en 30 min → sumar 10 puntos
-        Si la trx es realizada en + 30 min → sumar 5 pts
-     */
-
     init {
-        setInformation()
+        validateAvailableIntention()
+        intention.available = false
     }
 }

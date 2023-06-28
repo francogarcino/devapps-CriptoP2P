@@ -2,16 +2,15 @@ package ar.edu.unq.desapp.grupog.backenddesappapi.test.utils
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoActiveName
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.trxHelpers.TrxType
-import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.IntentionDTO
+import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.IntentionCreateDTO
 
-class IntentionDTOBuilder {
+class IntentionCreateDTOBuilder {
     private var cryptoActive = CryptoActiveName.ALICEUSDT
     private var cryptoAmount = 10
     private var cryptoPrice = 30.5
     private var trxType = TrxType.BUY
 
-    fun build() = IntentionDTO(null, cryptoActive, cryptoAmount, cryptoPrice,
-        null, null, trxType, null, null)
+    fun build() = IntentionCreateDTO(cryptoActive, cryptoAmount, cryptoPrice, trxType)
 
     fun withCryptoActive(newCryptoActive: CryptoActiveName) = this.apply { cryptoActive = newCryptoActive }
     fun withCryptoAmount(newCryptoAmount: Int) = this.apply { cryptoAmount = newCryptoAmount }
