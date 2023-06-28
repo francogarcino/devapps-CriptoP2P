@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupog.backenddesappapi.webservice
 
 import ar.edu.unq.desapp.grupog.backenddesappapi.model.CryptoVolume
+import ar.edu.unq.desapp.grupog.backenddesappapi.model.exceptions.OutOfRangePriceException
 import ar.edu.unq.desapp.grupog.backenddesappapi.service.*
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.dtos.*
 import ar.edu.unq.desapp.grupog.backenddesappapi.webservice.mappers.*
@@ -199,6 +200,8 @@ class UserController : ControllerHelper() {
             ResponseEntity.ok().body(dto)
         } catch (e : NoSuchElementException) {
             ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+        } catch (e : OutOfRangePriceException) {
+            ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
         }
     }
 
