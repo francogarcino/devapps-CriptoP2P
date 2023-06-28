@@ -263,10 +263,10 @@ class UserController : ControllerHelper() {
     fun getCryptoVolume(request: HttpServletRequest,
                         @PathVariable userId: Long,
                         @RequestBody @Valid dateRange: DateRangeDTO): ResponseEntity<Any> {
-        if (jwtDoesNotExistInTheHeader(request)) {
-            return ResponseEntity(messageNotAuthenticated, HttpStatus.UNAUTHORIZED)
-        }
         return try {
+            if (jwtDoesNotExistInTheHeader(request)) {
+                return ResponseEntity(messageNotAuthenticated, HttpStatus.UNAUTHORIZED)
+            }
             val init : LocalDateTime = LocalDateTime.of(dateRange.initYear,dateRange.initMonth,dateRange.initDay,0,0,0)
             val end : LocalDateTime = LocalDateTime.of(dateRange.endYear,dateRange.endMonth,dateRange.endDay,0,0,0)
             val cryptoVolume = userService.getCryptoVolume(userId, init, end)
